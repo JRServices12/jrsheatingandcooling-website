@@ -46,4 +46,4 @@ Most boilers have a reset button. Press it **once**, as your manual describes. I
 - You hear loud banging or the boiler is making unusual noises
 - The flame is yellow or orange instead of blue, or there are black marks around the boiler
 
-I cover breakdowns across South East London and North Kent, and I'll get to you as quickly as I can.
+We cover breakdowns across South East London and North Kent, and we'll get to you as quickly as we can.

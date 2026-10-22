@@ -6,14 +6,14 @@ import { quotePrices } from "../data/quote-prices.js";
 const config = { prices: quotePrices, whatsapp: business.whatsapp, email: business.email, brands: business.brands };
 ---
 <Layout
-  title="Instant Quote"
+  title="Quick price"
   description={`Get a rough price for your boiler, heating or air conditioning job in ${business.region}. Answer a few questions, send photos on WhatsApp and get a confirmed quote.`}
 >
   <section class="page-hero">
     <div class="container narrow">
-      <p class="eyebrow">Free quote</p>
+      <p class="eyebrow">Quick price</p>
       <h1>Get a rough price in a minute</h1>
-      <p class="lead">Answer a few quick questions and you'll see a rough guide price straight away. Then send it to me on WhatsApp with a few photos, and I'll confirm your quote.</p>
+      <p class="lead">Answer a few quick questions and you'll see a rough guide price straight away. Then send it to us on WhatsApp with a few photos, and we'll confirm your quote.</p>
     </div>
   </section>
 
@@ -45,14 +45,14 @@ const config = { prices: quotePrices, whatsapp: business.whatsapp, email: busine
           <p class="qt-price" id="qt-price"></p>
           <p class="qt-price-note" id="qt-price-note"></p>
           <div class="qt-photos">
-            <p><strong>Photos that help me quote:</strong></p>
+            <p><strong>Photos that help us quote:</strong></p>
             <ul id="qt-photo-tips"></ul>
           </div>
           <div class="qt-actions">
             <a class="btn btn-whatsapp" id="qt-wa" href="#" target="_blank" rel="noopener">Send on WhatsApp with photos</a>
             <a class="btn btn-outline" id="qt-email" href="#">Email instead</a>
           </div>
-          <p class="qt-small">Prices include everything, with no VAT to add. This is a rough guide only, not a fixed quote. Your price is confirmed in writing after I've seen your photos or visited, and nothing is booked until you're happy with it. All gas work is carried out by a Gas Safe registered engineer.</p>
+          <p class="qt-small">Prices include everything, with no VAT to add. This is a rough guide only, not a fixed quote. Your price is confirmed in writing after we've seen your photos or visited, and nothing is booked until you're happy with it. All gas work is carried out by a Gas Safe registered engineer.</p>
         </div>
       </form>
       <noscript><p class="note">The quote tool needs JavaScript. You can call {business.phone} or email {business.email} for a free quote instead.</p></noscript>
@@ -114,7 +114,7 @@ const config = { prices: quotePrices, whatsapp: business.whatsapp, email: busine
     ], photos: ["Each room, showing where the indoor unit could go", "The outside wall or ground where the outdoor unit could go"] },
 
     { id: "other", label: "Something else", qs: [
-      { id: "desc", q: "Tell me what you need", text: true, long: true }
+      { id: "desc", q: "Tell us what you need", text: true, long: true }
     ], photos: ["Anything that shows the job"] }
   ];
 
@@ -132,8 +132,8 @@ const config = { prices: quotePrices, whatsapp: business.whatsapp, email: busine
         break;
       case "repair":
         r = rng(P.repairCallout); from = true;
-        note = "To find the fault. Parts and any extra time are quoted before I go ahead.";
-        if (a.age === "Over 15 years") note += " With a boiler this age, I'll also tell you honestly if a repair is worth it.";
+        note = "To find the fault. Parts and any extra time are quoted before we go ahead.";
+        if (a.age === "Over 15 years") note += " With a boiler this age, we'll also tell you honestly if a repair is worth it.";
         break;
       case "landlord":
         var n = { "1 (just the boiler)": 1, "2": 2, "3": 3, "4 or more": 4 }[a.appliances] || 1;
@@ -148,12 +148,12 @@ const config = { prices: quotePrices, whatsapp: business.whatsapp, email: busine
         if (n >= 4) from = true;
         break;
       case "boiler":
-        if (a.want === "Not sure, please advise" || a.current === "Not sure") { r = null; note = "I'll recommend the right boiler for your home and price it up."; break; }
+        if (a.want === "Not sure, please advise" || a.current === "Not sure") { r = null; note = "We'll recommend the right boiler for your home and price it up."; break; }
         if (a.want === "A combi boiler") r = a.current.indexOf("Combi") === 0 ? rng(P.combiSwap) : rng(P.conversionToCombi);
         else r = rng(P.systemSwap);
         if (a.move === "Somewhere new") r = add(r, rng(P.boilerMoveExtra));
         note = "Fitted price including the boiler, system clean, and Gas Safe registration.";
-        if (a.baths === "3 or more" && a.want === "A combi boiler") note += " With 3 or more bathrooms, a combi may not keep up, so I'll talk you through the options.";
+        if (a.baths === "3 or more" && a.want === "A combi boiler") note += " With 3 or more bathrooms, a combi may not keep up, so we'll talk you through the options.";
         break;
       case "flush":
         var band = { "Up to 6": "upTo6", "7 to 10": "upTo10", "11 to 15": "upTo15", "16 or more": "over15" }[a.rads];
@@ -170,7 +170,7 @@ const config = { prices: quotePrices, whatsapp: business.whatsapp, email: busine
         var s = { "Up to 10 m² (e.g. a bathroom)": "small", "10 to 20 m² (e.g. a kitchen)": "medium", "20 to 40 m² (e.g. an extension)": "large" }[a.size];
         r = s ? rng(P.underfloor[s]) : null;
         note = "Pipework, manifold and controls, connected to your boiler. Screed and floor finishes are not included.";
-        if (a.stage === "Existing finished floor") note += " On a finished floor, the floor usually has to come up or be raised, so I'll need to see it.";
+        if (a.stage === "Existing finished floor") note += " On a finished floor, the floor usually has to come up or be raised, so we'll need to see it.";
         break;
       case "ac":
         var k = { "1": "ac1Room", "2": "ac2Rooms", "3": "ac3Rooms" }[a.rooms];
@@ -186,7 +186,7 @@ const config = { prices: quotePrices, whatsapp: business.whatsapp, email: busine
 
   function money(n) { return "£" + Math.round(n).toLocaleString("en-GB"); }
   function show(p) {
-    if (!p.r) return "I'll confirm the price after seeing your photos";
+    if (!p.r) return "We'll confirm the price after seeing your photos";
     if (p.from) return "From " + money(p.r[0]);
     if (p.r[0] === p.r[1]) return money(p.r[0]);
     return money(p.r[0]) + " to " + money(p.r[1]);
@@ -255,7 +255,7 @@ const config = { prices: quotePrices, whatsapp: business.whatsapp, email: busine
 
     var name = document.getElementById("qt-name").value.trim();
     var area = document.getElementById("qt-area").value.trim();
-    var lines = ["Hi Jordan, I'd like a quote from your website.", "", "Job: " + current.label];
+    var lines = ["Hi JRS, I'd like a quote from your website.", "", "Job: " + current.label];
     current.qs.forEach(function (q) { if (answers[q.id]) lines.push("- " + q.q.replace(/ \(optional\)$/, "").replace(/\?$/, "") + ": " + answers[q.id]); });
     if (name) lines.push("Name: " + name);
     if (area) lines.push("Area: " + area);
@@ -282,7 +282,7 @@ const config = { prices: quotePrices, whatsapp: business.whatsapp, email: busine
   .qt-jobs { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
   .qt-job, .qt-opt { position: relative; cursor: pointer; }
   .qt-job input, .qt-opt input { position: absolute; opacity: 0; pointer-events: none; }
-  .qt-job span, .qt-opt span { display: block; border: 2px solid var(--line); background: #fff; border-radius: 10px; padding: 12px 14px; font-weight: 600; color: var(--navy); transition: border-color 0.15s, background 0.15s; }
+  .qt-job span, .qt-opt span { display: block; border: 2px solid var(--line); background: #fff; border-radius: 2px; padding: 12px 14px; font-weight: 600; color: var(--navy); transition: border-color 0.15s, background 0.15s; }
   .qt-job span { padding: 16px; font-size: 1.02rem; }
   .qt-job:hover span, .qt-opt:hover span { border-color: var(--blue); }
   .qt-job input:checked + span, .qt-opt input:checked + span { border-color: var(--blue); background: var(--sky); box-shadow: inset 0 0 0 1px var(--blue); }
@@ -292,13 +292,13 @@ const config = { prices: quotePrices, whatsapp: business.whatsapp, email: busine
   .qt-opts { display: flex; flex-wrap: wrap; gap: 8px; }
   .qt-opt span { padding: 9px 14px; font-weight: 600; font-size: 0.95rem; }
   .qt-field { display: block; font-weight: 700; margin-bottom: 14px; }
-  .qt-field input, .qt-text { display: block; width: 100%; margin-top: 6px; font: inherit; font-weight: 400; padding: 11px 13px; border: 2px solid var(--line); border-radius: 10px; box-sizing: border-box; }
+  .qt-field input, .qt-text { display: block; width: 100%; margin-top: 6px; font: inherit; font-weight: 400; padding: 11px 13px; border: 2px solid var(--line); border-radius: 2px; box-sizing: border-box; }
   .qt-field input:focus, .qt-text:focus { outline: none; border-color: var(--blue); }
-  .qt-result { border: 2px solid var(--blue); border-radius: 14px; padding: 24px; background: #fff; box-shadow: 0 12px 32px rgba(18, 50, 79, 0.1); }
+  .qt-result { border: 2px solid var(--blue); border-radius: 2px; padding: 24px; background: #fff; box-shadow: 0 12px 32px rgba(10, 30, 49, 0.1); }
   .qt-result-label { margin: 0; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.82rem; }
   .qt-price { font-family: var(--display); font-weight: 700; font-size: clamp(1.6rem, 5vw, 2.4rem); color: var(--blue); line-height: 1.15; margin: 6px 0 8px; }
   .qt-price-note { margin: 0 0 16px; }
-  .qt-photos { background: var(--sky); border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; }
+  .qt-photos { background: var(--sky); border-radius: 2px; padding: 14px 18px; margin-bottom: 18px; }
   .qt-photos p { margin: 0 0 6px; }
   .qt-photos ul { margin: 0; padding-left: 1.2em; }
   .qt-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }

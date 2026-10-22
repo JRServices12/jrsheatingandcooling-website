@@ -10,13 +10,18 @@ export const business = {
   yearsExperience: "10",
   region: "South East London & North Kent",
   base: "South East London",
-  reach: "including Dartford, Gravesend and the rest of North Kent",
+  reach: "including Dartford and Gravesend",
   url: "https://jrsheatingandcooling.co.uk",
   hours: "Monday to Friday, 8am to 5pm",
   // Google Business Profile link, and the link that opens the "write a review" box.
   googleUrl: "https://g.page/r/CXTaVJ-gDNE6EBM",
   googleReviewUrl: "https://g.page/r/CXTaVJ-gDNE6EBM/review",
   hoursShort: "Mon–Fri 8am–5pm",
+  // Contact form: free Web3Forms access key, made at https://web3forms.com with the work email.
+  // It's safe to keep here (it can only send messages to that inbox). Leave blank to hide the form.
+  formKey: "9096182a-817a-4a00-a1c6-c7ad1943c9dd",
+  // Breakdowns are covered outside normal hours too.
+  breakdowns: "evenings and weekends too",
   // Boiler makes Jordan installs and services (names only, no brand logos).
   brands: ["Worcester Bosch", "Vaillant", "Ideal", "Glow-worm"],
   // Air conditioning makes Jordan installs.
@@ -44,46 +49,46 @@ export const services = [
     slug: "boiler-repair-servicing",
     quoteJob: "service",
     boiler: true,
-    title: "Boiler Repair & Servicing",
+    title: "Boiler repair and servicing",
     short: "Annual boiler services from £100, and repairs to get your heating and hot water back on.",
   },
   {
     slug: "landlord-gas-safety-certificates",
     quoteJob: "landlord",
-    title: "Landlord Gas Safety Certificates",
+    title: "Landlord gas safety certificates",
     short: "Annual gas safety checks and CP12 certificates for rented properties.",
   },
   {
     slug: "boiler-installation",
     quoteJob: "boiler",
     boiler: true,
-    title: "Boiler Installation",
+    title: "Boiler installation",
     short: "New combi, system and conventional boilers fitted neatly and properly.",
   },
   {
     slug: "power-flushing",
     quoteJob: "flush",
     boiler: true,
-    title: "Power Flushing",
+    title: "Power flushing",
     short: "Clears sludge and debris from your heating system so radiators heat up properly again.",
   },
   {
     slug: "radiators-central-heating",
     quoteJob: "rads",
-    title: "Radiators & Central Heating",
+    title: "Radiators and central heating",
     short: "New and replacement radiators, valves, moving radiators and central heating repairs.",
   },
   {
     slug: "underfloor-heating",
     quoteJob: "ufh",
-    title: "Underfloor Heating",
+    title: "Underfloor heating",
     short: "Wet underfloor heating connected to your boiler, ideal for kitchens, extensions and bathrooms.",
   },
   {
     slug: "air-conditioning-installation",
     quoteJob: "ac",
     href: "/air-conditioning/",
-    title: "Air Conditioning Installation",
+    title: "Air conditioning installation",
     short: "Wall-mounted air conditioning for homes, to keep rooms cool in summer.",
   },
 ];
@@ -101,7 +106,6 @@ export const reviews = [
   {"area": "SE18", "date": "3 August 2024", "score": "10", "job": "Boiler emergency", "text": "Efficient and reliable. Jordan was recommended to us, and we were very grateful for his speedy, knowledgeable service. We would call him again."},
   {"area": "SE18", "date": "6 March 2024", "score": "10", "job": "Boiler Service and other plumbing maintenance", "text": "Jordan is very diligent and thorough. Compared to other Plumbers he was very polite and did not make a mess in the house. His prices are also very reasonable. I would highly recommend him."},
   {"area": "SE18", "date": "20 November 2023", "score": "10", "job": "Boiler servicing", "text": "Jordan did a great job and was really good to deal with. Clear communication, arrived at agreed time, sorted out the boiler promptly. Would definitely recommend Jordan to anyone looking for a reliable plumber."},
-  {"area": "HP16", "date": "11 July 2023", "score": "10", "job": "Jordan installed ten radiators and TRVs for us, piping them onto the existing system.", "text": "I was let down by my usual plumber and got Jordan out to quote purely on the strength of his reviews - and I’m so pleased I did! Jordan went above and beyond - taking the work on around his existing jobs and making it work to our deadline despite his pre-existing holiday. His work is top class, he’s incredibly tidy, he never failed to show up on time and we’re very pleased with everything he did for us. We’ll be getting him out again! Thanks."},
   {"area": "SE18", "date": "5 April 2024", "score": "10", "job": "Moving and fitting of radiators", "text": "Jordan was quick to respond and was very helpful in determining the best way to do things. He is polite, friendly, courteous and tidy. I would highly recommend him."},
   {"area": "DA5", "date": "2 June 2024", "score": "10", "job": "Fixing a small gas leak", "text": "Jordan came round within 24hrs of posting a request on checkatrade. He tested for the leak, nipped up the offending joint and confirmed the leak was gone. Prompt service and good communication. Would definitely use again."},
   {"area": "SE3", "date": "6 March 2024", "score": "10", "job": "Gas certificate", "text": "- Really quick turn around - Very courteous"},

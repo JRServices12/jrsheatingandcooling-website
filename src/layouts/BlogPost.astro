@@ -29,10 +29,10 @@ const article = {
       <slot />
       <div class="post-help">
         <h2>Need a hand?</h2>
-        <p>I'm Jordan, a Gas Safe registered and F-Gas certified engineer covering {business.region}. If you'd rather someone took a look, call {business.phone}. Open {business.hours}, and I'll get to breakdowns as quickly as I can.</p>
+        <p>{business.name} is Gas Safe registered and F-Gas certified, covering {business.region}. Rather we took a look? Call {business.phone}. We're open {business.hours}, and we cover breakdowns {business.breakdowns}.</p>
         <div class="cta-actions" style="justify-content:flex-start">
           <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
-          <a class="btn btn-quote" href="/quote/">Get a free quote</a>
+          <a class="btn btn-quote" href="/quote/">Get a quick price</a>
         </div>
       </div>
       {related.length > 0 && (
@@ -48,7 +48,7 @@ const article = {
   .post li { margin-bottom: 0.4em; }
   .post blockquote { margin: 1.4em 0; background: var(--sky); border-left: 4px solid var(--blue); padding: 14px 18px; border-radius: 6px; }
   .post blockquote p { margin: 0; }
-  .post-help { margin-top: 2.4em; border: 2px solid var(--blue); border-radius: 12px; padding: 22px 24px; }
+  .post-help { margin-top: 2.4em; border: 2px solid var(--blue); border-radius: 2px; padding: 22px 24px; }
   .post-help h2 { margin-top: 0; }
   .post-related { margin-top: 1.6em; color: var(--muted); }
   .page-hero .eyebrow a { color: inherit; }

@@ -7,7 +7,7 @@ import { business, reviews, reviewSource } from "../data/business.js";
     <div class="container">
       <p class="eyebrow">Reviews</p>
       <h1>What customers say</h1>
-      <p class="lead">Real reviews from customers across South East London and Dartford, copied word for word. A selection from the {reviewSource.total} reviews left on {reviewSource.name} while trading as JRS Services, {reviewSource.perfect} of them a perfect 10/10.</p>
+      <p class="lead">Real reviews from customers across {business.region}, copied word for word from {reviewSource.name}, where we traded as JRS Services. {reviewSource.perfect} of the {reviewSource.total} are a perfect 10.</p>
     </div>
   </section>
   <section class="section">
@@ -34,6 +34,6 @@ import { business, reviews, reviewSource } from "../data/business.js";
 </Layout>
 
 <style>
-  .google-review { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; justify-content: space-between; border: 2px solid var(--blue); border-radius: 12px; padding: 18px 22px; }
+  .google-review { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; justify-content: space-between; border: 2px solid var(--blue); border-radius: 2px; padding: 18px 22px; }
   .google-review p { margin: 0; }
 </style>

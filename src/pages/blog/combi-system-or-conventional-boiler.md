@@ -44,10 +44,10 @@ Also called a regular or heat-only boiler. It uses a **hot water cylinder plus a
 
 ## Can I switch to a combi?
 
-Often, yes. Changing from a tank in the loft to a combi is one of the most common upgrades I do. It frees up the airing cupboard and the loft. It usually takes longer than a straight swap, because the pipework has to change, and it's only a good idea if a combi can supply your home properly.
+Often, yes. Changing from a tank in the loft to a combi is one of the most common upgrades we do. It frees up the airing cupboard and the loft. It usually takes longer than a straight swap, because the pipework has to change, and it's only a good idea if a combi can supply your home properly.
 
 ## Which brand?
 
-I install and service Worcester Bosch, Vaillant, Ideal and Glow-worm. Each makes a good range, so the choice usually comes down to the right model and size for your home rather than the badge.
+We install and service Worcester Bosch, Vaillant, Ideal and Glow-worm. Each makes a good range, so the choice usually comes down to the right model and size for your home rather than the badge.
 
-When I quote for a new boiler, I'll look at your home, your water pressure and how you use hot water, then recommend the right type and size.
+When we quote for a new boiler, we'll look at your home, your water pressure and how you use hot water, then recommend the right type and size.

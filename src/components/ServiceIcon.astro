@@ -24,14 +24,14 @@ const hot = ["boiler-repair-servicing", "landlord-gas-safety-certificates", "boi
   <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={paths[slug] ?? ""} />
 </span>
 <style>
-  .svc-icon { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 16px 16px 16px 4px; flex: none; transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1), background-color 0.2s ease, color 0.2s ease; }
-  .svc-sm { width: 36px; height: 36px; border-radius: 10px 10px 10px 3px; }
-  .svc-hot { background: #fdeee6; color: var(--hot); }
-  .svc-cold { background: #e6f4fc; color: #1b7fbf; }
+  .svc-icon { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 2px; flex: none; transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1), background-color 0.2s ease, color 0.2s ease; }
+  .svc-sm { width: 36px; height: 36px; border-radius: 2px; }
+  .svc-hot { background: #F5EBE3; color: var(--hot); }
+  .svc-cold { background: #F4EEE2; color: #8A6A2F; }
   .svc-icon svg { display: block; transition: transform 0.45s cubic-bezier(0.3, 1.6, 0.5, 1); }
   :global(a:hover) > .svc-icon, :global(a:focus-visible) > .svc-icon, :global(a:hover) .svc-icon { transform: translateY(-3px) scale(1.06); }
   :global(a:hover) .svc-hot { background: var(--hot); color: #fff; }
-  :global(a:hover) .svc-cold { background: var(--cold); color: #fff; }
+  :global(a:hover) .svc-cold { background: var(--cold); color: #0A1E31; }
   :global(a:hover) .svc-icon svg { transform: rotate(-12deg); }
   @media (prefers-reduced-motion: reduce) { .svc-icon, .svc-icon svg { transition: none; } }
 </style>

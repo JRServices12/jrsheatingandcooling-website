@@ -21,11 +21,11 @@ const p = servicePrices[slug];
       </tbody>
     </table>
     <p class="pricebox-note">{p.note} No VAT to add. You always get a written quote before any work starts.</p>
-    <a class="btn btn-call" href={quoteJob ? `/quote/?job=${quoteJob}` : "/quote/"}>Get a free quote</a>
+    <a class="btn btn-call" href={quoteJob ? `/quote/?job=${quoteJob}` : "/quote/"}>Get a quick price</a>
   </section>
 )}
 <style>
-  .pricebox { margin: 36px 0; border: 2px solid var(--navy); border-radius: 4px 4px 4px 32px; padding: 26px 28px; background: #fff; }
+  .pricebox { margin: 36px 0; border: 2px solid var(--navy); border-radius: 2px; padding: 26px 28px; background: #fff; }
   .pricebox-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 7px solid var(--hot); box-shadow: 0 11px 0 -4px var(--cold); margin-bottom: 18px; }
   .pricebox h2 { margin: 0; }
   .pricebox-label { margin: 4px 0 0; color: var(--muted); }

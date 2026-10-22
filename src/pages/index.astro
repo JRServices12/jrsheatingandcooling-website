@@ -1,89 +1,68 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { business, services, serviceHref, reviews, reviewSource, photos } from "../data/business.js";
+import { business, reviews, reviewSource, photos } from "../data/business.js";
 import { quotePrices as P } from "../data/quote-prices.js";
-import Accreditations from "../components/Accreditations.astro";
-import BrandStrip from "../components/BrandStrip.astro";
-import ServiceIcon from "../components/ServiceIcon.astro";
 
-const low = (v) => (Array.isArray(v) ? v[0] : v);
 const gbp = (n) => "£" + Number(n).toLocaleString("en-GB");
-const priceFor = {
-  "boiler-repair-servicing": `Service ${gbp(P.boilerService)}`,
-  "landlord-gas-safety-certificates": gbp(P.landlordCert),
-  "boiler-installation": `From ${gbp(low(P.combiSwap))}`,
-  "power-flushing": `From ${gbp(low(P.powerFlush.upTo6))}`,
-  "radiators-central-heating": `From ${gbp(low(P.radiatorReplace))}`,
-  "underfloor-heating": `From ${gbp(low(P.underfloor.small))}`,
-  "air-conditioning-installation": `From ${gbp(low(P.ac1Room))}`,
-};
 const photo = (file) => photos.find((p) => p.file === file);
-const heroPhoto = photo("boiler-install-1");
-const tidy = ["boiler-install-cupboard", "radiators-fitted", "boiler-install-3"].map(photo);
-const featured = reviews[1];
-const more = [reviews[0], reviews[6]];
+const tidy = [
+  { ...photo("bathroom-freestanding-bath"), src: "/images/work/bathroom-freestanding-bath.jpg" },
+  { ...photo("boiler-install-cupboard"), src: "/images/work/boiler-install-cupboard-sm.jpg" },
+  { ...photo("radiators-fitted"), src: "/images/work/radiators-fitted-sm.jpg" },
+];
+const review = (area, date) => reviews.find((x) => x.area === area && x.date === date);
+const featured = review("SE7", "13 December 2023");
+const more = [review("DA16", "21 February 2024"), review("SE18", "9 November 2023")];
+
+// The three routes into the site, one per kind of customer.
+const paths = [
+  {
+    title: "I own my home",
+    text: "Yearly boiler service, a breakdown, or a new boiler. Honest advice on repair or replace.",
+    cta: `Service from ${gbp(P.boilerService)}`,
+    href: "/boilers/",
+  },
+  {
+    title: "I'm a landlord",
+    text: "Gas safety certificates (CP12) for one property or several, with a reminder before each one is due.",
+    cta: `Certificate ${gbp(P.landlordCert)}`,
+    href: "/services/landlord-gas-safety-certificates/",
+  },
+  {
+    title: "I'm renovating",
+    text: "New heating systems, underfloor heating and air conditioning, planned around your build, with a photo report at first fix, second fix and handover.",
+    cta: "Talk to us about your project",
+    href: "/contact/",
+    brass: true,
+  },
+];
 ---
 <Layout
   title="Home"
-  description={`Gas Safe registered boiler, heating and air conditioning engineer based in ${business.base} and covering Dartford and North Kent. Boiler servicing, repairs, new boilers, landlord gas safety certificates and air con. Free quotes.`}
+  description={`Gas Safe registered boiler, heating and air conditioning company based in ${business.base} and covering North Kent. Boiler servicing, repairs, new boilers, landlord gas safety certificates and air con. Free quotes.`}
 >
   <section class="h-hero">
-    <div class="container h-hero-inner">
-      <div class="h-hero-copy">
-        <h1>Boilers, heating and air con for South East London and North Kent</h1>
-        <div class="pipes pipes-hero" aria-hidden="true"><span class="hot"></span><span class="cold"></span></div>
-        <p class="h-lead">I'm Jordan, a Gas Safe registered engineer with {business.yearsExperience}+ years in the trade. Every job is done by me, priced up front, and finished so neatly you'd be happy to leave the cupboard door open.</p>
-        <div class="h-actions">
-          <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
-          <a class="btn btn-quote" href="/quote/">Get a free quote</a>
-        </div>
-        <Accreditations />
+    <div class="container">
+      <p class="eyebrow">Gas Safe registered · {business.region}</p>
+      <h1>Boilers, heating and air con. What do you need help with?</h1>
+      <p class="h-lead">Pick the one that sounds like you and we'll take you straight to the right place. Every job is priced in writing before any work starts.</p>
+      <div class="h-paths">
+        {paths.map((p) => (
+          <a class:list={["h-path", { "h-path-brass": p.brass }]} href={p.href}>
+            <span class="h-path-title">{p.title}</span>
+            <span class="h-path-text">{p.text}</span>
+            <span class="h-path-cta">{p.cta} →</span>
+          </a>
+        ))}
       </div>
-      <figure class="h-hero-photo">
-        <img src={`/images/work/${heroPhoto.file}.jpg`} alt={heroPhoto.caption} width="900" height="1200" fetchpriority="high" />
-        <figcaption>My own work: a new boiler with the copper pipework run straight and clipped by hand.</figcaption>
-      </figure>
+      <p class="h-breakdown"><strong>No heating or hot water?</strong> Call <a href={business.phoneHref}>{business.phone}</a>, evenings and weekends included, and we'll get to you as quickly as we can.</p>
     </div>
   </section>
 
   <section class="h-proof" aria-label="Reviews summary">
     <div class="container h-proof-inner">
-      <p class="h-proof-score"><strong>{reviewSource.perfect}</strong> of my {reviewSource.total} Checkatrade reviews are a perfect 10</p>
-      <p class="h-proof-quote">“His work is top class, he’s incredibly tidy” <span>Customer review, HP16</span></p>
-    </div>
-  </section>
-
-  <section class="emergency" aria-label="Emergency call-outs">
-    <div class="container emergency-inner">
-      <div>
-        <h2>Boiler broken down? No heating or hot water?</h2>
-        <p>Call me and I'll get to you as quickly as I can. Breakdowns, leaks and boilers that won't fire up go first.</p>
-        <p class="gas-warn"><strong>Smell gas?</strong> Open windows, don't use switches or flames, and call the National Gas Emergency line on <a href="tel:0800111999">0800 111 999</a> straight away.</p>
-      </div>
-      <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="h-head">
-        <h2>What I do, and what it costs</h2>
-        <p>Guide prices with nothing hidden. You always get a written quote before any work starts, and as I'm not VAT registered there's no VAT to add.</p>
-      </div>
-      <ul class="price-list">
-        {services.map((s) => (
-          <li>
-            <a href={serviceHref(s)}>
-              <ServiceIcon slug={s.slug} size={34} />
-              <span class="pl-name">{s.title}</span>
-              <span class="pl-desc">{s.short}</span>
-              <span class="pl-price">{priceFor[s.slug] ?? "Ask for a price"}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-      <p class="h-after"><a href="/quote/">Get a rough price for your job in a minute</a></p>
-      <BrandStrip brands={[...business.brands, ...business.acBrands]} title="Brands I install and service" note="Boilers and air conditioning, and most other makes too. Not sure about yours? Just ask." />
+      <p class="h-proof-score"><strong>{reviewSource.perfect}</strong><span>of our {reviewSource.total} Checkatrade reviews<br />are a perfect 10</span></p>
+      <p class="h-proof-quote">“Jordan is very diligent and thorough. Compared to other Plumbers he was very polite and did not make a mess in the house.” <span>Boiler service, SE18</span></p>
     </div>
   </section>
 
@@ -91,128 +70,136 @@ const more = [reviews[0], reviews[6]];
     <div class="container h-tidy-inner">
       <div class="h-tidy-photos">
         {tidy.map((p, i) => (
-          <img class={`t${i + 1}`} src={`/images/work/${p.file}${i === 0 ? "" : "-sm"}.jpg`} alt={p.caption} loading="lazy" />
+          <img class={`t${i + 1}`} src={p.src} alt={p.caption} loading="lazy" />
         ))}
       </div>
       <div class="h-tidy-copy">
+        <p class="eyebrow">The standard</p>
         <h2>Tidy work, even where you can't see it</h2>
-        <p>The thing I'm proudest of is how neat the job is when I leave. Pipework is run straight and clipped properly, whether it's on show or hidden behind a cupboard.</p>
-        <ul class="tick-list">
-          <li>Gas Safe registered. I'll show you my ID card when I arrive.</li>
-          <li>Local and on my own, so the person who quotes is the person who turns up.</li>
-          <li>A clear written price first, so there are no surprises at the end.</li>
-          <li>Your home left clean, with dust sheets down and everything cleared away.</li>
-        </ul>
-        <p><a class="btn btn-quote" href="/work/">See more of my work</a></p>
+        <p class="h-muted">The thing we're proudest of is how neat the job is when we leave. Pipework is run straight and clipped properly, whether it's on show or hidden behind a cupboard. From a period bathroom to a rental flat, the finish is the same.</p>
+        <ol class="h-standards">
+          <li><span>01</span>Gas Safe registered, with ID shown when we arrive.</li>
+          <li><span>02</span>The engineer who quotes your job is the one who does it. Nothing is passed to subcontractors.</li>
+          <li><span>03</span>A clear written price first, so there are no surprises at the end.</li>
+          <li><span>04</span>Dust sheets down, and your home left clean.</li>
+        </ol>
+        <p><a class="h-link" href="/work/">See more of our work →</a></p>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="h-reviews">
     <div class="container">
       <figure class="h-featured">
         <blockquote>“{featured.text}”</blockquote>
-        <figcaption>Checkatrade review from {featured.area}, {featured.date}. Scored {featured.score}/10.</figcaption>
+        <figcaption>Checkatrade review, {featured.area}, {featured.date} · {featured.score}/10</figcaption>
       </figure>
       <div class="h-more-reviews">
         {more.map((r) => (
-          <figure>
+          <figure class="h-quote">
             <blockquote>“{r.text}”</blockquote>
-            <figcaption>{r.area}, {r.date}. Scored {r.score}/10.</figcaption>
+            <figcaption>{r.area}, {r.date} · {r.score}/10</figcaption>
           </figure>
         ))}
       </div>
-      <p class="h-after"><a href="/reviews/">Read more reviews</a>, <a href="/faq/">read the FAQ</a>, or <a href={business.googleReviewUrl} target="_blank" rel="noopener">leave me a Google review</a></p>
+      <p class="h-after"><a class="h-link" href="/reviews/">Read more reviews →</a> <span>or</span> <a href={business.googleReviewUrl} target="_blank" rel="noopener">leave us a Google review</a></p>
+    </div>
+  </section>
+
+  <section class="h-emergency" aria-label="Breakdowns">
+    <div class="container">
+      <div class="h-emergency-box">
+        <div>
+          <h2>No heating or hot water?</h2>
+          <p>Call us, evenings and weekends included, and we'll get to you as quickly as we can. Breakdowns, leaks and boilers that won't fire up go first.</p>
+          <p class="gas-warn"><strong>Smell gas?</strong> Open windows, don't use switches or flames, and call the National Gas Emergency line on <a href="tel:0800111999">0800 111 999</a> straight away.</p>
+        </div>
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+      </div>
     </div>
   </section>
 
   <section class="cta-band">
     <div class="container">
-      <h2>Need a heating engineer in South East London or North Kent?</h2>
+      <h2>Looking for heating engineers you can trust in your home?</h2>
       <p>Call for a chat, or send a few photos on WhatsApp for a price.</p>
       <div class="cta-actions">
         <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
-        <a class="btn btn-outline-light" href={`https://wa.me/${business.whatsapp}`} target="_blank" rel="noopener">WhatsApp me</a>
+        <a class="btn btn-outline-light" href={`https://wa.me/${business.whatsapp}`} target="_blank" rel="noopener">WhatsApp us</a>
       </div>
     </div>
   </section>
 </Layout>
 
 <style>
-  /* Hero */
-  .h-hero { padding: 48px 0 56px; background: #fff; }
-  .h-hero-inner { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 48px; align-items: center; }
-  .h-hero h1 { font-size: clamp(2.3rem, 5.6vw, 4.1rem); font-weight: 700; line-height: 1.02; letter-spacing: -0.01em; margin: 0; max-width: 17ch; }
-  .pipes-hero { margin: 22px 0; max-width: 420px; }
-  .h-lead { font-size: 1.18rem; color: var(--ink); max-width: 34em; }
-  .h-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 22px 0 8px; }
-  .h-hero-copy :global(.accreditations img) { height: 58px; }
-  .h-hero-photo { margin: 0; }
-  .h-hero-photo img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px 4px 4px 48px; }
-  .h-hero-photo figcaption { margin-top: 10px; font-size: 0.92rem; color: var(--muted); max-width: 32em; }
-  @media (max-width: 860px) {
-    .h-hero-inner { grid-template-columns: 1fr; gap: 28px; }
-    .h-hero-photo img { aspect-ratio: 4 / 3; }
+  /* Hero: three routes into the site */
+  .h-hero { padding: 88px 0 96px; }
+  .h-hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; margin: 0 0 16px; max-width: 20ch; }
+  .h-lead { font-size: 1.18rem; color: var(--muted); max-width: 40em; margin-bottom: 44px; }
+  .h-paths { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .h-path { display: flex; flex-direction: column; gap: 10px; min-height: 240px; padding: 32px; background: #fff; border: 1px solid var(--line); border-top: 3px solid var(--navy); color: inherit; text-decoration: none; transition: box-shadow 0.2s ease, border-color 0.2s ease; }
+  .h-path-brass { border-top-color: var(--brass); }
+  .h-path:hover { color: inherit; box-shadow: 0 14px 32px rgba(10, 30, 49, 0.09); }
+  .h-path-title { font-family: var(--display); font-size: 1.9rem; line-height: 1.15; color: var(--navy); }
+  .h-path-text { color: var(--muted); }
+  .h-path-cta { margin-top: auto; font-weight: 600; color: var(--navy); }
+  .h-path:hover .h-path-cta { color: var(--copper); }
+  .h-breakdown { margin: 28px 0 0; color: var(--muted); }
+  .h-breakdown strong { color: var(--ink); }
+  .h-breakdown a { font-weight: 600; }
+  @media (max-width: 900px) {
+    .h-paths { grid-template-columns: 1fr; }
+    .h-path { min-height: 0; padding: 26px; }
+    .h-hero { padding: 56px 0 64px; }
   }
 
   /* Proof strip */
-  .h-proof { background: var(--navy); color: #dbe8f4; padding: 22px 0; }
-  .h-proof-inner { display: flex; flex-wrap: wrap; gap: 10px 40px; align-items: baseline; justify-content: space-between; }
+  .h-proof { background: var(--navy); color: #B9C6D3; }
+  .h-proof-inner { display: flex; flex-wrap: wrap; gap: 24px 56px; align-items: center; justify-content: space-between; padding-top: 40px; padding-bottom: 40px; }
   .h-proof p { margin: 0; }
-  .h-proof-score { font-size: 1.1rem; color: #fff; }
-  .h-proof-score strong { font-family: var(--display); font-size: 2.2rem; color: var(--hot); margin-right: 4px; }
-  .h-proof-quote { font-style: italic; }
-  .h-proof-quote span { font-style: normal; color: #9fb4c8; margin-left: 8px; font-size: 0.9rem; }
-
-  /* Section heads, with no small labels above them */
-  .h-head { max-width: 680px; margin-bottom: 28px; }
-  .h-head p { color: var(--muted); font-size: 1.08rem; }
-  .h-after { margin-top: 20px; }
-
-  /* Price list */
-  .price-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--navy); }
-  .price-list li { border-bottom: 1px solid var(--line); }
-  .price-list a { display: grid; grid-template-columns: 64px minmax(0, 15rem) minmax(0, 1fr) auto; gap: 6px 24px; align-items: center; padding: 16px 12px; color: inherit; text-decoration: none; border-radius: 4px 4px 4px 24px; transition: background-color 0.2s ease, transform 0.25s ease; }
-  .price-list a:hover, .price-list a:focus-visible { background: var(--soft); transform: translateX(6px); }
-  .price-list a:hover .pl-price { color: var(--hot); }
-  .pl-price { transition: color 0.2s ease; }
-  .pl-name { font-family: var(--display); font-weight: 700; font-size: 1.35rem; color: var(--navy); }
-  .pl-desc { color: var(--muted); }
-  .pl-price { font-family: var(--display); font-weight: 700; font-size: 1.25rem; color: var(--navy); white-space: nowrap; }
-  .price-list a:hover .pl-name, .price-list a:focus-visible .pl-name { color: var(--blue); text-decoration: underline; text-underline-offset: 4px; }
-  @media (max-width: 760px) {
-    .price-list a { grid-template-columns: 64px 1fr; gap: 4px 16px; }
-    .price-list a :global(.svc-icon) { grid-row: 1 / 4; align-self: start; }
-    .pl-price { grid-column: 2; }
-  }
-  @media (prefers-reduced-motion: reduce) { .price-list a { transition: none; } .price-list a:hover { transform: none; } }
+  .h-proof-score { display: flex; align-items: baseline; gap: 14px; color: #fff; }
+  .h-proof-score strong { font-family: var(--display); font-weight: 500; font-size: 3.5rem; line-height: 1; color: var(--brass); }
+  .h-proof-quote { max-width: 580px; font-family: var(--display); font-style: italic; font-size: 1.45rem; line-height: 1.35; color: #fff; }
+  .h-proof-quote span { display: block; margin-top: 6px; font-family: var(--body); font-style: normal; font-size: 0.88rem; color: #B9C6D3; }
 
   /* Tidy work */
-  .h-tidy { padding: 72px 0; background: var(--soft); }
-  .h-tidy-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; }
-  .h-tidy-photos { display: grid; grid-template-columns: 1.3fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; height: 520px; }
-  .h-tidy-photos img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 4px; }
-  .h-tidy-photos .t1 { grid-row: 1 / 3; border-radius: 4px 4px 4px 40px; }
-  @media (max-width: 860px) {
-    .h-tidy-inner { grid-template-columns: 1fr; gap: 32px; }
-    .h-tidy-photos { height: 380px; }
+  .h-tidy { background: #fff; border-bottom: 1px solid var(--line); padding: 96px 0; }
+  .h-tidy-inner { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 64px; align-items: center; }
+  .h-tidy-photos { display: grid; grid-template-columns: 1.3fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; height: 560px; }
+  .h-tidy-photos img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .h-tidy-photos .t1 { grid-row: 1 / 3; }
+  .h-muted { color: var(--muted); }
+  .h-standards { list-style: none; margin: 0 0 28px; padding: 0; display: grid; gap: 14px; }
+  .h-standards li { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 8px; }
+  .h-standards span { font-family: var(--display); color: var(--brass-text); }
+  .h-link { font-weight: 600; }
+  @media (max-width: 900px) {
+    .h-tidy { padding: 64px 0; }
+    .h-tidy-inner { grid-template-columns: 1fr; gap: 36px; }
+    .h-tidy-photos { height: 400px; }
   }
 
   /* Reviews */
-  .h-featured { margin: 0 0 40px; max-width: 900px; }
-  .h-featured blockquote { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(1.45rem, 3vw, 2.1rem); line-height: 1.25; color: var(--navy); }
-  .h-featured figcaption { margin-top: 14px; color: var(--muted); }
-  .h-more-reviews { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
-  .h-more-reviews figure { margin: 0; padding-left: 18px; border-left: 4px solid var(--line); }
-  .h-more-reviews blockquote { margin: 0; }
-  .h-more-reviews figcaption { margin-top: 8px; color: var(--muted); font-size: 0.92rem; }
+  .h-reviews { padding: 96px 0; }
+  .h-featured { margin: 0 0 56px; max-width: 900px; }
+  .h-featured blockquote { margin: 0; font-family: var(--display); font-size: clamp(1.5rem, 3vw, 2.3rem); line-height: 1.3; color: var(--navy); }
+  .h-featured figcaption { margin-top: 18px; color: var(--muted); font-size: 0.95rem; }
+  .h-more-reviews { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; }
+  .h-quote { margin: 0; padding-top: 20px; border-top: 1px solid var(--brass); }
+  .h-quote blockquote { margin: 0; }
+  .h-quote figcaption { margin-top: 10px; color: var(--muted); font-size: 0.9rem; }
+  .h-after { margin-top: 40px; color: var(--muted); }
+  .h-after span { margin: 0 6px; }
+  @media (max-width: 900px) { .h-reviews { padding: 64px 0; } }
 
-  /* Emergency */
-  .emergency { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 32px 0; }
-  .emergency-inner { display: flex; gap: 24px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
-  .emergency-inner > div { max-width: 720px; }
-  .emergency h2 { margin: 0 0 6px; font-size: clamp(1.4rem, 3vw, 1.9rem); }
-  .emergency p { margin: 0 0 10px; }
-  .gas-warn { border-left: 4px solid var(--hot); padding: 4px 0 4px 14px; font-size: 0.95rem; color: var(--muted); }
-  .gas-warn a { color: var(--navy); font-weight: 700; }
+  /* Breakdowns */
+  .h-emergency { padding: 0 0 72px; }
+  .h-emergency-box { display: flex; gap: 24px 48px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 36px 40px; background: #fff; border: 1px solid var(--navy); }
+  .h-emergency-box > div { max-width: 700px; }
+  .h-emergency h2 { font-size: clamp(1.6rem, 3vw, 2rem); margin-bottom: 8px; }
+  .h-emergency p { color: var(--muted); margin: 0 0 12px; }
+  .gas-warn { font-size: 0.92rem; margin: 0 !important; }
+  .gas-warn strong { color: var(--ink); }
+  .gas-warn a { font-weight: 600; }
+  @media (max-width: 600px) { .h-emergency-box { padding: 26px 22px; } }
 </style>

@@ -33,8 +33,8 @@ If any of these apply, check with your council before work goes ahead. That will
 
 Usually on a back or side wall, on brackets or on the ground, as close to the indoor unit as possible. That keeps pipe runs short and tidy, keeps the unit away from neighbours' windows, and makes it far less likely to cause problems.
 
-## What I'll do
+## What we'll do
 
-When I survey for air conditioning, I'll look at where the units can go and flag anything you should check with your council first. Air conditioning must be installed by an F-Gas certified engineer, and I'm F-Gas certified.
+When we survey for air conditioning, we'll look at where the units can go and flag anything you should check with your council first. Air conditioning must be installed by an F-Gas certified engineer, and we're F-Gas certified.
 
 *This is general guidance on the rules in England, not legal advice. If you're unsure, your local council's planning team can confirm.*

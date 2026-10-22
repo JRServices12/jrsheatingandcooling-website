@@ -2,11 +2,11 @@
 import Layout from "../../layouts/Layout.astro";
 import { business } from "../../data/business.js";
 ---
-<Layout title="Areas Covered" description={`${business.name} is based in ${business.base} and covers Dartford and North Kent, including Crayford, Swanley, Greenhithe and Gravesend.`}>
+<Layout title="Areas Covered" description={`${business.name} is based in ${business.base} and covers North Kent, including Dartford, Crayford, Swanley and Gravesend.`}>
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">Areas covered</p>
-      <h1>South East London &amp; North Kent</h1>
+      <h1>Areas we cover</h1>
       <p class="lead">Based in {business.base} and covering North Kent, {business.reach}. Boiler servicing, repairs, new boilers, landlord certificates and air conditioning.</p>
     </div>
   </section>
@@ -22,7 +22,7 @@ import { business } from "../../data/business.js";
   ))}
   <section class="section">
     <div class="container narrow">
-      <p class="note">Don't see your town? If you're nearby, I may still be able to help. Call {business.phone} and ask.</p>
+      <p class="note">Don't see your town? If you're nearby, we may still be able to help. Call {business.phone} and ask.</p>
     </div>
   </section>
 </Layout>

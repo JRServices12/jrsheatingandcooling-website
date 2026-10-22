@@ -16,7 +16,7 @@ export const servicePrices = {
       ["Boiler service and landlord gas safety certificate", r(P.landlordCertWithService)],
       ["Boiler repair call-out, to find the fault", `From ${gbp(P.repairCallout)}, plus parts`],
     ],
-    note: "Parts and any extra time on a repair are priced before I go ahead.",
+    note: "Parts and any extra time on a repair are priced before we go ahead.",
   },
   "landlord-gas-safety-certificates": {
     title: "Landlord gas safety certificates",
@@ -63,7 +63,7 @@ export const servicePrices = {
       ["Move a radiator", `${r(P.radiatorMove)} each`],
       ["Fit a thermostatic radiator valve (TRV)", `${r(P.trvValve)} each`],
     ],
-    note: "The price depends on the size and style of radiator. Heating repairs are quoted once I've found the fault.",
+    note: "The price depends on the size and style of radiator. Heating repairs are quoted once we've found the fault.",
   },
   "underfloor-heating": {
     title: "Underfloor heating",

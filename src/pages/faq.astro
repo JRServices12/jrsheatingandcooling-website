@@ -5,39 +5,40 @@ import { quotePrices as P } from "../data/quote-prices.js";
 
 const groups = [
   {
-    title: "About me",
+    title: "About us",
     items: [
-      ["Are you Gas Safe registered?", "Yes. Every registered engineer carries a Gas Safe ID card, and I'm happy to show you mine. You can also check any engineer on the Gas Safe Register website before they start work."],
-      ["Are you qualified to install air conditioning?", "Yes. I'm F-Gas certified, which is the legal requirement for installing air conditioning that uses refrigerant gas."],
-      ["Will you do the work yourself?", "Yes. I carry out every job myself, so the person who quotes is the person who turns up and does the work."],
-      ["Which areas do you cover?", `I'm based in ${business.base} and cover Dartford and North Kent too, including Crayford, Swanley, Greenhithe and Gravesend. If you're not sure whether you're covered, just ask.`],
-      ["What are your hours?", `${business.hours}. If your boiler has broken down, call and I'll get to you as quickly as I can.`],
+      ["Are you Gas Safe registered?", "Yes. Every registered engineer carries a Gas Safe ID card, and we're happy to show ours. You can also check any engineer on the Gas Safe Register website before they start work."],
+      ["Are you qualified to install air conditioning?", "Yes. We're F-Gas certified, which is the legal requirement for installing air conditioning that uses refrigerant gas."],
+      ["Who will do the work?", "A Gas Safe registered engineer from JRS. The engineer who quotes your job is the one who does it, and we never pass work to subcontractors."],
+      ["Which areas do you cover?", `We're based in ${business.base} and cover North Kent too, including Dartford, Crayford, Swanley and Gravesend. Not sure if you're covered? Just ask.`],
+      ["What are your hours?", `${business.hours} for booked work. Breakdowns are covered ${business.breakdowns}: call and we'll get to you as quickly as we can.`],
     ],
   },
   {
     title: "Prices and quotes",
     items: [
-      ["Do you give free quotes?", "Yes. Every job gets a free, written quote before any work starts. You can also get a rough price in a minute with the quick quote tool."],
+      ["Do you give free quotes?", "Yes. Every job gets a free, written quote before any work starts. You can also get a rough price in a minute with the quick price tool."],
       ["How much is a boiler service?", `A standard gas boiler service is £${P.boilerService}. With a landlord gas safety certificate at the same visit it's £${P.landlordCertWithService}.`],
-      ["Do I have to pay VAT on top?", "No. I'm not VAT registered, so there's no VAT to add to any of my prices."],
-      ["Will the price change once you start?", "No. You get the price in writing first. If I find something unexpected, I'll explain it and price it before doing any extra work."],
+      ["Do I have to pay VAT on top?", "No. We're not VAT registered, so there's no VAT to add to any of our prices."],
+      ["Will the price change once you start?", "No. You get the price in writing first. If we find something unexpected, we'll explain it and price it before doing any extra work."],
     ],
   },
   {
     title: "Boilers and heating",
     items: [
       ["How often should my boiler be serviced?", "Once a year. Most manufacturers need a yearly service to keep the boiler's warranty valid, and it's the best way to catch problems before they leave you without heating."],
-      ["Which boilers do you work on?", `I install and service ${business.brands.slice(0, -1).join(", ")} and ${business.brands.at(-1)} boilers, and work on most other makes too.`],
+      ["Which boilers do you work on?", `We install and service ${business.brands.slice(0, -1).join(", ")} and ${business.brands.at(-1)} boilers, and work on most other makes too.`],
       ["How long does a new boiler take to fit?", "A straight swap for the same type of boiler is usually done in a day. Moving the boiler or changing the type, such as going from a tank in the loft to a combi, normally takes two or three days."],
-      ["What is a power flush, and do I need one?", "A power flush clears sludge and rust out of your radiators and pipes. You might need one if radiators are cold at the bottom, the water is dark when you bleed them, or the boiler is noisy. I'll only recommend it if your system needs it."],
-      ["Do you do emergency call-outs?", `Yes. If your boiler has broken down, you've lost heating or hot water, or there's a leak, call ${business.phone} and I'll get to you as quickly as I can. If you smell gas, call the National Gas Emergency line on 0800 111 999 first.`],
+      ["What is a power flush, and do I need one?", "A power flush clears sludge and rust out of your radiators and pipes. You might need one if radiators are cold at the bottom, the water is dark when you bleed them, or the boiler is noisy. We'll only recommend it if your system needs it."],
+      ["Do you take on renovation projects?", "Yes. We fit full heating systems on extensions and renovations, work alongside your builder, and send you a photo report at first fix, second fix and handover, so you can see what's behind the walls before it's covered."],
+      ["Do you do emergency call-outs?", `Yes. If your boiler has broken down, you've lost heating or hot water, or there's a leak, call ${business.phone}, evenings and weekends included, and we'll get to you as quickly as we can. If you smell gas, call the National Gas Emergency line on 0800 111 999 first.`],
     ],
   },
   {
     title: "Landlords",
     items: [
-      ["How often do I need a gas safety certificate?", "Every 12 months for each rented property with gas appliances. I can check, certify and remind you when the next one is due."],
-      ["Can you deal with my tenants or letting agent?", "Yes. I'm happy to arrange access with your tenants or agent directly."],
+      ["How often do I need a gas safety certificate?", "Every 12 months for each rented property with gas appliances. We can check, certify and remind you when the next one is due."],
+      ["Can you deal with my tenants or letting agent?", "Yes. We're happy to arrange access with your tenants or agent directly."],
     ],
   },
 ];
@@ -46,7 +47,7 @@ const groups = [
   <section class="page-hero">
     <div class="container">
       <h1>Questions people ask</h1>
-      <p class="lead">Straight answers about how I work, what things cost, and boilers and heating in general. Can't see yours? Call or WhatsApp me.</p>
+      <p class="lead">Straight answers about how we work, what things cost, and boilers and heating in general. Can't see yours? Call or WhatsApp us.</p>
     </div>
   </section>
 
@@ -74,8 +75,8 @@ const groups = [
         <h2>How a job works</h2>
       </div>
       <ol class="route">
-        <li><h3>Get in touch</h3><p>Call, WhatsApp or use the quick quote with what you need and roughly when suits you.</p></li>
-        <li><h3>I take a look</h3><p>Photos are often enough. For bigger jobs I'll visit and talk you through the options.</p></li>
+        <li><h3>Get in touch</h3><p>Call, WhatsApp or use the quick price tool with what you need and roughly when suits you.</p></li>
+        <li><h3>We take a look</h3><p>Photos are often enough. For bigger jobs we'll visit and talk you through the options.</p></li>
         <li><h3>Written quote</h3><p>A clear price in writing. Nothing starts until you're happy with it.</p></li>
         <li><h3>Done properly</h3><p>Fitted to standard, tested, explained to you, and the area left tidy.</p></li>
       </ol>
@@ -88,7 +89,7 @@ const groups = [
       <p>Call, or send a message on WhatsApp.</p>
       <div class="cta-actions">
         <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
-        <a class="btn btn-outline-light" href={`https://wa.me/${business.whatsapp}`} target="_blank" rel="noopener">WhatsApp me</a>
+        <a class="btn btn-outline-light" href={`https://wa.me/${business.whatsapp}`} target="_blank" rel="noopener">WhatsApp us</a>
       </div>
     </div>
   </section>

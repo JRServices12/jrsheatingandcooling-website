@@ -16,10 +16,10 @@ const boilerReviews = reviews.filter((r) => /boiler/i.test(r.job)).slice(0, 3);
     <div class="container">
       <p class="eyebrow">Covering {business.region}</p>
       <h1>Boiler servicing, repairs &amp; new boilers</h1>
-      <p class="lead">Everything to do with your boiler, from the yearly service to a full new installation. All done by me, a Gas Safe registered engineer with {business.yearsExperience}+ years in the trade.</p>
+      <p class="lead">Everything to do with your boiler, from the yearly service to a full new installation. All carried out by Gas Safe registered engineers, with {business.yearsExperience}+ years in the trade.</p>
       <div class="cta-actions" style="justify-content:flex-start">
         <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
-        <a class="btn btn-quote" href="/quote/?job=boiler">Get a free quote</a>
+        <a class="btn btn-quote" href="/quote/?job=boiler">Get a quick price</a>
       </div>
       <Accreditations />
     </div>
@@ -29,7 +29,7 @@ const boilerReviews = reviews.filter((r) => /boiler/i.test(r.job)).slice(0, 3);
     <div class="container">
       <div class="section-head">
         <p class="eyebrow">Boiler services</p>
-        <h2>What I can help with</h2>
+        <h2>What we can help with</h2>
       </div>
       <div class="grid grid-3">
         {boilerServices.map((s) => (
@@ -67,7 +67,7 @@ const boilerReviews = reviews.filter((r) => /boiler/i.test(r.job)).slice(0, 3);
       <div class="section-head">
         <p class="eyebrow">Choosing a new boiler</p>
         <h2>Which type of boiler is right for you?</h2>
-        <p class="lead">There are three main types. I'll look at your home and how you use hot water, then recommend the right one.</p>
+        <p class="lead">There are three main types. We'll look at your home and how you use hot water, then recommend the right one.</p>
       </div>
       <div class="grid grid-3">
         <div class="card">
@@ -91,7 +91,7 @@ const boilerReviews = reviews.filter((r) => /boiler/i.test(r.job)).slice(0, 3);
       <div class="section-head">
         <p class="eyebrow">Honest advice</p>
         <h2>Repair or replace your boiler?</h2>
-        <p class="lead">I'll always tell you straight. If a repair makes sense, that's what I'll recommend.</p>
+        <p class="lead">We'll always tell you straight. If a repair makes sense, that's what we'll recommend.</p>
       </div>
       <div class="grid grid-2">
         <div class="card">
@@ -183,19 +183,19 @@ const boilerReviews = reviews.filter((r) => /boiler/i.test(r.job)).slice(0, 3);
         </details>
         <details>
           <summary>How long does a new boiler installation take?</summary>
-          <p>A straight swap for the same type of boiler is usually done in a day. Moving the boiler or changing the type, such as going from a tank in the loft to a combi, normally takes two or three days. I'll tell you how long when I quote.</p>
+          <p>A straight swap for the same type of boiler is usually done in a day. Moving the boiler or changing the type, such as going from a tank in the loft to a combi, normally takes two or three days. We'll tell you how long when we quote.</p>
         </details>
         <details>
           <summary>Will I get a certificate for my new boiler?</summary>
-          <p>Yes. Every installation is registered with Gas Safe, and you'll receive a Building Regulations compliance certificate. I'll also help you register the manufacturer's warranty.</p>
+          <p>Yes. Every installation is registered with Gas Safe, and you'll receive a Building Regulations compliance certificate. We'll also help you register the manufacturer's warranty.</p>
         </details>
         <details>
           <summary>Do you do emergency boiler repairs?</summary>
-          <p>Yes. If your boiler has broken down, call {business.phone} and I'll get to you as quickly as I can. My normal hours are {business.hours}.</p>
+          <p>Yes. If your boiler has broken down, call {business.phone} and we'll get to you as quickly as we can. Our normal hours are {business.hours}, and we cover breakdowns {business.breakdowns}.</p>
         </details>
         <details>
           <summary>Which boiler brands do you work on?</summary>
-          <p>I install and service {business.brands.slice(0, -1).join(", ")} and {business.brands.at(-1)}, and work on most other makes too.</p>
+          <p>We install and service {business.brands.slice(0, -1).join(", ")} and {business.brands.at(-1)}, and work on most other makes too.</p>
         </details>
       </div>
     </div>
@@ -207,7 +207,7 @@ const boilerReviews = reviews.filter((r) => /boiler/i.test(r.job)).slice(0, 3);
       <p>Free, written quote before any work starts.</p>
       <div class="cta-actions">
         <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
-        <a class="btn btn-outline-light" href={`mailto:${business.email}`}>Email me</a>
+        <a class="btn btn-outline-light" href={`mailto:${business.email}`}>Email us</a>
       </div>
     </div>
   </section>

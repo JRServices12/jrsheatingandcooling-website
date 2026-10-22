@@ -8,7 +8,7 @@ related:
   - { label: "Landlord gas safety certificates", href: "/services/landlord-gas-safety-certificates/" }
 ---
 
-If you rent out a property with gas appliances, the law requires you to have them checked every year. With so many rented homes across Greenwich, Woolwich, Bexley, Dartford and Gravesend, this is one of the most common jobs I do. Here's what's involved.
+If you rent out a property with gas appliances, the law requires you to have them checked every year. With so many rented homes across Greenwich, Woolwich, Bexley, Dartford and Gravesend, this is one of the most common jobs we do. Here's what's involved.
 
 ## What is a landlord gas safety certificate?
 
@@ -37,8 +37,8 @@ Appliances that belong to your tenant aren't your responsibility, but the pipewo
 
 ## Carbon monoxide and smoke alarms
 
-Since October 2022, landlords in England must fit a carbon monoxide alarm in any room with a fixed combustion appliance (apart from gas cookers), and a smoke alarm on every floor. I'll test any CO alarms near the gas appliances while I'm there.
+Since October 2022, landlords in England must fit a carbon monoxide alarm in any room with a fixed combustion appliance (apart from gas cookers), and a smoke alarm on every floor. We'll test any CO alarms near the gas appliances while we're there.
 
 ## Booking a check
 
-I carry out landlord gas safety checks across South East London and North Kent. I can work with your tenants or letting agent to arrange access, and remind you when the next one is due.
+We carry out landlord gas safety checks across South East London and North Kent. We can work with your tenants or letting agent to arrange access, and remind you when the next one is due.

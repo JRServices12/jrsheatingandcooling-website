@@ -1,0 +1,124 @@
+---
+// Contact form. Messages are sent to the work email through Web3Forms.
+// Set business.formKey in src/data/business.js to switch it on.
+import { business, services } from "../data/business.js";
+const key = business.formKey;
+const jobs = [...services.map((s) => s.title), "Something else"];
+const dev = import.meta.env.DEV;
+---
+{key ? (
+  <form class="cf" id="contact-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+    <input type="hidden" name="access_key" value={key} />
+    <input type="hidden" name="subject" value="New enquiry from the JRS website" />
+    <input type="hidden" name="from_name" value="JRS website" />
+    <input type="checkbox" name="botcheck" class="cf-trap" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    <div class="cf-row">
+      <label class="cf-field">Your name
+        <input type="text" name="name" autocomplete="name" required />
+        <span class="cf-error" data-for="name">Please add your name.</span>
+      </label>
+      <label class="cf-field">Phone number
+        <input type="tel" name="phone" autocomplete="tel" inputmode="tel" required />
+        <span class="cf-error" data-for="phone">Please add a phone number we can call you on.</span>
+      </label>
+    </div>
+    <div class="cf-row">
+      <label class="cf-field">Email <span class="cf-optional">(optional)</span>
+        <input type="email" name="email" autocomplete="email" />
+        <span class="cf-error" data-for="email">That email address doesn't look right.</span>
+      </label>
+      <label class="cf-field">Town or postcode
+        <input type="text" name="area" autocomplete="postal-code" placeholder="Eltham or SE9" />
+      </label>
+    </div>
+    <label class="cf-field">What do you need?
+      <select name="job">
+        {jobs.map((j) => <option>{j}</option>)}
+      </select>
+    </label>
+    <label class="cf-field">Tell us about the job
+      <textarea name="message" rows="5" required placeholder="What's happening, the make of boiler if you know it, and when suits you"></textarea>
+      <span class="cf-error" data-for="message">Please tell us a little about the job.</span>
+    </label>
+    <p class="cf-small">Got photos? Send them on <a href={`https://wa.me/${business.whatsapp}`} target="_blank" rel="noopener">WhatsApp</a> after this and we'll match them up. By sending this form you agree we can use these details to reply and quote. See our <a href="/privacy/">privacy page</a>.</p>
+    <button type="submit" class="btn btn-call cf-submit">Send message</button>
+    <p class="cf-status" role="status" aria-live="polite"></p>
+  </form>
+) : dev ? (
+  <p class="note"><strong>Contact form not switched on yet.</strong> Add a free Web3Forms access key as <code>formKey</code> in <code>src/data/business.js</code>. This note only shows on your computer, never on the live site.</p>
+) : null}
+
+<style>
+  .cf { display: grid; gap: 18px; background: #fff; border: 1px solid var(--line); border-top: 3px solid var(--navy); padding: 32px; }
+  .cf-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .cf-field { display: grid; gap: 6px; font-weight: 600; color: var(--navy); font-size: 0.95rem; }
+  .cf-optional { font-weight: 400; color: var(--muted); }
+  .cf input, .cf select, .cf textarea { font: inherit; font-weight: 400; color: var(--ink); background: var(--paper); border: 1px solid #CFC7B8; border-radius: 2px; padding: 12px 14px; min-height: 48px; width: 100%; }
+  .cf textarea { resize: vertical; }
+  .cf input:focus, .cf select:focus, .cf textarea:focus { outline: 2px solid var(--brass); outline-offset: 1px; border-color: var(--navy); }
+  .cf [aria-invalid="true"] { border-color: #B42318; }
+  .cf-error { display: none; font-weight: 400; font-size: 0.88rem; color: #B42318; }
+  .cf-error.show { display: block; }
+  .cf-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .cf-small { margin: 0; font-size: 0.88rem; color: var(--muted); }
+  .cf-submit { justify-self: start; }
+  .cf-submit[disabled] { opacity: 0.7; cursor: progress; }
+  .cf-status { margin: 0; font-weight: 600; }
+  .cf-status.ok { color: #1E6B3A; }
+  .cf-status.bad { color: #B42318; }
+  @media (max-width: 640px) { .cf { padding: 22px; } .cf-row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("#contact-form");
+  if (form) {
+    const status = form.querySelector<HTMLElement>(".cf-status")!;
+    const submit = form.querySelector<HTMLButtonElement>(".cf-submit")!;
+    const field = (n: string) => form.elements.namedItem(n) as HTMLInputElement;
+    const showError = (n: string, bad: boolean) => {
+      field(n).setAttribute("aria-invalid", bad ? "true" : "false");
+      form.querySelector(`.cf-error[data-for="${n}"]`)?.classList.toggle("show", bad);
+    };
+    const check = () => {
+      const bad = {
+        name: !field("name").value.trim(),
+        phone: field("phone").value.replace(/\D/g, "").length < 10,
+        email: !!field("email").value.trim() && !/^\S+@\S+\.\S+$/.test(field("email").value.trim()),
+        message: !field("message").value.trim(),
+      };
+      Object.entries(bad).forEach(([n, b]) => showError(n, b));
+      const first = Object.keys(bad).find((n) => (bad as Record<string, boolean>)[n]);
+      if (first) field(first).focus();
+      return !first;
+    };
+    ["name", "phone", "email", "message"].forEach((n) => field(n).addEventListener("input", () => showError(n, false)));
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      status.className = "cf-status";
+      status.textContent = "";
+      if (!check()) return;
+      submit.disabled = true;
+      submit.textContent = "Sending…";
+      try {
+        const data = Object.fromEntries(new FormData(form).entries());
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(data),
+        });
+        const out = await res.json().catch(() => ({}));
+        if (!res.ok || !out.success) throw new Error(out.message || "failed");
+        form.reset();
+        status.classList.add("ok");
+        status.textContent = "Thanks, your message has been sent. We'll get back to you as soon as we can. For a breakdown, please call us.";
+      } catch {
+        status.classList.add("bad");
+        status.textContent = "Sorry, that didn't send. Please call or WhatsApp us instead.";
+      } finally {
+        submit.disabled = false;
+        submit.textContent = "Send message";
+      }
+    });
+  }
+</script>

@@ -10,7 +10,7 @@ const pick = (area, date, quote) => {
   return { area, date, quote };
 };
 const traits = [
-  { quality: "Tidy", ...pick("HP16", "11 July 2023", "His work is top class, he’s incredibly tidy, he never failed to show up on time") },
+  { quality: "Tidy", ...pick("SE18", "5 April 2024", "He is polite, friendly, courteous and tidy.") },
   { quality: "Clear explanations", ...pick("SE7", "13 December 2023", "a very good explainer and communicator of all things technical") },
   { quality: "Respect for your home", ...pick("SE18", "6 March 2024", "Compared to other Plumbers he was very polite and did not make a mess in the house.") },
   { quality: "Honest advice", ...pick("SE18", "18 October 2023", "I would give an extra star for his diligence and advice concerning another matter that I had not been aware of") },
@@ -21,14 +21,14 @@ const accreditations = [
   {
     logo: "/logos/gas-safe.png",
     name: "Gas Safe registered",
-    text: "Legally required for any work on gas boilers, cookers, fires and pipework in the UK. Our engineer carries a Gas Safe ID card on every job, and you can check it on the Gas Safe Register website.",
+    text: "Legally required for any work on gas boilers, cookers, fires and pipework in the UK. We carry Gas Safe ID on every job, and you can check our registration on the Gas Safe Register website.",
     link: "https://www.gassaferegister.co.uk/",
     linkText: "Check the Gas Safe Register",
   },
   {
     logo: "/logos/f-gas.png",
     name: "REFCOM F-Gas certified",
-    text: "Air conditioning uses refrigerant gas, and the law says only F-Gas certified companies and engineers can install or work on it. JRS is certified through REFCOM, the UK's main F-Gas certification body.",
+    text: "Air conditioning uses refrigerant gas, and the law says only F-Gas certified companies and engineers can install or work on it. We're certified through REFCOM, the UK's main F-Gas certification body.",
   },
 ];
 
@@ -96,9 +96,9 @@ const photo = photos.find((p) => p.file === "boiler-install-loft") ?? photos[0];
   <section class="section section-soft">
     <div class="container about-engineer">
       <div>
-        <h2>Meet your engineer</h2>
-        <p><strong>Jordan</strong> founded {business.name} and carries out every job himself. He has worked hands-on with boilers, heating systems and gas appliances for over {business.yearsExperience} years, and added F-Gas certification so the company could offer air conditioning too.</p>
-        <p>What he's known for is how tidy the work is. If it's done properly where nobody will look, you can trust it's done properly everywhere else.</p>
+        <h2>Meet the founder</h2>
+        <p><strong>Jordan</strong> founded {business.name} after more than {business.yearsExperience} years working hands-on with boilers, heating systems and gas appliances, and added F-Gas certification so the company could offer air conditioning too.</p>
+        <p>What we're known for is how tidy the work is. If it's done properly where nobody will look, you can trust it's done properly everywhere else.</p>
       </div>
       <div class="traits">
         {traits.map((t) => (
@@ -114,11 +114,11 @@ const photo = photos.find((p) => p.file === "boiler-install-loft") ?? photos[0];
 
   <section class="cta-band">
     <div class="container">
-      <h2>Get a free quote</h2>
+      <h2>Ask for a written quote</h2>
       <p>Call, WhatsApp or get a rough price online in a minute.</p>
       <div class="cta-actions">
         <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
-        <a class="btn btn-outline-light" href="/quote/">Get a free quote</a>
+        <a class="btn btn-outline-light" href="/quote/">Get a quick price</a>
       </div>
     </div>
   </section>
@@ -128,11 +128,11 @@ const photo = photos.find((p) => p.file === "boiler-install-loft") ?? photos[0];
   .about-intro { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 48px; align-items: center; }
   .about-intro p { max-width: 38em; }
   .about-photo { margin: 0; }
-  .about-photo img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px 4px 4px 40px; }
+  .about-photo img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 2px; }
   .about-photo figcaption { margin-top: 8px; color: var(--muted); font-size: 0.92rem; }
 
   .accred-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 8px; }
-  .accred { display: flex; gap: 20px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 4px 4px 4px 24px; padding: 22px; }
+  .accred { display: flex; gap: 20px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 2px; padding: 22px; }
   .accred img { width: 110px; height: auto; flex: none; }
   .accred h3 { margin-bottom: 6px; }
   .accred p { color: var(--muted); }
@@ -144,7 +144,7 @@ const photo = photos.find((p) => p.file === "boiler-install-loft") ?? photos[0];
 
   .about-engineer { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 48px; align-items: start; }
   .traits { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-  .trait { margin: 0; padding: 16px 18px; border-left: 6px solid var(--hot); background: #fff; border-radius: 0 4px 4px 20px; }
+  .trait { margin: 0; padding: 16px 18px; border-left: 6px solid var(--hot); background: #fff; border-radius: 2px; }
   .trait:nth-child(even) { border-left-color: var(--cold); }
   .trait h3 { margin: 0 0 6px; font-size: 1.15rem; }
   .trait blockquote { margin: 0; }

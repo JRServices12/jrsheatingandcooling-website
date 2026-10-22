@@ -1,0 +1,33 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { business } from "../data/business.js";
+const links = [
+  { href: "/boilers/", label: "Boilers", text: "Servicing, repairs and new boilers" },
+  { href: "/services/landlord-gas-safety-certificates/", label: "Landlord certificates", text: "Gas safety checks and CP12s" },
+  { href: "/quote/", label: "Prices", text: "A rough price in a minute" },
+  { href: "/contact/", label: "Contact", text: "Call, WhatsApp or email us" },
+];
+---
+<Layout title="Page not found" description={`This page doesn't exist on the ${business.name} website.`}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Page not found</p>
+      <h1>Sorry, we can't find that page</h1>
+      <p class="lead">It may have moved, or the link might be mistyped. These are the pages most people are looking for.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-4">
+        {links.map((l) => (
+          <a class="card" href={l.href} style="text-decoration:none;color:inherit">
+            <h3>{l.label}</h3>
+            <p>{l.text}</p>
+            <span class="more">Go</span>
+          </a>
+        ))}
+      </div>
+      <p style="margin-top:32px"><a href="/">Back to the homepage</a> or call <a href={business.phoneHref}>{business.phone}</a>.</p>
+    </div>
+  </section>
+</Layout>

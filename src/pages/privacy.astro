@@ -1,0 +1,57 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { business } from "../data/business.js";
+const updated = "22 October 2026";
+---
+<Layout title="Privacy and cookies" description={`How ${business.name} uses the information you give us, and the cookies on this website.`}>
+  <section class="page-hero">
+    <div class="container narrow">
+      <p class="eyebrow">Privacy and cookies</p>
+      <h1>How we look after your information</h1>
+      <p class="lead">We only collect what we need to quote for and carry out your job, and we never sell it. Last updated {updated}.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container narrow legal">
+      <h2>Who we are</h2>
+      <p>{business.name} provides boiler, heating and air conditioning services across {business.region}. We are responsible for the personal information described on this page. You can contact us about anything here by emailing <a href={`mailto:${business.email}`}>{business.email}</a> or calling <a href={business.phoneHref}>{business.phone}</a>.</p>
+
+      <h2>What we collect and why</h2>
+      <ul class="tick-list">
+        <li><strong>When you contact us</strong> by phone, WhatsApp, email, the contact form or the quick price tool: your name, phone number, email address, address or postcode, details of the job, and any photos you send. We use these to reply, quote and arrange the work.</li>
+        <li><strong>When we carry out work</strong>: the job address, what we did, and any certificates or records. Some of this we must keep by law, such as landlord gas safety records and Gas Safe notifications for new boilers.</li>
+        <li><strong>For invoicing and accounts</strong>: what we charged and how you paid, which we keep for our tax records.</li>
+        <li><strong>Website visits</strong>: only if you accept analytics cookies (see below).</li>
+      </ul>
+      <p>We use this information because we need it to provide the service you've asked for, to meet our legal obligations, or, for analytics, because you've agreed to it.</p>
+
+      <h2>Who we share it with</h2>
+      <p>We don't sell your information or use it for marketing lists. We only share it where needed to do the job or meet the law, for example:</p>
+      <ul class="tick-list">
+        <li>Gas Safe Register, when we register a new boiler installation, and boiler manufacturers, when we register a warranty for you</li>
+        <li>Your landlord, letting agent or tenant, for landlord gas safety checks</li>
+        <li>The services we use to run the business, such as our email, WhatsApp, accounting software and the form service that delivers contact form messages to our inbox (Web3Forms)</li>
+      </ul>
+
+      <h2>How long we keep it</h2>
+      <p>We keep enquiries that don't lead to a job for up to 12 months. We keep job records, certificates and invoices for at least six years, as tax and gas safety rules require. After that we delete them.</p>
+
+      <h2 id="cookies">Cookies</h2>
+      <p>This website only uses analytics cookies if you choose <strong>Accept</strong> on the cookie banner. They come from Google Analytics and tell us things like which pages are visited and how people found the site. They don't tell us who you are.</p>
+      <p>If you choose <strong>Reject</strong>, or make no choice, Google Analytics doesn't load at all. We remember your choice in your browser so we don't ask on every page. You can change your mind at any time using <button type="button" class="link-button" data-cookie-open>cookie settings</button>, which is also at the bottom of every page.</p>
+
+      <h2>Your rights</h2>
+      <p>You can ask us for a copy of the information we hold about you, ask us to correct it, or ask us to delete it where we don't have to keep it by law. Email <a href={`mailto:${business.email}`}>{business.email}</a> and we'll reply within one month.</p>
+      <p>If you're unhappy with how we've handled your information, please tell us first. You also have the right to complain to the Information Commissioner's Office at <a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener">ico.org.uk</a>.</p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .legal h2 { font-size: 1.7rem; margin-top: 1.6em; }
+  .legal h2:first-child { margin-top: 0; }
+  .legal p, .legal li { color: var(--ink); }
+  .link-button { font: inherit; color: var(--navy); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .link-button:hover { color: var(--copper); }
+</style>

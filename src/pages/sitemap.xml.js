@@ -2,7 +2,7 @@
 // Old redirect pages are left out.
 import { business } from "../data/business.js";
 
-const skip = ["/guides/", "/services/air-conditioning-installation/"];
+const skip = ["/guides/", "/services/air-conditioning-installation/", "/404/"];
 
 export async function GET() {
   const files = Object.keys(import.meta.glob("./**/*.{astro,md}"));
