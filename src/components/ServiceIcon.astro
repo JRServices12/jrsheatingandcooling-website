@@ -1,0 +1,37 @@
+---
+// Simple line icons for each service, drawn for this site.
+interface Props { slug: string; size?: number; small?: boolean }
+const { slug, size = 40, small = false } = Astro.props;
+const paths: Record<string, string> = {
+  // spanner
+  "boiler-repair-servicing": '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.1L3.8 16.9a1.6 1.6 0 0 0 2.3 2.3l5.5-5.5a4 4 0 0 0 5.1-5.4l-2.4 2.4-2.2-.6-.6-2.2Z"/>',
+  // certificate with tick
+  "landlord-gas-safety-certificates": '<path d="M6 3h9l4 4v14H6Z"/><path d="M15 3v4h4"/><path d="m9.5 13.5 2 2 4-4.5"/>',
+  // boiler with flame
+  "boiler-installation": '<rect x="5" y="3" width="14" height="15" rx="2"/><path d="M12 7.5c1.6 1.5 2.2 2.6 2.2 3.6a2.2 2.2 0 0 1-4.4 0c0-.6.3-1.2.8-1.7.1.8.5 1.2 1 1.2-.4-1.1-.2-2.1.4-3.1Z"/><path d="M9 18v3M15 18v3"/>',
+  // circular arrows with a drop
+  "power-flushing": '<path d="M20 12a8 8 0 0 1-13.7 5.6M4 12a8 8 0 0 1 13.7-5.6"/><path d="M17.7 3v3.6h-3.6M6.3 21v-3.4h3.6"/><path d="M12 8.6c1.3 1.5 2 2.5 2 3.4a2 2 0 0 1-4 0c0-.9.7-1.9 2-3.4Z"/>',
+  // radiator
+  "radiators-central-heating": '<path d="M4 7v11M20 7v11M2.5 17h19"/><rect x="6" y="5" width="2.6" height="13" rx="1.3"/><rect x="10.7" y="5" width="2.6" height="13" rx="1.3"/><rect x="15.4" y="5" width="2.6" height="13" rx="1.3"/>',
+  // floor with heat waves
+  "underfloor-heating": '<path d="M3 20h18"/><path d="M5 17c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0"/><path d="M8 12c-.8-1-.8-2 0-3s.8-2 0-3M12 12c-.8-1-.8-2 0-3s.8-2 0-3M16 12c-.8-1-.8-2 0-3s.8-2 0-3"/>',
+  // snowflake
+  "air-conditioning-installation": '<path d="M12 2.5v19M3.8 7.2l16.4 9.6M3.8 16.8l16.4-9.6"/><path d="m9.5 4 2.5 2.4L14.5 4M9.5 20l2.5-2.4 2.5 2.4M4.6 10.4l3.3-.9-.8-3.4M19.4 13.6l-3.3.9.8 3.4M7.1 17.9l.8-3.4-3.3-.9M16.9 6.1l-.8 3.4 3.3.9"/>',
+};
+const hot = ["boiler-repair-servicing", "landlord-gas-safety-certificates", "boiler-installation", "underfloor-heating"].includes(slug);
+---
+<span class:list={["svc-icon", hot ? "svc-hot" : "svc-cold", { "svc-sm": small }]} aria-hidden="true">
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={paths[slug] ?? ""} />
+</span>
+<style>
+  .svc-icon { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 16px 16px 16px 4px; flex: none; transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1), background-color 0.2s ease, color 0.2s ease; }
+  .svc-sm { width: 36px; height: 36px; border-radius: 10px 10px 10px 3px; }
+  .svc-hot { background: #fdeee6; color: var(--hot); }
+  .svc-cold { background: #e6f4fc; color: #1b7fbf; }
+  .svc-icon svg { display: block; transition: transform 0.45s cubic-bezier(0.3, 1.6, 0.5, 1); }
+  :global(a:hover) > .svc-icon, :global(a:focus-visible) > .svc-icon, :global(a:hover) .svc-icon { transform: translateY(-3px) scale(1.06); }
+  :global(a:hover) .svc-hot { background: var(--hot); color: #fff; }
+  :global(a:hover) .svc-cold { background: var(--cold); color: #fff; }
+  :global(a:hover) .svc-icon svg { transform: rotate(-12deg); }
+  @media (prefers-reduced-motion: reduce) { .svc-icon, .svc-icon svg { transition: none; } }
+</style>

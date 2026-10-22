@@ -1,16 +1,33 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import ServicePage from "../../layouts/ServicePage.astro";
+import { business } from "../../data/business.js";
 ---
-<Layout title="Landlord Gas Safety Certificates" description="Landlord Gas Safety Certificates from JR's Heating and Cooling, covering [service area].">
-  <h1>Landlord Gas Safety Certificates</h1>
-  <p class="lead">[What this service involves, and why a customer would need it.]</p>
+<ServicePage
+  slug="landlord-gas-safety-certificates"
+  title="Landlord Gas Safety Certificates"
+  description={`Landlord gas safety checks and CP12 certificates across ${business.region} by a Gas Safe registered engineer. Reminders when the next one is due.`}
+  intro="If you rent out a property with gas appliances, you're legally required to have them checked every 12 months. I'll carry out the check, give you the certificate and remind you before the next one is due."
+>
+  <h2>What the law says</h2>
+  <p>Under the Gas Safety (Installation and Use) Regulations 1998, landlords must:</p>
+  <ul class="tick-list">
+    <li>Have every gas appliance, fitting and flue they provide checked by a Gas Safe registered engineer every 12 months</li>
+    <li>Give existing tenants a copy of the record within 28 days of the check</li>
+    <li>Give new tenants a copy before they move in</li>
+    <li>Keep a copy of each record for at least two years</li>
+  </ul>
 
-  <h2>What's included</h2>
-  <p>[Bullet-style list of what a typical job covers, written as prose per your usual style, or a real list once you're ready to format it.]</p>
+  <h2>What's checked</h2>
+  <ul class="tick-list">
+    <li>Each gas appliance tested to make sure it's burning correctly and safely</li>
+    <li>Flues and chimneys checked so fumes are carried away properly</li>
+    <li>Ventilation checked for each appliance</li>
+    <li>Safety devices tested</li>
+    <li>Gas pipework tightness tested for leaks</li>
+  </ul>
+  <p>You get a landlord gas safety record (often called a CP12) for the property. If anything isn't safe, I'll explain it clearly and quote for putting it right.</p>
 
-  <h2>Typical cost</h2>
-  <p>[Honest, specific price range — these pages rank well and pre-qualify callers, per the setup guide's Section 2.]</p>
+  <h2>Landlords with more than one property</h2>
+  <p>If you've got several properties, I can keep track of when each certificate is due and get in touch ahead of time, so none of them run out.</p>
 
-  <h2>Areas covered</h2>
-  <p>[Link to relevant area pages once they exist.]</p>
-</Layout>
+</ServicePage>

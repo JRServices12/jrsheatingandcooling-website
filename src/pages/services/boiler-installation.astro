@@ -1,16 +1,26 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import ServicePage from "../../layouts/ServicePage.astro";
+import { business } from "../../data/business.js";
 ---
-<Layout title="Boiler Installation" description="Boiler Installation from JR's Heating and Cooling, covering [service area].">
-  <h1>Boiler Installation</h1>
-  <p class="lead">[What this service involves, and why a customer would need it.]</p>
-
+<ServicePage
+  slug="boiler-installation"
+  photoCategory="Boilers"
+  title="Boiler Installation"
+  description={`New boiler installation across ${business.region}: combi, system and conventional boilers fitted neatly by a Gas Safe registered engineer. Free quotes.`}
+  intro="Whether your old boiler has given up or you're upgrading, I'll recommend the right boiler for your home and fit it neatly, with pipework you'd be happy to have on show."
+>
   <h2>What's included</h2>
-  <p>[Bullet-style list of what a typical job covers, written as prose per your usual style, or a real list once you're ready to format it.]</p>
+  <ul class="tick-list">
+    <li>A visit to look at your home, your hot water needs and where the boiler should go</li>
+    <li>Honest advice on combi, system or conventional boilers and the right size for your home</li>
+    <li>Old boiler removed and the new one fitted to the manufacturer's instructions</li>
+    <li>Heating system flushed and protected with inhibitor, as manufacturers require</li>
+    <li>Everything tested, commissioned and explained to you before I leave</li>
+    <li>Installation registered with Gas Safe, so you get your Building Regulations compliance certificate</li>
+    <li>Help registering the manufacturer's warranty</li>
+  </ul>
 
-  <h2>Typical cost</h2>
-  <p>[Honest, specific price range — these pages rank well and pre-qualify callers, per the setup guide's Section 2.]</p>
+  <h2>Tidy installations</h2>
+  <p>A boiler is something you'll live with for years. Pipework is run straight and clipped properly, and the work area is cleaned up afterwards, including the parts behind the cupboard door.</p>
 
-  <h2>Areas covered</h2>
-  <p>[Link to relevant area pages once they exist.]</p>
-</Layout>
+</ServicePage>

@@ -1,7 +1,161 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import BrandStrip from "../components/BrandStrip.astro";
+import { business, reviews, reviewSource, photos } from "../data/business.js";
+
+// Short passages copied exactly from real Checkatrade reviews, matched to the standards on this page.
+const pick = (area, date, quote) => {
+  const r = reviews.find((x) => x.area === area && x.date === date);
+  if (!r || !r.text.includes(quote)) throw new Error(`About page quote not found in review ${area} ${date}`);
+  return { area, date, quote };
+};
+const traits = [
+  { quality: "Tidy", ...pick("HP16", "11 July 2023", "His work is top class, he’s incredibly tidy, he never failed to show up on time") },
+  { quality: "Clear explanations", ...pick("SE7", "13 December 2023", "a very good explainer and communicator of all things technical") },
+  { quality: "Respect for your home", ...pick("SE18", "6 March 2024", "Compared to other Plumbers he was very polite and did not make a mess in the house.") },
+  { quality: "Honest advice", ...pick("SE18", "18 October 2023", "I would give an extra star for his diligence and advice concerning another matter that I had not been aware of") },
+];
+
+// Qualifications and accreditations. Add more here as they're confirmed.
+const accreditations = [
+  {
+    logo: "/logos/gas-safe.png",
+    name: "Gas Safe registered",
+    text: "Legally required for any work on gas boilers, cookers, fires and pipework in the UK. Our engineer carries a Gas Safe ID card on every job, and you can check it on the Gas Safe Register website.",
+    link: "https://www.gassaferegister.co.uk/",
+    linkText: "Check the Gas Safe Register",
+  },
+  {
+    logo: "/logos/f-gas.png",
+    name: "REFCOM F-Gas certified",
+    text: "Air conditioning uses refrigerant gas, and the law says only F-Gas certified companies and engineers can install or work on it. JRS is certified through REFCOM, the UK's main F-Gas certification body.",
+  },
+];
+
+const photo = photos.find((p) => p.file === "boiler-install-loft") ?? photos[0];
 ---
-<Layout title="About" description="About JR's Heating and Cooling.">
-  <h1>About us</h1>
-  <p class="lead">[Who you are, how long you've been trading, any trade credentials (e.g. Gas Safe registration number), and what makes you different.]</p>
+<Layout title="About" description={`About ${business.name}: a Gas Safe registered and REFCOM F-Gas certified heating and cooling company with ${business.yearsExperience}+ years in the trade, covering ${business.region}.`}>
+  <section class="page-hero">
+    <div class="container">
+      <h1>About {business.name}</h1>
+      <p class="lead">A Gas Safe registered heating and air conditioning company based in {business.base}, looking after homes and landlords across {business.region}.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container about-intro">
+      <div>
+        <h2>Who we are</h2>
+        <p>{business.name} installs, services and repairs boilers, central heating, underfloor heating and air conditioning. We've been in the trade for more than {business.yearsExperience} years, working on everything from a yearly boiler service to full system changes.</p>
+        <p>We're a small, local company, and that's deliberate. The engineer who looks at your job and writes your quote is the same engineer who turns up and does the work. Nothing is passed to subcontractors, and you always know who's in your home.</p>
+        <p>Previously trading as JRS Services, we've built our reputation on word of mouth and reviews, with {reviewSource.perfect} of {reviewSource.total} Checkatrade reviews scoring a perfect 10.</p>
+      </div>
+      <figure class="about-photo">
+        <img src={`/images/work/${photo.file}.jpg`} alt={photo.caption} loading="lazy" width="900" height="1200" />
+        <figcaption>{photo.caption}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-head">
+        <h2>Qualifications and accreditations</h2>
+        <p class="lead">The registrations you should look for before letting anyone work on your gas or air conditioning.</p>
+      </div>
+      <div class="accred-grid">
+        {accreditations.map((a) => (
+          <div class="accred">
+            <img src={a.logo} alt="" loading="lazy" />
+            <div>
+              <h3>{a.name}</h3>
+              <p>{a.text}</p>
+              {a.link && <a href={a.link} target="_blank" rel="noopener">{a.linkText}</a>}
+            </div>
+          </div>
+        ))}
+      </div>
+      <BrandStrip brands={[...business.brands, ...business.acBrands]} title="Brands we install and service" note="And most other makes too." />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Our standards</h2>
+      </div>
+      <div class="standards">
+        <div><h3>A written price first</h3><p>Every job gets a free, written quote before any work starts. If something unexpected turns up, it's explained and priced before we carry on.</p></div>
+        <div><h3>Tidy, inside and out</h3><p>Pipework run straight and clipped properly, even behind a cupboard or under the floor. Dust sheets down, and the area cleaned when the job's done.</p></div>
+        <div><h3>Honest advice</h3><p>If a repair makes more sense than a new boiler, that's what we'll recommend. You get plain-English options, not a sales pitch.</p></div>
+        <div><h3>Done to standard</h3><p>Work carried out to manufacturers' instructions and current regulations, tested and explained to you, and registered with Gas Safe where required.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container about-engineer">
+      <div>
+        <h2>Meet your engineer</h2>
+        <p><strong>Jordan</strong> founded {business.name} and carries out every job himself. He has worked hands-on with boilers, heating systems and gas appliances for over {business.yearsExperience} years, and added F-Gas certification so the company could offer air conditioning too.</p>
+        <p>What he's known for is how tidy the work is. If it's done properly where nobody will look, you can trust it's done properly everywhere else.</p>
+      </div>
+      <div class="traits">
+        {traits.map((t) => (
+          <figure class="trait">
+            <h3>{t.quality}</h3>
+            <blockquote>“{t.quote}”</blockquote>
+            <figcaption>Checkatrade review, {t.area}, {t.date}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>Get a free quote</h2>
+      <p>Call, WhatsApp or get a rough price online in a minute.</p>
+      <div class="cta-actions">
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+        <a class="btn btn-outline-light" href="/quote/">Get a free quote</a>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .about-intro { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 48px; align-items: center; }
+  .about-intro p { max-width: 38em; }
+  .about-photo { margin: 0; }
+  .about-photo img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px 4px 4px 40px; }
+  .about-photo figcaption { margin-top: 8px; color: var(--muted); font-size: 0.92rem; }
+
+  .accred-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 8px; }
+  .accred { display: flex; gap: 20px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 4px 4px 4px 24px; padding: 22px; }
+  .accred img { width: 110px; height: auto; flex: none; }
+  .accred h3 { margin-bottom: 6px; }
+  .accred p { color: var(--muted); }
+
+  .standards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px; }
+  .standards > div { border-top: 6px solid var(--hot); padding-top: 14px; }
+  .standards > div:nth-child(even) { border-top-color: var(--cold); }
+  .standards p { color: var(--muted); margin: 0; }
+
+  .about-engineer { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 48px; align-items: start; }
+  .traits { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .trait { margin: 0; padding: 16px 18px; border-left: 6px solid var(--hot); background: #fff; border-radius: 0 4px 4px 20px; }
+  .trait:nth-child(even) { border-left-color: var(--cold); }
+  .trait h3 { margin: 0 0 6px; font-size: 1.15rem; }
+  .trait blockquote { margin: 0; }
+  .trait figcaption { margin-top: 8px; color: var(--muted); font-size: 0.88rem; }
+
+  @media (max-width: 860px) {
+    .about-intro, .about-engineer { grid-template-columns: 1fr; gap: 28px; }
+    .about-photo img { aspect-ratio: 4 / 3; }
+  }
+  @media (max-width: 420px) {
+    .accred { flex-direction: column; }
+    .accred-grid { grid-template-columns: 1fr; }
+  }
+</style>

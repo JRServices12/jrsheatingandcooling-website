@@ -1,12 +1,28 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import Layout from "../../layouts/Layout.astro";
+import { business, services, serviceHref } from "../../data/business.js";
+import ServiceIcon from "../../components/ServiceIcon.astro";
 ---
-<Layout title="Services" description="Heating and cooling services from JR's Heating and Cooling.">
-  <h1>Services</h1>
-  <div class="card-grid">
-    <div class="card"><h3><a href="/services/boiler-installation">Boiler installation</a></h3></div>
-    <div class="card"><h3><a href="/services/boiler-repair-servicing">Boiler repair &amp; servicing</a></h3></div>
-    <div class="card"><h3><a href="/services/air-conditioning-installation">Air conditioning installation</a></h3></div>
-    <div class="card"><h3><a href="/services/landlord-gas-safety-certificates">Landlord gas safety certificates</a></h3></div>
-  </div>
+<Layout title="Services" description={`Boiler servicing, repairs, new boilers, power flushing, radiators, underfloor heating, landlord gas safety certificates and air conditioning across ${business.region}.`}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Services</p>
+      <h1>Heating, gas and cooling services</h1>
+      <p class="lead">Every job is carried out by me, a Gas Safe registered and F-Gas certified engineer, with a free written quote first.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-2">
+        {services.map((s) => (
+          <a class="card" href={serviceHref(s)} style="text-decoration:none;color:inherit">
+            <ServiceIcon slug={s.slug} size={34} />
+            <h3>{s.title}</h3>
+            <p>{s.short}</p>
+            <span class="more">Find out more</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 </Layout>

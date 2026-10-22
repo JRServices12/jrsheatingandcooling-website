@@ -1,0 +1,33 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Gallery from "../components/Gallery.astro";
+import { business, photos } from "../data/business.js";
+const groups = ["Boilers", "Radiators", "Bathrooms", "Kitchens"].map((c) => ({ name: c, items: photos.filter((p) => p.category === c) }));
+---
+<Layout title="Our Work" description={`Photos of real boiler installations, radiators, bathrooms and kitchens by ${business.name}, covering ${business.region}.`}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Our work</p>
+      <h1>Recent jobs</h1>
+      <p class="lead">Real photos from real jobs. Neat pipework, tidy finishes, and work you'd be happy to have on show.</p>
+    </div>
+  </section>
+  {groups.map((g, i) => (
+    <section class:list={["section", { "section-soft": i % 2 === 1 }]}>
+      <div class="container">
+        <div class="section-head"><h2>{g.name}</h2></div>
+        <Gallery items={g.items} />
+      </div>
+    </section>
+  ))}
+  <section class="cta-band">
+    <div class="container">
+      <h2>Like what you see?</h2>
+      <p>Call for a free, written quote.</p>
+      <div class="cta-actions">
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+        <a class="btn btn-outline-light" href="/quote/">Get a free quote</a>
+      </div>
+    </div>
+  </section>
+</Layout>

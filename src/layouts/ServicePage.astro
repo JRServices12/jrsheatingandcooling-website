@@ -1,0 +1,75 @@
+---
+import Layout from "./Layout.astro";
+import { business, services, serviceHref, photos as allPhotos } from "../data/business.js";
+import Gallery from "../components/Gallery.astro";
+import PriceBox from "../components/PriceBox.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  intro: string;
+  slug: string;
+  photoCategory?: string;
+}
+const { title, description, intro, slug, photoCategory } = Astro.props;
+const jobPhotos = photoCategory ? allPhotos.filter((p) => p.category === photoCategory).slice(0, 6) : [];
+const others = services.filter((s) => s.slug !== slug);
+const me = services.find((s) => s.slug === slug);
+---
+<Layout title={title} description={description}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Covering {business.region}</p>
+      <h1>{title}</h1>
+      <p class="lead">{intro}</p>
+      <div class="cta-actions" style="justify-content:flex-start">
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+        <a class="btn btn-quote" href={me?.quoteJob ? `/quote/?job=${me.quoteJob}` : "/quote/"}>Get a free quote</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container narrow">
+      <slot />
+      <PriceBox slug={slug} quoteJob={me?.quoteJob} />
+
+      {jobPhotos.length > 0 && (
+        <>
+          <h2>Recent jobs</h2>
+          <Gallery items={jobPhotos} compact />
+          <p style="margin-top:14px"><a href="/work/">See all our work</a></p>
+        </>
+      )}
+
+      <h2>Areas covered</h2>
+      <p>Based in {business.base} and covering North Kent too, including {["Greenwich", "Eltham", "Bexleyheath", "Bromley", "Dartford", "Gravesend"].join(", ")} and more. See the <a href="/areas/">areas page</a> for the full list, or call if you're further out.</p>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <h2>Other services</h2>
+      <div class="grid grid-2" style="margin-top:16px">
+        {others.map((s) => (
+          <a class="card" href={serviceHref(s)} style="text-decoration:none;color:inherit">
+            <h3>{s.title}</h3>
+            <p>{s.short}</p>
+            <span class="more">Find out more</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>Book your {title.toLowerCase()}</h2>
+      <p>Free, written quote before any work starts.</p>
+      <div class="cta-actions">
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+        <a class="btn btn-outline-light" href={`mailto:${business.email}`}>Email me</a>
+      </div>
+    </div>
+  </section>
+</Layout>

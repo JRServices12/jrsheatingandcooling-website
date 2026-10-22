@@ -1,0 +1,59 @@
+---
+// A grid of job photos. Click a photo to see it full size.
+interface Photo { file: string; caption: string; category?: string }
+interface Props { items: Photo[]; compact?: boolean }
+const { items, compact = false } = Astro.props;
+---
+<ul class:list={["gallery", { compact }]}>
+  {items.map((p) => (
+    <li>
+      <a href={`/images/work/${p.file}.jpg`} data-full={`/images/work/${p.file}.jpg`} data-caption={p.caption}>
+        <img src={`/images/work/${p.file}-sm.jpg`} alt={p.caption} loading="lazy" width="450" height="600" />
+        {!compact && <span>{p.caption}</span>}
+      </a>
+    </li>
+  ))}
+</ul>
+
+<dialog class="lightbox" aria-label="Photo">
+  <figure>
+    <img alt="" />
+    <figcaption></figcaption>
+  </figure>
+  <button type="button" class="lightbox-close" aria-label="Close photo">×</button>
+</dialog>
+
+<style>
+  .gallery { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+  .gallery.compact { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+  .gallery a { display: block; position: relative; border-radius: 10px; overflow: hidden; background: var(--soft); text-decoration: none; }
+  .gallery img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; transition: transform 0.35s ease; }
+  .gallery a:hover img { transform: scale(1.04); }
+  .gallery span { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 12px 10px; color: #fff; font-weight: 600; font-size: 0.92rem; background: linear-gradient(transparent, rgba(12, 34, 56, 0.85)); }
+  .lightbox { border: 0; padding: 0; background: transparent; max-width: min(92vw, 900px); max-height: 92vh; }
+  .lightbox::backdrop { background: rgba(8, 20, 33, 0.85); }
+  .lightbox figure { margin: 0; }
+  .lightbox img { display: block; max-width: 100%; max-height: 82vh; margin: 0 auto; border-radius: 8px; }
+  .lightbox figcaption { color: #fff; text-align: center; padding: 10px 0 0; font-weight: 600; }
+  .lightbox-close { position: fixed; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: #fff; color: var(--navy); font-size: 1.6rem; line-height: 1; cursor: pointer; }
+  @media (prefers-reduced-motion: reduce) { .gallery img { transition: none; } }
+</style>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>(".lightbox");
+  if (dialog && typeof dialog.showModal === "function") {
+    const img = dialog.querySelector("img")!;
+    const cap = dialog.querySelector("figcaption")!;
+    document.querySelectorAll<HTMLAnchorElement>(".gallery a[data-full]").forEach((a) => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        img.src = a.dataset.full!;
+        img.alt = a.dataset.caption || "";
+        cap.textContent = a.dataset.caption || "";
+        dialog.showModal();
+      });
+    });
+    dialog.addEventListener("click", () => dialog.close());
+    dialog.querySelector(".lightbox-close")!.addEventListener("click", () => dialog.close());
+  }
+</script>

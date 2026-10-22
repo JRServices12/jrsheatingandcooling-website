@@ -1,0 +1,3 @@
+Put the official boiler brand logos in this folder, named exactly:
+  worcester-bosch.png   vaillant.png   ideal.png   glow-worm.png   daikin.png
+(.svg, .jpg or .webp also work). Each logo appears on the website automatically.

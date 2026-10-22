@@ -1,0 +1,34 @@
+---
+// Shows the official Gas Safe and F-Gas logos once their files are added to
+// public/logos/ (named gas-safe.png and f-gas.png, or .svg / .jpg).
+// Use only the official files from Gas Safe Register and your F-Gas
+// certification body. Until a file is there, nothing shows for it.
+import fs from "node:fs";
+import path from "node:path";
+
+interface Props { variant?: "default" | "footer" }
+const { variant = "default" } = Astro.props;
+
+const dir = path.join(process.cwd(), "public", "logos");
+const find = (name: string) => {
+  for (const ext of ["svg", "png", "jpg", "jpeg", "webp"]) {
+    if (fs.existsSync(path.join(dir, `${name}.${ext}`))) return `/logos/${name}.${ext}`;
+  }
+  return null;
+};
+const logos = [
+  { src: find("gas-safe"), alt: "Gas Safe Register" },
+  { src: find("f-gas"), alt: "F-Gas certified" },
+].filter((l) => l.src);
+---
+{logos.length > 0 && (
+  <div class={`accreditations ${variant}`}>
+    {logos.map((l) => <img src={l.src} alt={l.alt} height="92" loading="lazy" />)}
+  </div>
+)}
+<style>
+  .accreditations { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin: 16px 0; }
+  .accreditations img { height: 92px; width: auto; }
+  .accreditations.footer { margin: 12px 0 0; }
+  .accreditations.footer img { height: 72px; background: #fff; padding: 6px; border-radius: 8px; box-sizing: content-box; }
+</style>

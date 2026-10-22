@@ -1,0 +1,101 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { business } from "../data/business.js";
+import { quotePrices as P } from "../data/quote-prices.js";
+
+const groups = [
+  {
+    title: "About me",
+    items: [
+      ["Are you Gas Safe registered?", "Yes. Every registered engineer carries a Gas Safe ID card, and I'm happy to show you mine. You can also check any engineer on the Gas Safe Register website before they start work."],
+      ["Are you qualified to install air conditioning?", "Yes. I'm F-Gas certified, which is the legal requirement for installing air conditioning that uses refrigerant gas."],
+      ["Will you do the work yourself?", "Yes. I carry out every job myself, so the person who quotes is the person who turns up and does the work."],
+      ["Which areas do you cover?", `I'm based in ${business.base} and cover Dartford and North Kent too, including Crayford, Swanley, Greenhithe and Gravesend. If you're not sure whether you're covered, just ask.`],
+      ["What are your hours?", `${business.hours}. If your boiler has broken down, call and I'll get to you as quickly as I can.`],
+    ],
+  },
+  {
+    title: "Prices and quotes",
+    items: [
+      ["Do you give free quotes?", "Yes. Every job gets a free, written quote before any work starts. You can also get a rough price in a minute with the quick quote tool."],
+      ["How much is a boiler service?", `A standard gas boiler service is £${P.boilerService}. With a landlord gas safety certificate at the same visit it's £${P.landlordCertWithService}.`],
+      ["Do I have to pay VAT on top?", "No. I'm not VAT registered, so there's no VAT to add to any of my prices."],
+      ["Will the price change once you start?", "No. You get the price in writing first. If I find something unexpected, I'll explain it and price it before doing any extra work."],
+    ],
+  },
+  {
+    title: "Boilers and heating",
+    items: [
+      ["How often should my boiler be serviced?", "Once a year. Most manufacturers need a yearly service to keep the boiler's warranty valid, and it's the best way to catch problems before they leave you without heating."],
+      ["Which boilers do you work on?", `I install and service ${business.brands.slice(0, -1).join(", ")} and ${business.brands.at(-1)} boilers, and work on most other makes too.`],
+      ["How long does a new boiler take to fit?", "A straight swap for the same type of boiler is usually done in a day. Moving the boiler or changing the type, such as going from a tank in the loft to a combi, normally takes two or three days."],
+      ["What is a power flush, and do I need one?", "A power flush clears sludge and rust out of your radiators and pipes. You might need one if radiators are cold at the bottom, the water is dark when you bleed them, or the boiler is noisy. I'll only recommend it if your system needs it."],
+      ["Do you do emergency call-outs?", `Yes. If your boiler has broken down, you've lost heating or hot water, or there's a leak, call ${business.phone} and I'll get to you as quickly as I can. If you smell gas, call the National Gas Emergency line on 0800 111 999 first.`],
+    ],
+  },
+  {
+    title: "Landlords",
+    items: [
+      ["How often do I need a gas safety certificate?", "Every 12 months for each rented property with gas appliances. I can check, certify and remind you when the next one is due."],
+      ["Can you deal with my tenants or letting agent?", "Yes. I'm happy to arrange access with your tenants or agent directly."],
+    ],
+  },
+];
+---
+<Layout title="FAQ" description={`Answers to common questions about boilers, heating, landlord certificates, air conditioning and prices from ${business.name}, covering ${business.region}.`}>
+  <section class="page-hero">
+    <div class="container">
+      <h1>Questions people ask</h1>
+      <p class="lead">Straight answers about how I work, what things cost, and boilers and heating in general. Can't see yours? Call or WhatsApp me.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-wrap">
+      {groups.map((g) => (
+        <div class="faq-group">
+          <h2>{g.title}</h2>
+          <div class="faq">
+            {g.items.map(([q, a]) => (
+              <details>
+                <summary>{q}</summary>
+                <p>{a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-head">
+        <h2>How a job works</h2>
+      </div>
+      <ol class="route">
+        <li><h3>Get in touch</h3><p>Call, WhatsApp or use the quick quote with what you need and roughly when suits you.</p></li>
+        <li><h3>I take a look</h3><p>Photos are often enough. For bigger jobs I'll visit and talk you through the options.</p></li>
+        <li><h3>Written quote</h3><p>A clear price in writing. Nothing starts until you're happy with it.</p></li>
+        <li><h3>Done properly</h3><p>Fitted to standard, tested, explained to you, and the area left tidy.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>Still got a question?</h2>
+      <p>Call, or send a message on WhatsApp.</p>
+      <div class="cta-actions">
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+        <a class="btn btn-outline-light" href={`https://wa.me/${business.whatsapp}`} target="_blank" rel="noopener">WhatsApp me</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .faq-wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 40px 48px; align-items: start; }
+  .faq-group h2 { font-size: 1.6rem; }
+  @media (max-width: 520px) { .faq-wrap { grid-template-columns: 1fr; } }
+</style>

@@ -1,16 +1,32 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import ServicePage from "../../layouts/ServicePage.astro";
+import { business } from "../../data/business.js";
 ---
-<Layout title="Boiler Repair & Servicing" description="Boiler Repair & Servicing from JR's Heating and Cooling, covering [service area].">
-  <h1>Boiler Repair & Servicing</h1>
-  <p class="lead">[What this service involves, and why a customer would need it.]</p>
+<ServicePage
+  slug="boiler-repair-servicing"
+  photoCategory="Boilers"
+  title="Boiler Repair & Servicing"
+  description={`Annual boiler servicing and boiler repairs across ${business.region} by a Gas Safe registered engineer. Free quotes.`}
+  intro="A yearly service keeps your boiler safe, efficient and within its warranty. If it's already playing up, I'll find the fault and fix it properly."
+>
+  <h2>What's included in a boiler service</h2>
+  <ul class="tick-list">
+    <li>Visual check of the boiler, controls and pipework for leaks, damage or corrosion</li>
+    <li>Inside of the boiler opened up, inspected and cleaned where needed</li>
+    <li>Flue checked and combustion tested with a flue gas analyser</li>
+    <li>Gas pressure and safety devices tested</li>
+    <li>System pressure checked and topped up if needed</li>
+    <li>A record of the service for your warranty and your own files</li>
+  </ul>
 
-  <h2>What's included</h2>
-  <p>[Bullet-style list of what a typical job covers, written as prose per your usual style, or a real list once you're ready to format it.]</p>
+  <h2>Boiler repairs</h2>
+  <p>Common problems I fix include:</p>
+  <ul class="tick-list">
+    <li>No heating or no hot water</li>
+    <li>Boiler losing pressure or showing an error code</li>
+    <li>Leaks, drips and noisy boilers</li>
+    <li>Radiators not heating up properly</li>
+  </ul>
+  <p>I'll explain what's wrong in plain English, tell you the cost before going ahead, and let you know honestly if a repair isn't worth it.</p>
 
-  <h2>Typical cost</h2>
-  <p>[Honest, specific price range — these pages rank well and pre-qualify callers, per the setup guide's Section 2.]</p>
-
-  <h2>Areas covered</h2>
-  <p>[Link to relevant area pages once they exist.]</p>
-</Layout>
+</ServicePage>

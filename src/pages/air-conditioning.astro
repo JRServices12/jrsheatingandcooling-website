@@ -1,0 +1,154 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Accreditations from "../components/Accreditations.astro";
+import BrandStrip from "../components/BrandStrip.astro";
+import PriceBox from "../components/PriceBox.astro";
+import { business, services, serviceHref } from "../data/business.js";
+
+const others = services.filter((s) => !s.href);
+---
+<Layout
+  title="Air Conditioning"
+  description={`Home air conditioning installation across ${business.region}. Wall-mounted and multi-room systems fitted neatly by an F-Gas certified engineer. Free quotes.`}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Covering {business.region}</p>
+      <h1>Air conditioning for your home</h1>
+      <p class="lead">Keep bedrooms, living rooms and home offices comfortable through the summer. Wall-mounted air conditioning, fitted neatly with tidy pipe runs by an F-Gas certified engineer.</p>
+      <div class="cta-actions" style="justify-content:flex-start">
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+        <a class="btn btn-quote" href="/quote/?job=ac">Get a free quote</a>
+      </div>
+      <Accreditations />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container narrow">
+      <p class="note"><strong>F-Gas certified.</strong> By law, air conditioning that contains refrigerant gas must be installed by an F-Gas certified engineer. I'm F-Gas certified as well as Gas Safe registered.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Why air con</p>
+        <h2>More than just cooling</h2>
+      </div>
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Cool in a heatwave</h3>
+          <p>Bring a room down to a comfortable temperature in minutes, even on the hottest days of the year.</p>
+        </div>
+        <div class="card">
+          <h3>Better sleep</h3>
+          <p>A cool bedroom makes a big difference on warm summer nights. Modern indoor units run quietly.</p>
+        </div>
+        <div class="card">
+          <h3>Heating too</h3>
+          <p>Most modern systems can also heat a room in spring and autumn, so you don't need to put the whole central heating on.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Systems</p>
+        <h2>Which system suits your home?</h2>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Single room (split system)</h3>
+          <p>One indoor unit on the wall, connected to one outdoor unit outside. The most popular choice for a bedroom, living room or home office.</p>
+        </div>
+        <div class="card">
+          <h3>Several rooms (multi-split)</h3>
+          <p>Two or more indoor units running from a single outdoor unit, so you can cool several rooms without a row of units on the outside wall.</p>
+        </div>
+      </div>
+      <BrandStrip brands={business.acBrands} title="Air conditioning I install" note="Quiet, efficient systems from a leading air conditioning brand." />
+      <p style="margin-top:20px">Popular rooms for air con include bedrooms, home offices, loft conversions, extensions and conservatories, all rooms that tend to get the hottest.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>From first visit to first cool day</h2>
+      </div>
+      <ol class="steps">
+        <li><h3>Survey</h3><p>I look at the room, the best spot for the indoor unit and where the outdoor unit can go.</p></li>
+        <li><h3>Advice &amp; quote</h3><p>The right size of system for the room, and a clear, written price.</p></li>
+        <li><h3>Neat installation</h3><p>Indoor and outdoor units fitted, with pipework and cables run as neatly as possible.</p></li>
+        <li><h3>Tested &amp; explained</h3><p>The system is tested and commissioned, and I show you how to use the controls.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container narrow">
+      <PriceBox slug="air-conditioning-installation" quoteJob="ac" />
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container narrow">
+      <div class="section-head">
+        <p class="eyebrow">Questions</p>
+        <h2>Air conditioning questions</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Do I need planning permission for air conditioning?</summary>
+          <p>Many home installations don't, but some do, particularly for flats, listed buildings and conservation areas, or where the outdoor unit is on the front of the property. I'll flag anything to check with your council when I visit.</p>
+        </details>
+        <details>
+          <summary>Where does the outdoor unit go?</summary>
+          <p>Usually on a back or side wall, on brackets or on the ground, as close to the indoor unit as possible. I'll suggest the best spot so it's out of the way and pipe runs are kept short and tidy.</p>
+        </details>
+        <details>
+          <summary>How much does air conditioning cost?</summary>
+          <p>One room is usually £2,000 to £2,800 supplied and fitted, two rooms £3,500 to £4,800, and three rooms £4,500 to £6,000. The exact price depends on the room sizes and where the units go, and you'll get a free, written quote first.</p>
+        </details>
+        <details>
+          <summary>When is the best time to book?</summary>
+          <p>Autumn and spring. Demand goes up quickly when the warm weather arrives, so booking early means you're not left waiting in the first heatwave.</p>
+        </details>
+        <details>
+          <summary>Are you qualified to install air conditioning?</summary>
+          <p>Yes. I'm F-Gas certified, which is the legal requirement for working with the refrigerant gas in air conditioning systems.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Other services</h2>
+      <div class="grid grid-3" style="margin-top:16px">
+        {others.map((s) => (
+          <a class="card" href={serviceHref(s)} style="text-decoration:none;color:inherit">
+            <h3>{s.title}</h3>
+            <p>{s.short}</p>
+            <span class="more">Find out more</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>Ready for a cooler summer?</h2>
+      <p>Free, written quote before any work starts.</p>
+      <div class="cta-actions">
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+        <a class="btn btn-outline-light" href={`mailto:${business.email}`}>Email me</a>
+      </div>
+    </div>
+  </section>
+</Layout>

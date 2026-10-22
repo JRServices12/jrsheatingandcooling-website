@@ -1,16 +1,38 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import { business } from "../data/business.js";
 ---
-<Layout title="Contact" description="Contact JR's Heating and Cooling.">
-  <h1>Contact us</h1>
-  <p><strong>Phone:</strong> [phone number]</p>
-  <p><strong>Email:</strong> [email address]</p>
-  <p><strong>Areas covered:</strong> [towns]</p>
-
-  <div class="placeholder">
-    A real contact form (with a working backend) is a Section 5/11-style
-    addition for later — Stripe Payment Links and Web3Forms/Formspree are
-    the guide's suggested low-effort starting points. For now this page
-    lists direct contact details.
-  </div>
+<Layout title="Contact" description={`Contact ${business.name} for a free quote. Call ${business.phone} or email. Covering ${business.region}.`}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Contact</p>
+      <h1>Get a free quote</h1>
+      <p class="lead">Call, WhatsApp or email with what you need and roughly where you are. Or <a href="/quote/">get a rough price in a minute</a> with the quick quote tool. Every job gets a free, written quote first.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Call</h3>
+          <p>The quickest way to reach me.</p>
+          <a class="btn btn-call" href={business.phoneHref} style="align-self:flex-start">{business.phone}</a>
+        </div>
+        <div class="card">
+          <h3>WhatsApp</h3>
+          <p>Send a message and photos of the job to {business.whatsappDisplay}, and I'll get back to you.</p>
+          <a class="btn btn-whatsapp" href={`https://wa.me/${business.whatsapp}`} target="_blank" rel="noopener" style="align-self:flex-start">WhatsApp me</a>
+        </div>
+        <div class="card">
+          <h3>Email</h3>
+          <p>Photos of your boiler or the problem help me quote faster.</p>
+          <a href={`mailto:${business.email}`} style="font-weight:700;word-break:break-all">{business.email}</a>
+        </div>
+      </div>
+      <div class="note" style="margin-top:24px">
+        <p style="margin:0"><strong>Opening hours:</strong> {business.hours}. Boiler broken down or no heating? Call and I'll get to you as quickly as I can.</p>
+      </div>
+      <p style="margin-top:24px">Based in {business.base} and covering North Kent, {business.reach}. <a href="/areas/">See the areas we cover</a>.</p>
+    </div>
+  </section>
 </Layout>

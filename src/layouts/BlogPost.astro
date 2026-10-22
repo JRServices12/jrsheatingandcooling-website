@@ -1,0 +1,55 @@
+---
+import Layout from "./Layout.astro";
+import { business } from "../data/business.js";
+
+const { frontmatter } = Astro.props;
+const { title, description, date, related = [] } = frontmatter;
+const nice = new Date(date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+const article = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  datePublished: date,
+  author: { "@type": "Person", name: "Jordan", worksFor: { "@type": "HVACBusiness", name: business.name } },
+  publisher: { "@type": "Organization", name: business.name, url: business.url },
+};
+---
+<Layout title={title} description={description}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(article)} />
+  <section class="page-hero">
+    <div class="container narrow">
+      <p class="eyebrow"><a href="/blog/">Blog</a>, {nice}</p>
+      <h1>{title}</h1>
+      <p class="lead">{description}</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container narrow post">
+      <slot />
+      <div class="post-help">
+        <h2>Need a hand?</h2>
+        <p>I'm Jordan, a Gas Safe registered and F-Gas certified engineer covering {business.region}. If you'd rather someone took a look, call {business.phone}. Open {business.hours}, and I'll get to breakdowns as quickly as I can.</p>
+        <div class="cta-actions" style="justify-content:flex-start">
+          <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+          <a class="btn btn-quote" href="/quote/">Get a free quote</a>
+        </div>
+      </div>
+      {related.length > 0 && (
+        <p class="post-related">Related: {related.map((r, i) => <>{i > 0 && ", "}<a href={r.href}>{r.label}</a></>)}</p>
+      )}
+      <p><a href="/blog/">← All blog posts</a></p>
+    </div>
+  </section>
+</Layout>
+<style is:global>
+  .post h2 { margin-top: 1.6em; }
+  .post ul, .post ol { padding-left: 1.3em; }
+  .post li { margin-bottom: 0.4em; }
+  .post blockquote { margin: 1.4em 0; background: var(--sky); border-left: 4px solid var(--blue); padding: 14px 18px; border-radius: 6px; }
+  .post blockquote p { margin: 0; }
+  .post-help { margin-top: 2.4em; border: 2px solid var(--blue); border-radius: 12px; padding: 22px 24px; }
+  .post-help h2 { margin-top: 0; }
+  .post-related { margin-top: 1.6em; color: var(--muted); }
+  .page-hero .eyebrow a { color: inherit; }
+</style>

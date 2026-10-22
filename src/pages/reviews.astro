@@ -1,7 +1,39 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import { business, reviews, reviewSource } from "../data/business.js";
 ---
-<Layout title="Reviews" description="Customer reviews for JR's Heating and Cooling.">
-  <h1>Reviews</h1>
-  <p class="lead">[Real customer reviews only — never invent testimonials. Consider embedding your Google Business Profile reviews here once that's set up.]</p>
+<Layout title="Reviews" description={`Genuine customer reviews for ${business.name}, from ${reviewSource.total} reviews left on ${reviewSource.name}.`}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Reviews</p>
+      <h1>What customers say</h1>
+      <p class="lead">Real reviews from customers across South East London and Dartford, copied word for word. A selection from the {reviewSource.total} reviews left on {reviewSource.name} while trading as JRS Services, {reviewSource.perfect} of them a perfect 10/10.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="review-grid">
+        {reviews.map((r) => (
+          <figure class="review">
+            <p class="review-score"><strong>{r.score}</strong>/10</p>
+            <blockquote>“{r.text}”</blockquote>
+            <figcaption>
+              <span class="review-job">{r.job}</span>
+              <span>Verified customer in {r.area}, {r.date}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+      <p class="review-source">Reviews originally left on {reviewSource.name}. <a href={reviewSource.url} rel="noopener" target="_blank">See all {reviewSource.total} reviews</a>.</p>
+      <div class="google-review">
+        <p><strong>Had work done by JRS?</strong> A quick Google review really helps a small local business.</p>
+        <a class="btn btn-quote" href={business.googleReviewUrl || business.googleUrl} target="_blank" rel="noopener">{business.googleReviewUrl ? "Leave a Google review" : "Find us on Google"}</a>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .google-review { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; justify-content: space-between; border: 2px solid var(--blue); border-radius: 12px; padding: 18px 22px; }
+  .google-review p { margin: 0; }
+</style>

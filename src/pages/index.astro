@@ -1,43 +1,218 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import { business, services, serviceHref, reviews, reviewSource, photos } from "../data/business.js";
+import { quotePrices as P } from "../data/quote-prices.js";
+import Accreditations from "../components/Accreditations.astro";
+import BrandStrip from "../components/BrandStrip.astro";
+import ServiceIcon from "../components/ServiceIcon.astro";
+
+const low = (v) => (Array.isArray(v) ? v[0] : v);
+const gbp = (n) => "£" + Number(n).toLocaleString("en-GB");
+const priceFor = {
+  "boiler-repair-servicing": `Service ${gbp(P.boilerService)}`,
+  "landlord-gas-safety-certificates": gbp(P.landlordCert),
+  "boiler-installation": `From ${gbp(low(P.combiSwap))}`,
+  "power-flushing": `From ${gbp(low(P.powerFlush.upTo6))}`,
+  "radiators-central-heating": `From ${gbp(low(P.radiatorReplace))}`,
+  "underfloor-heating": `From ${gbp(low(P.underfloor.small))}`,
+  "air-conditioning-installation": `From ${gbp(low(P.ac1Room))}`,
+};
+const photo = (file) => photos.find((p) => p.file === file);
+const heroPhoto = photo("boiler-install-1");
+const tidy = ["boiler-install-cupboard", "radiators-fitted", "boiler-install-3"].map(photo);
+const featured = reviews[1];
+const more = [reviews[0], reviews[6]];
 ---
 <Layout
   title="Home"
-  description="JR's Heating and Cooling — boiler, heating and air conditioning specialists covering [service area]."
+  description={`Gas Safe registered boiler, heating and air conditioning engineer based in ${business.base} and covering Dartford and North Kent. Boiler servicing, repairs, new boilers, landlord gas safety certificates and air con. Free quotes.`}
 >
-  <h1>JR's Heating and Cooling</h1>
-  <p class="lead">[One-sentence summary of what you do and where — e.g. "Trusted boiler, heating and air conditioning engineers serving [towns] for over X years."]</p>
+  <section class="h-hero">
+    <div class="container h-hero-inner">
+      <div class="h-hero-copy">
+        <h1>Boilers, heating and air con for South East London and North Kent</h1>
+        <div class="pipes pipes-hero" aria-hidden="true"><span class="hot"></span><span class="cold"></span></div>
+        <p class="h-lead">I'm Jordan, a Gas Safe registered engineer with {business.yearsExperience}+ years in the trade. Every job is done by me, priced up front, and finished so neatly you'd be happy to leave the cupboard door open.</p>
+        <div class="h-actions">
+          <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+          <a class="btn btn-quote" href="/quote/">Get a free quote</a>
+        </div>
+        <Accreditations />
+      </div>
+      <figure class="h-hero-photo">
+        <img src={`/images/work/${heroPhoto.file}.jpg`} alt={heroPhoto.caption} width="900" height="1200" fetchpriority="high" />
+        <figcaption>My own work: a new boiler with the copper pipework run straight and clipped by hand.</figcaption>
+      </figure>
+    </div>
+  </section>
 
-  <div class="placeholder">
-    <strong>Placeholder content:</strong> replace the bracketed text throughout this
-    site with your real services, service area, and contact details once you have
-    them. See the README for a full list of what to fill in.
-  </div>
+  <section class="h-proof" aria-label="Reviews summary">
+    <div class="container h-proof-inner">
+      <p class="h-proof-score"><strong>{reviewSource.perfect}</strong> of my {reviewSource.total} Checkatrade reviews are a perfect 10</p>
+      <p class="h-proof-quote">“His work is top class, he’s incredibly tidy” <span>Customer review, HP16</span></p>
+    </div>
+  </section>
 
-  <h2>Our services</h2>
-  <div class="card-grid">
-    <div class="card">
-      <h3>Boiler installation</h3>
-      <p>[Short description of boiler installation service.]</p>
-      <a href="/services/boiler-installation">Learn more</a>
+  <section class="emergency" aria-label="Emergency call-outs">
+    <div class="container emergency-inner">
+      <div>
+        <h2>Boiler broken down? No heating or hot water?</h2>
+        <p>Call me and I'll get to you as quickly as I can. Breakdowns, leaks and boilers that won't fire up go first.</p>
+        <p class="gas-warn"><strong>Smell gas?</strong> Open windows, don't use switches or flames, and call the National Gas Emergency line on <a href="tel:0800111999">0800 111 999</a> straight away.</p>
+      </div>
+      <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
     </div>
-    <div class="card">
-      <h3>Boiler repair &amp; servicing</h3>
-      <p>[Short description of repair/servicing.]</p>
-      <a href="/services/boiler-repair-servicing">Learn more</a>
-    </div>
-    <div class="card">
-      <h3>Air conditioning installation</h3>
-      <p>[Short description of AC installation.]</p>
-      <a href="/services/air-conditioning-installation">Learn more</a>
-    </div>
-    <div class="card">
-      <h3>Landlord gas safety certificates</h3>
-      <p>[Short description — annual, legally required for rented properties.]</p>
-      <a href="/services/landlord-gas-safety-certificates">Learn more</a>
-    </div>
-  </div>
+  </section>
 
-  <h2>Areas we cover</h2>
-  <p>[List the towns/areas you actually serve.] See the <a href="/areas">areas page</a> for details.</p>
+  <section class="section">
+    <div class="container">
+      <div class="h-head">
+        <h2>What I do, and what it costs</h2>
+        <p>Guide prices with nothing hidden. You always get a written quote before any work starts, and as I'm not VAT registered there's no VAT to add.</p>
+      </div>
+      <ul class="price-list">
+        {services.map((s) => (
+          <li>
+            <a href={serviceHref(s)}>
+              <ServiceIcon slug={s.slug} size={34} />
+              <span class="pl-name">{s.title}</span>
+              <span class="pl-desc">{s.short}</span>
+              <span class="pl-price">{priceFor[s.slug] ?? "Ask for a price"}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="h-after"><a href="/quote/">Get a rough price for your job in a minute</a></p>
+      <BrandStrip brands={[...business.brands, ...business.acBrands]} title="Brands I install and service" note="Boilers and air conditioning, and most other makes too. Not sure about yours? Just ask." />
+    </div>
+  </section>
+
+  <section class="h-tidy">
+    <div class="container h-tidy-inner">
+      <div class="h-tidy-photos">
+        {tidy.map((p, i) => (
+          <img class={`t${i + 1}`} src={`/images/work/${p.file}${i === 0 ? "" : "-sm"}.jpg`} alt={p.caption} loading="lazy" />
+        ))}
+      </div>
+      <div class="h-tidy-copy">
+        <h2>Tidy work, even where you can't see it</h2>
+        <p>The thing I'm proudest of is how neat the job is when I leave. Pipework is run straight and clipped properly, whether it's on show or hidden behind a cupboard.</p>
+        <ul class="tick-list">
+          <li>Gas Safe registered. I'll show you my ID card when I arrive.</li>
+          <li>Local and on my own, so the person who quotes is the person who turns up.</li>
+          <li>A clear written price first, so there are no surprises at the end.</li>
+          <li>Your home left clean, with dust sheets down and everything cleared away.</li>
+        </ul>
+        <p><a class="btn btn-quote" href="/work/">See more of my work</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <figure class="h-featured">
+        <blockquote>“{featured.text}”</blockquote>
+        <figcaption>Checkatrade review from {featured.area}, {featured.date}. Scored {featured.score}/10.</figcaption>
+      </figure>
+      <div class="h-more-reviews">
+        {more.map((r) => (
+          <figure>
+            <blockquote>“{r.text}”</blockquote>
+            <figcaption>{r.area}, {r.date}. Scored {r.score}/10.</figcaption>
+          </figure>
+        ))}
+      </div>
+      <p class="h-after"><a href="/reviews/">Read more reviews</a>, <a href="/faq/">read the FAQ</a>, or <a href={business.googleReviewUrl} target="_blank" rel="noopener">leave me a Google review</a></p>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>Need a heating engineer in South East London or North Kent?</h2>
+      <p>Call for a chat, or send a few photos on WhatsApp for a price.</p>
+      <div class="cta-actions">
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+        <a class="btn btn-outline-light" href={`https://wa.me/${business.whatsapp}`} target="_blank" rel="noopener">WhatsApp me</a>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  /* Hero */
+  .h-hero { padding: 48px 0 56px; background: #fff; }
+  .h-hero-inner { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 48px; align-items: center; }
+  .h-hero h1 { font-size: clamp(2.3rem, 5.6vw, 4.1rem); font-weight: 700; line-height: 1.02; letter-spacing: -0.01em; margin: 0; max-width: 17ch; }
+  .pipes-hero { margin: 22px 0; max-width: 420px; }
+  .h-lead { font-size: 1.18rem; color: var(--ink); max-width: 34em; }
+  .h-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 22px 0 8px; }
+  .h-hero-copy :global(.accreditations img) { height: 58px; }
+  .h-hero-photo { margin: 0; }
+  .h-hero-photo img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px 4px 4px 48px; }
+  .h-hero-photo figcaption { margin-top: 10px; font-size: 0.92rem; color: var(--muted); max-width: 32em; }
+  @media (max-width: 860px) {
+    .h-hero-inner { grid-template-columns: 1fr; gap: 28px; }
+    .h-hero-photo img { aspect-ratio: 4 / 3; }
+  }
+
+  /* Proof strip */
+  .h-proof { background: var(--navy); color: #dbe8f4; padding: 22px 0; }
+  .h-proof-inner { display: flex; flex-wrap: wrap; gap: 10px 40px; align-items: baseline; justify-content: space-between; }
+  .h-proof p { margin: 0; }
+  .h-proof-score { font-size: 1.1rem; color: #fff; }
+  .h-proof-score strong { font-family: var(--display); font-size: 2.2rem; color: var(--hot); margin-right: 4px; }
+  .h-proof-quote { font-style: italic; }
+  .h-proof-quote span { font-style: normal; color: #9fb4c8; margin-left: 8px; font-size: 0.9rem; }
+
+  /* Section heads, with no small labels above them */
+  .h-head { max-width: 680px; margin-bottom: 28px; }
+  .h-head p { color: var(--muted); font-size: 1.08rem; }
+  .h-after { margin-top: 20px; }
+
+  /* Price list */
+  .price-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--navy); }
+  .price-list li { border-bottom: 1px solid var(--line); }
+  .price-list a { display: grid; grid-template-columns: 64px minmax(0, 15rem) minmax(0, 1fr) auto; gap: 6px 24px; align-items: center; padding: 16px 12px; color: inherit; text-decoration: none; border-radius: 4px 4px 4px 24px; transition: background-color 0.2s ease, transform 0.25s ease; }
+  .price-list a:hover, .price-list a:focus-visible { background: var(--soft); transform: translateX(6px); }
+  .price-list a:hover .pl-price { color: var(--hot); }
+  .pl-price { transition: color 0.2s ease; }
+  .pl-name { font-family: var(--display); font-weight: 700; font-size: 1.35rem; color: var(--navy); }
+  .pl-desc { color: var(--muted); }
+  .pl-price { font-family: var(--display); font-weight: 700; font-size: 1.25rem; color: var(--navy); white-space: nowrap; }
+  .price-list a:hover .pl-name, .price-list a:focus-visible .pl-name { color: var(--blue); text-decoration: underline; text-underline-offset: 4px; }
+  @media (max-width: 760px) {
+    .price-list a { grid-template-columns: 64px 1fr; gap: 4px 16px; }
+    .price-list a :global(.svc-icon) { grid-row: 1 / 4; align-self: start; }
+    .pl-price { grid-column: 2; }
+  }
+  @media (prefers-reduced-motion: reduce) { .price-list a { transition: none; } .price-list a:hover { transform: none; } }
+
+  /* Tidy work */
+  .h-tidy { padding: 72px 0; background: var(--soft); }
+  .h-tidy-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+  .h-tidy-photos { display: grid; grid-template-columns: 1.3fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; height: 520px; }
+  .h-tidy-photos img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 4px; }
+  .h-tidy-photos .t1 { grid-row: 1 / 3; border-radius: 4px 4px 4px 40px; }
+  @media (max-width: 860px) {
+    .h-tidy-inner { grid-template-columns: 1fr; gap: 32px; }
+    .h-tidy-photos { height: 380px; }
+  }
+
+  /* Reviews */
+  .h-featured { margin: 0 0 40px; max-width: 900px; }
+  .h-featured blockquote { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(1.45rem, 3vw, 2.1rem); line-height: 1.25; color: var(--navy); }
+  .h-featured figcaption { margin-top: 14px; color: var(--muted); }
+  .h-more-reviews { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+  .h-more-reviews figure { margin: 0; padding-left: 18px; border-left: 4px solid var(--line); }
+  .h-more-reviews blockquote { margin: 0; }
+  .h-more-reviews figcaption { margin-top: 8px; color: var(--muted); font-size: 0.92rem; }
+
+  /* Emergency */
+  .emergency { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 32px 0; }
+  .emergency-inner { display: flex; gap: 24px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .emergency-inner > div { max-width: 720px; }
+  .emergency h2 { margin: 0 0 6px; font-size: clamp(1.4rem, 3vw, 1.9rem); }
+  .emergency p { margin: 0 0 10px; }
+  .gas-warn { border-left: 4px solid var(--hot); padding: 4px 0 4px 14px; font-size: 0.95rem; color: var(--muted); }
+  .gas-warn a { color: var(--navy); font-weight: 700; }
+</style>

@@ -1,0 +1,42 @@
+---
+import { servicePrices } from "../data/service-prices.js";
+interface Props { slug: string; quoteJob?: string }
+const { slug, quoteJob } = Astro.props;
+const p = servicePrices[slug];
+---
+{p && (
+  <section class="pricebox" aria-labelledby={`price-${slug}`}>
+    <div class="pricebox-top">
+      <div>
+        <h2 id={`price-${slug}`}>Prices</h2>
+        <p class="pricebox-label">{p.headlineLabel}</p>
+      </div>
+      <p class="pricebox-headline">{p.headline}</p>
+    </div>
+    <table class="pricebox-table">
+      <tbody>
+        {p.rows.map(([label, price]) => (
+          <tr><th scope="row">{label}</th><td>{price}</td></tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="pricebox-note">{p.note} No VAT to add. You always get a written quote before any work starts.</p>
+    <a class="btn btn-call" href={quoteJob ? `/quote/?job=${quoteJob}` : "/quote/"}>Get a free quote</a>
+  </section>
+)}
+<style>
+  .pricebox { margin: 36px 0; border: 2px solid var(--navy); border-radius: 4px 4px 4px 32px; padding: 26px 28px; background: #fff; }
+  .pricebox-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 7px solid var(--hot); box-shadow: 0 11px 0 -4px var(--cold); margin-bottom: 18px; }
+  .pricebox h2 { margin: 0; }
+  .pricebox-label { margin: 4px 0 0; color: var(--muted); }
+  .pricebox-headline { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(2.2rem, 5vw, 3rem); line-height: 1; color: var(--navy); }
+  .pricebox-table { width: 100%; border-collapse: collapse; margin: 6px 0 14px; }
+  .pricebox-table th, .pricebox-table td { padding: 10px 0; border-bottom: 1px solid var(--line); vertical-align: baseline; }
+  .pricebox-table th { text-align: left; font-weight: 400; padding-right: 16px; }
+  .pricebox-table td { text-align: right; font-weight: 700; color: var(--navy); white-space: nowrap; }
+  .pricebox-note { color: var(--muted); font-size: 0.95rem; }
+  @media (max-width: 560px) {
+    .pricebox { padding: 20px; }
+    .pricebox-table td { white-space: normal; }
+  }
+</style>

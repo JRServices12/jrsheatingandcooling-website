@@ -1,0 +1,45 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { business } from "../../data/business.js";
+
+const posts = Object.values(import.meta.glob("./*.md", { eager: true }))
+  .map((p) => ({ ...p.frontmatter, url: p.url }))
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+---
+<Layout title="Blog" description={`Straight answers to common boiler, heating and air conditioning questions from a Gas Safe registered engineer covering ${business.region}.`}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Blog</p>
+      <h1>Boiler, heating &amp; air con questions answered</h1>
+      <p class="lead">Straight answers to the questions people in {business.region} ask most, from a boiler losing pressure to planning rules for air conditioning.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-3">
+        {posts.map((p) => (
+          <a class="card post-card" href={p.url}>
+            <p class="post-tag">{p.tag}</p>
+            <h3>{p.title}</h3>
+            <p>{p.description}</p>
+            <span class="more">Read the answer</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="cta-band">
+    <div class="container">
+      <h2>Got a question that isn't here?</h2>
+      <p>Call or email and I'll give you a straight answer.</p>
+      <div class="cta-actions">
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+        <a class="btn btn-outline-light" href={`mailto:${business.email}`}>Email me</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+<style>
+  .post-card { text-decoration: none; color: inherit; }
+  .post-tag { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--warm); margin: 0 0 6px; }
+</style>

@@ -1,0 +1,7 @@
+Put the official logo files in this folder, named exactly:
+
+  gas-safe.png   (or .svg / .jpg)  - from your Gas Safe Register account
+  f-gas.png      (or .svg / .jpg)  - from your F-Gas certification body
+
+They will then show automatically on the home page, the About page and in the footer.
+Only use the official files, not copies from the internet.

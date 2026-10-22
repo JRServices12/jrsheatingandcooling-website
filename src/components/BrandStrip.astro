@@ -1,0 +1,44 @@
+---
+// Boiler brands strip. Shows each brand's official logo if a file is in
+// public/logos/brands/ (named worcester-bosch, vaillant, ideal, glow-worm, daikin .svg/.png/.jpg/.webp),
+// otherwise shows the brand name as text.
+import fs from "node:fs";
+import path from "node:path";
+import { business } from "../data/business.js";
+
+interface Props { brands?: string[]; title?: string; note?: string }
+const {
+  brands: names = business.brands,
+  title = "Boilers I install and service",
+  note = "And most other makes. Not sure about yours? Just ask.",
+} = Astro.props;
+const dir = path.join(process.cwd(), "public", "logos", "brands");
+const slug = (n: string) => n.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+const find = (name: string) => {
+  for (const ext of ["svg", "png", "jpg", "jpeg", "webp"]) {
+    if (fs.existsSync(path.join(dir, `${name}.${ext}`))) return `/logos/brands/${name}.${ext}`;
+  }
+  return null;
+};
+const brands = names.map((b) => ({ name: b, src: find(slug(b)) }));
+---
+<div class="brands">
+  <p class="brands-head">{title}</p>
+  <ul class="brand-list">
+    {brands.map((b) => (
+      <li class:list={{ "has-logo": b.src }}>
+        {b.src ? <img src={b.src} alt={b.name} loading="lazy" /> : b.name}
+      </li>
+    ))}
+  </ul>
+  {note && <p class="brands-note">{note}</p>}
+</div>
+<style>
+  .brands { margin-top: 36px; text-align: center; }
+  .brands-head { font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+  .brand-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 14px; }
+  .brand-list li { font-family: var(--display); font-weight: 700; font-size: 1.15rem; color: var(--navy); background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px 20px; display: flex; align-items: center; justify-content: center; min-height: 64px; box-sizing: border-box; }
+  .brand-list li.has-logo { padding: 10px 18px; }
+  .brand-list img { display: block; height: 42px; width: auto; max-width: 200px; object-fit: contain; }
+  .brands-note { color: var(--muted); font-size: 0.95rem; margin-top: 10px; }
+</style>

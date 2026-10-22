@@ -1,0 +1,223 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Accreditations from "../components/Accreditations.astro";
+import Gallery from "../components/Gallery.astro";
+import BrandStrip from "../components/BrandStrip.astro";
+import { business, services, serviceHref, reviews, reviewSource, photos } from "../data/business.js";
+
+const boilerServices = services.filter((s) => s.boiler);
+const boilerReviews = reviews.filter((r) => /boiler/i.test(r.job)).slice(0, 3);
+---
+<Layout
+  title="Boilers"
+  description={`Boiler servicing, repairs, new boiler installation and power flushing across ${business.region}. Gas Safe registered engineer. Boiler service £100. Free quotes.`}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Covering {business.region}</p>
+      <h1>Boiler servicing, repairs &amp; new boilers</h1>
+      <p class="lead">Everything to do with your boiler, from the yearly service to a full new installation. All done by me, a Gas Safe registered engineer with {business.yearsExperience}+ years in the trade.</p>
+      <div class="cta-actions" style="justify-content:flex-start">
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+        <a class="btn btn-quote" href="/quote/?job=boiler">Get a free quote</a>
+      </div>
+      <Accreditations />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Boiler services</p>
+        <h2>What I can help with</h2>
+      </div>
+      <div class="grid grid-3">
+        {boilerServices.map((s) => (
+          <a class="card service-card" href={serviceHref(s)}>
+            <h3>{s.title}</h3>
+            <p>{s.short}</p>
+            <span class="more">Find out more</span>
+          </a>
+        ))}
+      </div>
+      <BrandStrip />
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="grid grid-2 split">
+        <div>
+          <p class="eyebrow">Boiler servicing</p>
+          <h2>A yearly service for £100</h2>
+          <p>Most manufacturers need your boiler serviced every year to keep the warranty valid. A service also keeps it running safely and efficiently, and catches small problems before they turn into a breakdown in the middle of winter.</p>
+          <p><a href="/services/boiler-repair-servicing/">What's included in a service</a></p>
+        </div>
+        <div class="price-box">
+          <p class="price-label">Annual boiler service</p>
+          <p class="price">£100</p>
+          <p class="price-note">Standard gas boiler service. Repairs and new boilers are quoted separately, and you'll always get the price before any work starts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Choosing a new boiler</p>
+        <h2>Which type of boiler is right for you?</h2>
+        <p class="lead">There are three main types. I'll look at your home and how you use hot water, then recommend the right one.</p>
+      </div>
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Combi boiler</h3>
+          <p>Heats water straight from the mains when you turn on a tap, so there's no hot water tank. Saves space and suits most flats and small to medium homes.</p>
+        </div>
+        <div class="card">
+          <h3>System boiler</h3>
+          <p>Works with a hot water cylinder but has no tank in the loft. Good for homes with more than one bathroom, where several taps run at once.</p>
+        </div>
+        <div class="card">
+          <h3>Conventional boiler</h3>
+          <p>Also called a regular or heat-only boiler. Uses a cylinder and tanks in the loft, and often suits older homes with that setup already in place.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Honest advice</p>
+        <h2>Repair or replace your boiler?</h2>
+        <p class="lead">I'll always tell you straight. If a repair makes sense, that's what I'll recommend.</p>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Usually worth repairing</h3>
+          <ul class="tick-list">
+            <li>The boiler is under about 10 years old</li>
+            <li>It's been serviced and hasn't had many faults</li>
+            <li>The fault is a single part, like a fan, pump or sensor</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Worth thinking about a new one</h3>
+          <ul class="tick-list">
+            <li>It's 12–15 years old or more and breaking down often</li>
+            <li>Parts are hard to get or the repair costs a lot</li>
+            <li>Your energy bills keep going up</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Warning signs</p>
+        <h2>When to call a boiler engineer</h2>
+      </div>
+      <ul class="tick-list cols">
+        <li>No heating or no hot water</li>
+        <li>The pressure gauge keeps dropping</li>
+        <li>An error code or flashing light on the boiler</li>
+        <li>Banging, gurgling or whistling noises</li>
+        <li>Water leaking from the boiler or pipes</li>
+        <li>A yellow or orange flame instead of a crisp blue one</li>
+        <li>Black marks or soot around the boiler</li>
+        <li>Radiators cold at the bottom</li>
+      </ul>
+      <p class="note" style="margin-top:20px"><strong>Smell gas?</strong> Open windows, don't use switches or flames, turn off the gas at the meter if you can, and call the National Gas Emergency line on <a href="tel:0800111999">0800 111 999</a> straight away.</p>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Recent work</p>
+        <h2>Recent boiler installs</h2>
+        <p class="lead">Neat pipework, even inside the cupboard. <a href="/work/">See all our work</a></p>
+      </div>
+      <Gallery items={photos.filter((p) => p.category === "Boilers").slice(0, 6)} compact />
+    </div>
+  </section>
+
+  {boilerReviews.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Reviews</p>
+          <h2>What boiler customers say</h2>
+          <p class="lead">From {reviewSource.total} reviews on {reviewSource.name}.</p>
+        </div>
+        <div class="review-grid">
+          {boilerReviews.map((r) => (
+            <figure class="review">
+              <p class="review-score"><strong>{r.score}</strong>/10</p>
+              <blockquote>“{r.text}”</blockquote>
+              <figcaption>
+                <span class="review-job">{r.job}</span>
+                <span>Verified customer in {r.area}, {r.date}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <p class="review-source"><a href="/reviews/">Read more reviews</a></p>
+      </div>
+    </section>
+  )}
+
+  <section class="section section-soft">
+    <div class="container narrow">
+      <div class="section-head">
+        <p class="eyebrow">Questions</p>
+        <h2>Boiler questions</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>How often should my boiler be serviced?</summary>
+          <p>Once a year. It keeps the manufacturer's warranty valid and is the best way to catch problems early. A standard boiler service is £100.</p>
+        </details>
+        <details>
+          <summary>How long does a new boiler installation take?</summary>
+          <p>A straight swap for the same type of boiler is usually done in a day. Moving the boiler or changing the type, such as going from a tank in the loft to a combi, normally takes two or three days. I'll tell you how long when I quote.</p>
+        </details>
+        <details>
+          <summary>Will I get a certificate for my new boiler?</summary>
+          <p>Yes. Every installation is registered with Gas Safe, and you'll receive a Building Regulations compliance certificate. I'll also help you register the manufacturer's warranty.</p>
+        </details>
+        <details>
+          <summary>Do you do emergency boiler repairs?</summary>
+          <p>Yes. If your boiler has broken down, call {business.phone} and I'll get to you as quickly as I can. My normal hours are {business.hours}.</p>
+        </details>
+        <details>
+          <summary>Which boiler brands do you work on?</summary>
+          <p>I install and service {business.brands.slice(0, -1).join(", ")} and {business.brands.at(-1)}, and work on most other makes too.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>Need a boiler engineer in South East London or North Kent?</h2>
+      <p>Free, written quote before any work starts.</p>
+      <div class="cta-actions">
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+        <a class="btn btn-outline-light" href={`mailto:${business.email}`}>Email me</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .service-card { text-decoration: none; color: inherit; }
+  .split { align-items: center; }
+  .split .price-box { background: #fff; margin: 0; justify-self: center; }
+  .card .tick-list { margin-bottom: 0; }
+  .tick-list.cols { columns: 2 280px; column-gap: 32px; }
+  .tick-list.cols li { break-inside: avoid; }
+</style>

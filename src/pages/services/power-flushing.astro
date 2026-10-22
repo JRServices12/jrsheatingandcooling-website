@@ -1,0 +1,26 @@
+---
+import ServicePage from "../../layouts/ServicePage.astro";
+import { business } from "../../data/business.js";
+---
+<ServicePage
+  slug="power-flushing"
+  title="Power Flushing"
+  description={`Central heating power flushing across ${business.region} by a Gas Safe registered engineer. Clears sludge so radiators heat up properly. Free quotes.`}
+  intro="Over time, sludge and rust build up inside radiators and pipes. A power flush clears it out, so your heating warms up faster and your boiler doesn't have to work as hard."
+>
+  <h2>Signs your system needs a power flush</h2>
+  <ul class="tick-list">
+    <li>Radiators cold at the bottom but warm at the top</li>
+    <li>Some radiators heating up and others staying cold</li>
+    <li>Dirty, dark water when you bleed a radiator</li>
+    <li>A noisy boiler that bangs, kettles or gurgles</li>
+    <li>The heating taking a long time to warm the house</li>
+  </ul>
+
+  <h2>What happens during a power flush</h2>
+  <p>A power flushing machine is connected to your heating system and pumps water and cleaning chemicals through it at speed. This loosens the sludge and flushes it out. Each radiator is worked through in turn until the water runs clean.</p>
+  <p>Once it's clean, the system is refilled with an inhibitor, which helps stop sludge building up again. Your floors and furniture are protected throughout, and everything is left tidy.</p>
+
+  <h2>Fitting a new boiler?</h2>
+  <p>Most boiler manufacturers expect the heating system to be cleaned when a new boiler goes in, to protect it and keep its warranty valid. I'll check your system and recommend a power flush only if it actually needs one.</p>
+</ServicePage>

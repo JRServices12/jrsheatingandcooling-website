@@ -1,32 +1,27 @@
-# JR's Heating and Cooling — website
+# JRS Heating and Cooling — website
 
-Static site built with [Astro](https://astro.build). Ships zero JavaScript by
-default, deploys cleanly to AWS Amplify Hosting, and matches the site
-architecture from the setup guide (Section 2): service pages + area pages
-that cross-link, a guides/content hub, about, reviews, contact.
+Static site built with [Astro](https://astro.build), hosted on AWS Amplify.
+Every push to `main` on GitHub deploys to https://jrsheatingandcooling.co.uk
+automatically.
 
-## Structure
+## Where to change things
 
-```
-src/pages/index.astro                        Home
-src/pages/services/*.astro                    One page per service
-src/pages/areas/index.astro                   Placeholder — see note inside
-src/pages/guides/index.astro                  Placeholder cost-guide hub
-src/pages/about.astro
-src/pages/reviews.astro
-src/pages/contact.astro
-src/layouts/Layout.astro                      Shared header/footer, click-to-call
-```
+- `src/data/business.js` — phone, email, Gas Safe number, areas covered and the
+  list of services. Change them here and every page updates.
+- `src/layouts/Layout.astro` — header, footer, colours, Google Analytics and
+  the structured data Google reads.
+- `src/layouts/ServicePage.astro` — the shared layout for each service page.
+- `src/pages/` — the text on each page.
 
-## What still needs filling in
+## Still to add
 
-Every `[placeholder like this]` in the pages needs a real value before this
-goes live — service list, towns actually covered, phone number, email,
-address (if any), Gas Safe/trade registration number, and real testimonials
-(never invent fake reviews or fake job photos). Search the project for `[` to
-find them all quickly.
+- Price ranges on each service page (currently "free quote")
+- Real customer reviews on the reviews page (never invented ones)
+- A contact form (Web3Forms or Formspree)
+- Cost guides, starting with air conditioning
+- Logo, once there's a version that says Heating and Cooling
 
-## Local development
+## Running it on your computer
 
 ```
 npm install
@@ -34,9 +29,4 @@ npm run dev       # http://localhost:4321
 npm run build     # outputs to ./dist
 ```
 
-## Deployment
-
-This repo is meant to be connected directly to **AWS Amplify Hosting**
-(Amplify console → Create app → connect this GitHub repo). Amplify builds
-and deploys automatically on every push to `main` — no separate GitHub
-Actions workflow file is needed for this stack.
+On Windows, use `npm.cmd` instead of `npm` if PowerShell blocks scripts.

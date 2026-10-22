@@ -1,0 +1,307 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { business } from "../data/business.js";
+import { quotePrices } from "../data/quote-prices.js";
+
+const config = { prices: quotePrices, whatsapp: business.whatsapp, email: business.email, brands: business.brands };
+---
+<Layout
+  title="Instant Quote"
+  description={`Get a rough price for your boiler, heating or air conditioning job in ${business.region}. Answer a few questions, send photos on WhatsApp and get a confirmed quote.`}
+>
+  <section class="page-hero">
+    <div class="container narrow">
+      <p class="eyebrow">Free quote</p>
+      <h1>Get a rough price in a minute</h1>
+      <p class="lead">Answer a few quick questions and you'll see a rough guide price straight away. Then send it to me on WhatsApp with a few photos, and I'll confirm your quote.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container narrow">
+      <form id="qt" class="qt" novalidate>
+        <fieldset class="qt-step">
+          <legend><span class="qt-num">1</span> What do you need?</legend>
+          <div class="qt-jobs" id="qt-jobs"></div>
+        </fieldset>
+
+        <fieldset class="qt-step" id="qt-q-wrap" hidden>
+          <legend><span class="qt-num">2</span> A few details</legend>
+          <div id="qt-questions"></div>
+        </fieldset>
+
+        <fieldset class="qt-step" id="qt-you" hidden>
+          <legend><span class="qt-num">3</span> About you</legend>
+          <label class="qt-field">Your name
+            <input type="text" id="qt-name" autocomplete="name" />
+          </label>
+          <label class="qt-field">Town or postcode
+            <input type="text" id="qt-area" autocomplete="postal-code" placeholder="e.g. Eltham or SE9" />
+          </label>
+        </fieldset>
+
+        <div class="qt-result" id="qt-result" hidden aria-live="polite">
+          <p class="qt-result-label">Rough guide price</p>
+          <p class="qt-price" id="qt-price"></p>
+          <p class="qt-price-note" id="qt-price-note"></p>
+          <div class="qt-photos">
+            <p><strong>Photos that help me quote:</strong></p>
+            <ul id="qt-photo-tips"></ul>
+          </div>
+          <div class="qt-actions">
+            <a class="btn btn-whatsapp" id="qt-wa" href="#" target="_blank" rel="noopener">Send on WhatsApp with photos</a>
+            <a class="btn btn-outline" id="qt-email" href="#">Email instead</a>
+          </div>
+          <p class="qt-small">Prices include everything, with no VAT to add. This is a rough guide only, not a fixed quote. Your price is confirmed in writing after I've seen your photos or visited, and nothing is booked until you're happy with it. All gas work is carried out by a Gas Safe registered engineer.</p>
+        </div>
+      </form>
+      <noscript><p class="note">The quote tool needs JavaScript. You can call {business.phone} or email {business.email} for a free quote instead.</p></noscript>
+    </div>
+  </section>
+</Layout>
+
+<script is:inline define:vars={{ config }}>
+(function () {
+  var P = config.prices;
+  var brands = config.brands.concat(["Other", "Not sure"]);
+
+  // ---------- Jobs and their questions ----------
+  var JOBS = [
+    { id: "service", label: "Boiler service", qs: [
+      { id: "make", q: "What make is your boiler?", opts: brands },
+      { id: "landlord", q: "Do you also need a landlord gas safety certificate?", opts: ["No", "Yes"] }
+    ], photos: ["The front of the boiler", "The label with the make and model (often under the boiler or inside the front flap)"] },
+
+    { id: "repair", label: "Boiler repair", qs: [
+      { id: "problem", q: "What's the problem?", opts: ["No heating or hot water", "Losing pressure", "Leaking", "Error code or flashing light", "Noisy (banging, gurgling)", "Something else"] },
+      { id: "make", q: "What make is your boiler?", opts: brands },
+      { id: "age", q: "Roughly how old is it?", opts: ["Under 5 years", "5 to 10 years", "10 to 15 years", "Over 15 years", "Not sure"] },
+      { id: "code", q: "Any error code showing? (optional)", text: true }
+    ], photos: ["The boiler display or any error code", "The label with the make and model", "The pressure gauge", "Any leak or drips"] },
+
+    { id: "landlord", label: "Landlord gas safety certificate", qs: [
+      { id: "appliances", q: "How many gas appliances are in the property?", opts: ["1 (just the boiler)", "2", "3", "4 or more"] },
+      { id: "service", q: "Would you like the boiler serviced at the same time?", opts: ["No", "Yes"] }
+    ], photos: ["The boiler", "Any gas hob, oven or fire"] },
+
+    { id: "boiler", label: "New boiler", qs: [
+      { id: "current", q: "What do you have now?", opts: ["Combi boiler (no hot water tank)", "System boiler with a hot water cylinder", "Boiler with tanks in the loft", "Not sure"] },
+      { id: "want", q: "What would you like?", opts: ["A combi boiler", "Keep a hot water cylinder", "Not sure, please advise"] },
+      { id: "move", q: "Is the new boiler going in the same place?", opts: ["Same place", "Somewhere new"] },
+      { id: "baths", q: "How many bathrooms or showers?", opts: ["1", "2", "3 or more"] },
+      { id: "brand", q: "Any preferred brand?", opts: config.brands.concat(["No preference"]) }
+    ], photos: ["The whole boiler and the pipes underneath", "Where the flue comes out (inside and outside)", "Your hot water cylinder or loft tanks, if you have them"] },
+
+    { id: "flush", label: "Power flush", qs: [
+      { id: "rads", q: "How many radiators do you have?", opts: ["Up to 6", "7 to 10", "11 to 15", "16 or more"] },
+      { id: "signs", q: "What are you noticing?", opts: ["Radiators cold at the bottom", "Some radiators not heating", "Noisy boiler", "Fitting a new boiler", "Something else"] }
+    ], photos: ["A radiator that's cold at the bottom", "The boiler", "Dirty water from bleeding a radiator, if you have it"] },
+
+    { id: "rads", label: "Radiators & valves", qs: [
+      { id: "what", q: "What do you need?", opts: ["Replace a radiator", "Add a new radiator", "Move a radiator", "New thermostatic valves (TRVs)"] },
+      { id: "qty", q: "How many?", opts: ["1", "2", "3", "4", "5 or more"] }
+    ], photos: ["The radiator(s) and the wall around them", "The pipes and valves at each end"] },
+
+    { id: "ufh", label: "Underfloor heating", qs: [
+      { id: "size", q: "Roughly how big is the area?", opts: ["Up to 10 m² (e.g. a bathroom)", "10 to 20 m² (e.g. a kitchen)", "20 to 40 m² (e.g. an extension)", "Bigger than 40 m²"] },
+      { id: "stage", q: "What stage is the floor at?", opts: ["New build or extension (floor not down yet)", "Renovation (floor coming up)", "Existing finished floor"] }
+    ], photos: ["The room or space", "Your boiler", "Plans or drawings, if you have them"] },
+
+    { id: "ac", label: "Air conditioning", qs: [
+      { id: "rooms", q: "How many rooms?", opts: ["1", "2", "3", "4 or more"] },
+      { id: "size", q: "How big are the rooms?", opts: ["Bedroom or office size", "A large room or open-plan space"] },
+      { id: "outdoor", q: "Where could the outdoor unit go?", opts: ["Ground level or a low wall", "High up on a wall", "Not sure"] }
+    ], photos: ["Each room, showing where the indoor unit could go", "The outside wall or ground where the outdoor unit could go"] },
+
+    { id: "other", label: "Something else", qs: [
+      { id: "desc", q: "Tell me what you need", text: true, long: true }
+    ], photos: ["Anything that shows the job"] }
+  ];
+
+  // ---------- Pricing ----------
+  function rng(v) { return v == null ? null : (Array.isArray(v) ? [v[0], v[1]] : [v, v]); }
+  function add(a, b) { return a && b ? [a[0] + b[0], a[1] + b[1]] : null; }
+  function times(a, n) { return a ? [a[0] * n, a[1] * n] : null; }
+
+  function price(job, a) {
+    var note = "", from = false, r = null;
+    switch (job) {
+      case "service":
+        r = a.landlord === "Yes" ? rng(P.landlordCertWithService) : rng(P.boilerService);
+        note = a.landlord === "Yes" ? "Boiler service and landlord gas safety certificate together." : "Standard annual gas boiler service.";
+        break;
+      case "repair":
+        r = rng(P.repairCallout); from = true;
+        note = "To find the fault. Parts and any extra time are quoted before I go ahead.";
+        if (a.age === "Over 15 years") note += " With a boiler this age, I'll also tell you honestly if a repair is worth it.";
+        break;
+      case "landlord":
+        var n = { "1 (just the boiler)": 1, "2": 2, "3": 3, "4 or more": 4 }[a.appliances] || 1;
+        if (a.service === "Yes") {
+          r = add(rng(P.landlordCertWithService), times(rng(P.landlordExtraAppliance), n - 1));
+          note = "Certificate plus boiler service.";
+        } else {
+          r = add(rng(P.landlordCert), times(rng(P.landlordExtraAppliance), n - 1));
+          note = "Gas safety check and certificate.";
+        }
+        if (n === 1 && r === null) r = a.service === "Yes" ? rng(P.landlordCertWithService) : rng(P.landlordCert);
+        if (n >= 4) from = true;
+        break;
+      case "boiler":
+        if (a.want === "Not sure, please advise" || a.current === "Not sure") { r = null; note = "I'll recommend the right boiler for your home and price it up."; break; }
+        if (a.want === "A combi boiler") r = a.current.indexOf("Combi") === 0 ? rng(P.combiSwap) : rng(P.conversionToCombi);
+        else r = rng(P.systemSwap);
+        if (a.move === "Somewhere new") r = add(r, rng(P.boilerMoveExtra));
+        note = "Fitted price including the boiler, system clean, and Gas Safe registration.";
+        if (a.baths === "3 or more" && a.want === "A combi boiler") note += " With 3 or more bathrooms, a combi may not keep up, so I'll talk you through the options.";
+        break;
+      case "flush":
+        var band = { "Up to 6": "upTo6", "7 to 10": "upTo10", "11 to 15": "upTo15", "16 or more": "over15" }[a.rads];
+        r = rng(P.powerFlush[band]); if (band === "over15") from = true;
+        note = "Full power flush with cleaning chemicals and inhibitor.";
+        break;
+      case "rads":
+        var key = { "Replace a radiator": "radiatorReplace", "Add a new radiator": "radiatorNew", "Move a radiator": "radiatorMove", "New thermostatic valves (TRVs)": "trvValve" }[a.what];
+        var q = { "1": 1, "2": 2, "3": 3, "4": 4, "5 or more": 5 }[a.qty] || 1;
+        r = times(rng(P[key]), q); if (q >= 5) from = true;
+        note = "Price depends on the size and style of radiator.";
+        break;
+      case "ufh":
+        var s = { "Up to 10 m² (e.g. a bathroom)": "small", "10 to 20 m² (e.g. a kitchen)": "medium", "20 to 40 m² (e.g. an extension)": "large" }[a.size];
+        r = s ? rng(P.underfloor[s]) : null;
+        note = "Pipework, manifold and controls, connected to your boiler. Screed and floor finishes are not included.";
+        if (a.stage === "Existing finished floor") note += " On a finished floor, the floor usually has to come up or be raised, so I'll need to see it.";
+        break;
+      case "ac":
+        var k = { "1": "ac1Room", "2": "ac2Rooms", "3": "ac3Rooms" }[a.rooms];
+        r = k ? rng(P[k]) : null;
+        if (r && a.size === "A large room or open-plan space") r = add(r, times(rng(P.acLargeRoomExtra), parseInt(a.rooms, 10)));
+        note = "Supplied and fitted, tested and commissioned.";
+        break;
+      default:
+        r = null; note = "";
+    }
+    return { r: r, from: from, note: note };
+  }
+
+  function money(n) { return "£" + Math.round(n).toLocaleString("en-GB"); }
+  function show(p) {
+    if (!p.r) return "I'll confirm the price after seeing your photos";
+    if (p.from) return "From " + money(p.r[0]);
+    if (p.r[0] === p.r[1]) return money(p.r[0]);
+    return money(p.r[0]) + " to " + money(p.r[1]);
+  }
+
+  // ---------- Build the form ----------
+  var jobsEl = document.getElementById("qt-jobs");
+  var qWrap = document.getElementById("qt-q-wrap"), qEl = document.getElementById("qt-questions");
+  var youEl = document.getElementById("qt-you"), res = document.getElementById("qt-result");
+  var current = null, answers = {};
+
+  JOBS.forEach(function (j) {
+    var l = document.createElement("label"); l.className = "qt-job";
+    l.innerHTML = '<input type="radio" name="job" value="' + j.id + '"><span>' + j.label + "</span>";
+    jobsEl.appendChild(l);
+  });
+
+  jobsEl.addEventListener("change", function (e) {
+    current = JOBS.filter(function (j) { return j.id === e.target.value; })[0];
+    answers = {};
+    qEl.innerHTML = "";
+    current.qs.forEach(function (q) {
+      var box = document.createElement("div"); box.className = "qt-q";
+      var h = document.createElement("p"); h.className = "qt-q-title"; h.textContent = q.q; box.appendChild(h);
+      if (q.text) {
+        var t = document.createElement(q.long ? "textarea" : "input");
+        if (!q.long) t.type = "text";
+        t.rows = 4; t.dataset.q = q.id; t.className = "qt-text";
+        t.addEventListener("input", function () { answers[q.id] = t.value.trim(); update(); });
+        box.appendChild(t);
+      } else {
+        var opts = document.createElement("div"); opts.className = "qt-opts";
+        q.opts.forEach(function (o) {
+          var l = document.createElement("label"); l.className = "qt-opt";
+          var i = document.createElement("input"); i.type = "radio"; i.name = "q-" + q.id; i.value = o;
+          i.addEventListener("change", function () { answers[q.id] = o; update(); });
+          var s = document.createElement("span"); s.textContent = o;
+          l.appendChild(i); l.appendChild(s); opts.appendChild(l);
+        });
+        box.appendChild(opts);
+      }
+      qEl.appendChild(box);
+    });
+    qWrap.hidden = false; youEl.hidden = true; res.hidden = true;
+    update();
+    qWrap.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  ["qt-name", "qt-area"].forEach(function (id) { document.getElementById(id).addEventListener("input", update); });
+
+  function complete() {
+    return current && current.qs.every(function (q) { return q.text ? (!q.long || answers[q.id]) : answers[q.id]; });
+  }
+
+  function update() {
+    if (!current) return;
+    var done = complete();
+    var wasHidden = res.hidden;
+    youEl.hidden = !done; res.hidden = !done;
+    if (!done) return;
+    var p = price(current.id, answers);
+    document.getElementById("qt-price").textContent = show(p);
+    document.getElementById("qt-price-note").textContent = p.note;
+    var tips = document.getElementById("qt-photo-tips"); tips.innerHTML = "";
+    current.photos.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; tips.appendChild(li); });
+
+    var name = document.getElementById("qt-name").value.trim();
+    var area = document.getElementById("qt-area").value.trim();
+    var lines = ["Hi Jordan, I'd like a quote from your website.", "", "Job: " + current.label];
+    current.qs.forEach(function (q) { if (answers[q.id]) lines.push("- " + q.q.replace(/ \(optional\)$/, "").replace(/\?$/, "") + ": " + answers[q.id]); });
+    if (name) lines.push("Name: " + name);
+    if (area) lines.push("Area: " + area);
+    lines.push("Rough guide shown: " + (p.r ? show(p) : "to be confirmed"));
+    var body = lines.join("\n");
+    document.getElementById("qt-wa").href = "https://wa.me/" + config.whatsapp + "?text=" + encodeURIComponent(body + "\n\nI'll send some photos now.");
+    document.getElementById("qt-email").href = "mailto:" + config.email + "?subject=" + encodeURIComponent("Quote request: " + current.label) + "&body=" + encodeURIComponent(body + "\n\n(Photos attached)");
+    if (wasHidden) setTimeout(function () { youEl.scrollIntoView({ behavior: "smooth", block: "start" }); }, 50);
+  }
+
+  // Arriving from a service page (/quote/?job=flush etc.) picks that job straight away.
+  var pre = new URLSearchParams(location.search).get("job");
+  var preInput = pre && jobsEl.querySelector('input[value="' + pre.replace(/[^a-z]/g, "") + '"]');
+  if (preInput) { preInput.checked = true; preInput.dispatchEvent(new Event("change", { bubbles: true })); }
+
+  document.getElementById("qt").addEventListener("submit", function (e) { e.preventDefault(); });
+})();
+</script>
+
+<style is:global>
+  .qt-step { border: 0; padding: 0; margin: 0 0 32px; min-width: 0; }
+  .qt-step legend { font-family: var(--display); font-weight: 700; font-size: 1.4rem; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; padding: 0; }
+  .qt-num { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--navy); color: #fff; font-size: 1rem; }
+  .qt-jobs { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .qt-job, .qt-opt { position: relative; cursor: pointer; }
+  .qt-job input, .qt-opt input { position: absolute; opacity: 0; pointer-events: none; }
+  .qt-job span, .qt-opt span { display: block; border: 2px solid var(--line); background: #fff; border-radius: 10px; padding: 12px 14px; font-weight: 600; color: var(--navy); transition: border-color 0.15s, background 0.15s; }
+  .qt-job span { padding: 16px; font-size: 1.02rem; }
+  .qt-job:hover span, .qt-opt:hover span { border-color: var(--blue); }
+  .qt-job input:checked + span, .qt-opt input:checked + span { border-color: var(--blue); background: var(--sky); box-shadow: inset 0 0 0 1px var(--blue); }
+  .qt-job input:focus-visible + span, .qt-opt input:focus-visible + span { outline: 3px solid var(--warm); outline-offset: 2px; }
+  .qt-q { margin-bottom: 22px; }
+  .qt-q-title { font-weight: 700; margin: 0 0 8px; }
+  .qt-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .qt-opt span { padding: 9px 14px; font-weight: 600; font-size: 0.95rem; }
+  .qt-field { display: block; font-weight: 700; margin-bottom: 14px; }
+  .qt-field input, .qt-text { display: block; width: 100%; margin-top: 6px; font: inherit; font-weight: 400; padding: 11px 13px; border: 2px solid var(--line); border-radius: 10px; box-sizing: border-box; }
+  .qt-field input:focus, .qt-text:focus { outline: none; border-color: var(--blue); }
+  .qt-result { border: 2px solid var(--blue); border-radius: 14px; padding: 24px; background: #fff; box-shadow: 0 12px 32px rgba(18, 50, 79, 0.1); }
+  .qt-result-label { margin: 0; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.82rem; }
+  .qt-price { font-family: var(--display); font-weight: 700; font-size: clamp(1.6rem, 5vw, 2.4rem); color: var(--blue); line-height: 1.15; margin: 6px 0 8px; }
+  .qt-price-note { margin: 0 0 16px; }
+  .qt-photos { background: var(--sky); border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; }
+  .qt-photos p { margin: 0 0 6px; }
+  .qt-photos ul { margin: 0; padding-left: 1.2em; }
+  .qt-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+  .qt-small { font-size: 0.88rem; color: var(--muted); margin: 0; }
+  .btn-outline { border-color: var(--navy); color: var(--navy); background: #fff; }
+</style>
