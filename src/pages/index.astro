@@ -90,12 +90,8 @@ const paths = [
 
   <section class="h-reviews">
     <div class="container">
-      <figure class="h-featured">
-        <blockquote>“{featured.text}”</blockquote>
-        <figcaption>Checkatrade review, {featured.area}, {featured.date} · {featured.score}/10</figcaption>
-      </figure>
       <div class="h-more-reviews">
-        {more.map((r) => (
+        {[featured, ...more].map((r) => (
           <figure class="h-quote">
             <blockquote>“{r.text}”</blockquote>
             <figcaption>{r.area}, {r.date} · {r.score}/10</figcaption>
