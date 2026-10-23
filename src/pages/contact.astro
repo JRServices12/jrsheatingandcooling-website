@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { business } from "../data/business.js";
 import ContactForm from "../components/ContactForm.astro";
+import InstagramIcon from "../components/InstagramIcon.astro";
 ---
 <Layout title="Contact" description={`Contact ${business.name} for a free quote. Call ${business.phone} or email. Covering ${business.region}.`}>
   <section class="page-hero">
@@ -13,7 +14,7 @@ import ContactForm from "../components/ContactForm.astro";
   </section>
   <section class="section">
     <div class="container">
-      <div class="grid grid-3">
+      <div class="grid grid-3" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
         <div class="card">
           <h3>Call</h3>
           <p>The quickest way to reach us.</p>
@@ -28,6 +29,14 @@ import ContactForm from "../components/ContactForm.astro";
           <h3>Email</h3>
           <p>Photos of your boiler or the problem help us quote faster.</p>
           <a href={`mailto:${business.email}`} style="font-weight:700;word-break:break-all">{business.email}</a>
+        </div>
+        <div class="card">
+          <h3>Instagram</h3>
+          <p>See our recent jobs and send us a message.</p>
+          <a href={business.instagramUrl} target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;font-weight:700;align-self:flex-start;text-decoration:none">
+            <InstagramIcon size={34} id="ig-contact" />
+            <span>@jrs.heatingandcooling</span>
+          </a>
         </div>
       </div>
       <div class="note" style="margin-top:24px">
