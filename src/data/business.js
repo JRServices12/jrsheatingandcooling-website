@@ -79,6 +79,12 @@ export const services = [
     short: "New and replacement radiators, valves, moving radiators and central heating repairs.",
   },
   {
+    slug: "plumbing",
+    href: "/plumbing/",
+    title: "Plumbing repairs",
+    short: "Leaks, burst or dripping pipes, taps, radiator valves and blockages, sorted tidily by a Gas Safe registered engineer.",
+  },
+  {
     slug: "underfloor-heating",
     quoteJob: "ufh",
     title: "Underfloor heating",
@@ -110,6 +116,8 @@ export const reviews = [
   {"area": "DA5", "date": "2 June 2024", "score": "10", "job": "Fixing a small gas leak", "text": "Jordan came round within 24hrs of posting a request on checkatrade. He tested for the leak, nipped up the offending joint and confirmed the leak was gone. Prompt service and good communication. Would definitely use again."},
   {"area": "SE3", "date": "6 March 2024", "score": "10", "job": "Gas certificate", "text": "- Really quick turn around - Very courteous"},
   {"area": "SE18", "date": "18 October 2023", "score": "10", "job": "Multiple plumbing jobs , new radiator , leaks and blockages", "text": "I’m very happy with his work . He was punctual , pleasant and worked quietly and tidied up after . I would give an extra star for his diligence and advice concerning another matter that I had not been aware of . I feel I got great value for my money . Well done"},
+  {"area": "DA1", "date": "15 November 2024", "score": "10", "job": "Unblock kitchen sink", "text": "Excellent service. Excellent contact. Would extremely recommend. I am DA1 area."},
+  {"area": "DA1", "date": "11 November 2024", "score": "10", "job": "Shower head fitting", "text": "professionally done. will recommend to friends and family"},
   {"area": "DA1", "date": "30 September 2024", "score": "10", "job": "Serious leak under kitchen flooring.", "text": "Jordan arrived at the arranged time and got straight to work. It didn’t take long to identify the cause and was able to rectify the problem. He was courteous, polite and deserves this review."},
 ];
 export const reviewSource = {

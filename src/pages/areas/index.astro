@@ -1,6 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { business } from "../../data/business.js";
+import { towns } from "../../data/towns.js";
+const townPages = new Set(towns.map((t) => t.name));
 ---
 <Layout title="Areas Covered" description={`${business.name} is based in ${business.base} and covers North Kent, including Dartford, Crayford, Swanley and Gravesend.`}>
   <section class="page-hero">
@@ -15,7 +17,7 @@ import { business } from "../../data/business.js";
       <div class="container">
         <h2>{g.name}</h2>
         <ul class="area-chips" style="margin-top:14px">
-          {g.towns.map((t) => <li>{t}</li>)}
+          {g.towns.map((t) => <li>{townPages.has(t) ? <a href={`/areas/${towns.find((x) => x.name === t).slug}/`}>{t}</a> : t}</li>)}
         </ul>
       </div>
     </section>

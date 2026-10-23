@@ -1,0 +1,38 @@
+---
+import ServicePage from "../layouts/ServicePage.astro";
+import { business } from "../data/business.js";
+import { quotePrices as P } from "../data/quote-prices.js";
+---
+<ServicePage
+  slug="boiler-repair-servicing"
+  title="Emergency boiler repair"
+  description={`Boiler broken down or no heating or hot water? We cover breakdowns ${business.breakdowns} across ${business.region}. Gas Safe registered engineer. Call ${business.phone}.`}
+  intro={`No heating or hot water? We cover boiler breakdowns ${business.breakdowns} across ${business.region}. Call us and we'll get to you as quickly as we can.`}
+>
+  <div class="note" style="margin-bottom:28px">
+    <p style="margin:0"><strong>Smell gas or think there's a leak?</strong> Don't call us first. Open the windows, turn off the gas at the meter, don't use switches or flames, and call the National Gas Emergency Service on <strong>0800 111 999</strong>. It's free and open 24 hours. Once the gas is safe, we can help with the repair.</p>
+  </div>
+
+  <h2>When to call us</h2>
+  <ul class="tick-list">
+    <li>Your boiler has stopped working and you've no heating or hot water</li>
+    <li>The boiler is showing an error code or keeps shutting itself off</li>
+    <li>The boiler is leaking water or making loud banging or whistling noises</li>
+    <li>The pressure keeps dropping, or radiators are staying cold</li>
+  </ul>
+  <p>Before you call, our <a href="/blog/no-heating-or-hot-water-checks/">no heating or hot water checks</a> and our <a href="/blog/boiler-losing-pressure/">boiler losing pressure guide</a> take a few minutes, and sometimes fix the problem yourself.</p>
+
+  <h2>What happens when you call</h2>
+  <ol class="steps">
+    <li><h3>You call us</h3><p>Tell us what the boiler is doing and roughly where you are. If you can, send a photo of the boiler and any error code on WhatsApp.</p></li>
+    <li><h3>We come out</h3><p>We'll tell you when we can get there. Breakdowns are covered {business.breakdowns}.</p></li>
+    <li><h3>We find and explain the fault</h3><p>The call-out is from £{P.repairCallout} plus parts. We explain what's wrong and price any repair before we start.</p></li>
+    <li><h3>We fix it, or tell you honestly if it's not worth fixing</h3><p>If the boiler is past repairing, we'll explain your options, and you get a written quote for a new one with no pressure.</p></li>
+  </ol>
+
+  <p>We're Gas Safe registered, so you can be confident the work is done properly and legally. Normal hours are {business.hours}.</p>
+  <div class="cta-actions" style="justify-content:flex-start;margin-top:20px">
+    <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+    <a class="btn btn-quote" href={`https://wa.me/${business.whatsapp}`} target="_blank" rel="noopener">WhatsApp us</a>
+  </div>
+</ServicePage>

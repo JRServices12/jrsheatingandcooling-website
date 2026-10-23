@@ -1,0 +1,136 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Accreditations from "../../components/Accreditations.astro";
+import { business, reviews, reviewSource } from "../../data/business.js";
+import { towns } from "../../data/towns.js";
+import { quotePrices as P } from "../../data/quote-prices.js";
+
+export function getStaticPaths() {
+  return towns.map((t) => ({ params: { town: t.slug }, props: { town: t } }));
+}
+
+const { town } = Astro.props;
+const gbp = (n) => "£" + Number(n).toLocaleString("en-GB");
+const range = (v) => `${gbp(v[0])} to ${gbp(v[1])}`;
+const shown = town.reviewAreas
+  .flatMap((a) => reviews.filter((r) => r.area === a))
+  .slice(0, 3);
+const otherTowns = towns.filter((t) => t.slug !== town.slug);
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: town.faqs.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
+};
+---
+<Layout
+  title={`Boiler service, repair and installation in ${town.name}`}
+  description={`Gas Safe registered boiler servicing from ${gbp(P.boilerService)}, repairs, new boilers, landlord gas safety certificates and air conditioning in ${town.name} (${town.postcodes.join(", ")}). Free written quotes.`}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">{town.name}, {town.county} · {town.postcodes.join(", ")}</p>
+      <h1>Boiler servicing, repairs and installs in {town.name}</h1>
+      <p class="lead">{town.intro}</p>
+      <div class="cta-actions" style="justify-content:flex-start">
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+        <a class="btn btn-quote" href="/quote/">Get a quick price</a>
+      </div>
+      <Accreditations />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container narrow">
+      <h2>What we do in {town.name}</h2>
+      <div class="grid grid-2" style="margin-top:16px">
+        <a class="card" href="/services/boiler-repair-servicing/" style="text-decoration:none;color:inherit">
+          <h3>Boiler servicing and repairs</h3>
+          <p>Annual service {gbp(P.boilerService)}. Repair call-out from {gbp(P.repairCallout)}, plus parts.</p>
+          <span class="more">Find out more</span>
+        </a>
+        <a class="card" href="/services/landlord-gas-safety-certificates/" style="text-decoration:none;color:inherit">
+          <h3>Landlord gas safety certificates</h3>
+          <p>{gbp(P.landlordCert)} for one appliance, or {gbp(P.landlordCertWithService)} with a boiler service.</p>
+          <span class="more">Find out more</span>
+        </a>
+        <a class="card" href="/services/boiler-installation/" style="text-decoration:none;color:inherit">
+          <h3>New boilers</h3>
+          <p>Combi swaps from {gbp(P.combiSwap[0])}, fitted neatly and properly.</p>
+          <span class="more">Find out more</span>
+        </a>
+        <a class="card" href="/air-conditioning/" style="text-decoration:none;color:inherit">
+          <h3>Air conditioning</h3>
+          <p>One room {range(P.ac1Room)}. F-Gas certified.</p>
+          <span class="more">Find out more</span>
+        </a>
+      </div>
+      <p class="note" style="margin-top:20px">No VAT to add to any of our prices, and every job gets a free written quote before any work starts. These are rough guides. We confirm the price first.</p>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container narrow">
+      <h2>Heating in {town.name} homes</h2>
+      {town.homes.map((p) => <p>{p}</p>)}
+      <p>We cover {town.name}, {town.nearby.slice(0, -1).join(", ")} and {town.nearby.at(-1)}.</p>
+
+      <h2>Landlords in {town.name}</h2>
+      <p>{town.landlords}</p>
+
+      <h2>Air conditioning in {town.name}</h2>
+      <p>{town.aircon}</p>
+    </div>
+  </section>
+
+  {shown.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2>What our customers say</h2>
+        <p style="color:var(--muted)">Real reviews from customers across South East London and North Kent, copied word for word from {reviewSource.name}. The postcode shown is where each customer lives.</p>
+        <div class="review-grid" style="margin-top:20px">
+          {shown.map((r) => (
+            <figure class="review">
+              <p class="review-score"><strong>{r.score}</strong>/10</p>
+              <blockquote>“{r.text}”</blockquote>
+              <figcaption>
+                <span class="review-job">{r.job}</span>
+                <span>Customer in {r.area}, {r.date}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <p style="margin-top:18px"><a href="/reviews/">Read all our reviews</a></p>
+      </div>
+    </section>
+  )}
+
+  <section class="section section-soft">
+    <div class="container narrow">
+      <h2>Questions from {town.name} customers</h2>
+      {town.faqs.map(([q, a]) => (
+        <>
+          <h3 style="margin-top:20px">{q}</h3>
+          <p>{a}</p>
+        </>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container narrow">
+      <h2>Ready when you are</h2>
+      <p>Call {business.phone}, message us on WhatsApp, or use the quick price tool. For a breakdown, we cover {business.breakdowns}.</p>
+      <div class="cta-actions" style="justify-content:flex-start">
+        <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+        <a class="btn btn-quote" href="/contact/">Contact us</a>
+      </div>
+      {otherTowns.length > 0 && (
+        <p style="margin-top:28px">Also covering: {otherTowns.map((t, i) => (
+          <>{i > 0 && ", "}<a href={`/areas/${t.slug}/`}>{t.name}</a></>
+        ))}. See <a href="/areas/">all the areas we cover</a>.</p>
+      )}
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Layout>

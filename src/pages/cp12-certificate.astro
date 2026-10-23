@@ -1,0 +1,45 @@
+---
+import ServicePage from "../layouts/ServicePage.astro";
+import { business } from "../data/business.js";
+import { quotePrices as P } from "../data/quote-prices.js";
+---
+<ServicePage
+  slug="landlord-gas-safety-certificates"
+  title="CP12 gas safety certificate for landlords"
+  description={`CP12 landlord gas safety certificates from £${P.landlordCert} across ${business.region}. Gas Safe registered engineer, certificate issued on the day, and a reminder before the next one is due.`}
+  intro={`A CP12 is the landlord gas safety record every landlord with gas appliances needs each year. We do the check from £${P.landlordCert}, give you the certificate, and remind you before it runs out.`}
+>
+  <h2>What is a CP12?</h2>
+  <p>"CP12" is the name most landlords use for the landlord gas safety record. It's the certificate a Gas Safe registered engineer issues after checking every gas appliance, flue and pipe in a rented property. If the property is let, you need a new one every 12 months.</p>
+
+  <h2>Who needs one?</h2>
+  <ul class="tick-list">
+    <li>Any landlord renting out a home with a gas boiler, gas hob, gas fire or other gas appliance</li>
+    <li>Landlords who let a room in a shared house or a flat</li>
+    <li>Letting agents managing a property for a landlord</li>
+  </ul>
+  <p>If a property has no gas supply or appliances at all, there's nothing to certify. If you're unsure, ask us.</p>
+
+  <h2>What you get</h2>
+  <ul class="tick-list">
+    <li>Every gas appliance, flue and the pipework checked by a Gas Safe registered engineer</li>
+    <li>Your CP12 certificate, to give to your tenants and keep for your records</li>
+    <li>A clear explanation if anything isn't safe, and a quote to put it right</li>
+    <li>A reminder before the next one is due, so it never lapses</li>
+  </ul>
+
+  <h2>What it costs</h2>
+  <p>A certificate for one appliance, usually the boiler, is £{P.landlordCert}. Each extra appliance such as a gas hob, oven or fire is £{P.landlordExtraAppliance} more. If the boiler is due a service, doing the service and the certificate together is £{P.landlordCertWithService}. We're not VAT registered, so there's nothing to add.</p>
+
+  <h2>Your legal duties as a landlord</h2>
+  <ul class="tick-list">
+    <li>Get a new gas safety record at least every 12 months</li>
+    <li>Give existing tenants a copy within 28 days of the check</li>
+    <li>Give new tenants a copy before they move in</li>
+    <li>Keep a copy of each record for at least two years</li>
+  </ul>
+  <p>You can book up to two months before the old one runs out and still keep the same renewal date. For more detail, read our <a href="/blog/landlord-gas-safety-certificate-guide/">landlord gas safety certificate guide</a>, or see the full <a href="/services/landlord-gas-safety-certificates/">landlord gas safety certificates</a> page.</p>
+
+  <h2>Several properties?</h2>
+  <p>We can keep track of when each one is due and book them together, and arrange access with your tenants or letting agent. Call us on {business.phone} and tell us how many you have.</p>
+</ServicePage>

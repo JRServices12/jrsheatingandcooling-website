@@ -1,0 +1,57 @@
+---
+import ServicePage from "../layouts/ServicePage.astro";
+import { business, reviews } from "../data/business.js";
+const plumbingReviews = reviews.filter((r) => /sink|shower|leak|plumbing|blockage/i.test(r.job) && !/gas/i.test(r.job)).slice(0, 4);
+---
+<ServicePage
+  slug="plumbing"
+  title="Plumbing repairs"
+  description={`Plumbing repairs across ${business.region}: leaks, pipework, taps, radiator valves and blockages, by a Gas Safe registered engineer. Free written quotes and tidy work.`}
+  intro="Dripping tap, leaking pipe or a radiator that needs a new valve? We sort out everyday plumbing problems properly, and leave the area clean when we're done."
+>
+  <h2>What we can help with</h2>
+  <ul class="tick-list">
+    <li>Leaks and burst or dripping pipes, found and fixed</li>
+    <li>Pipework repairs and alterations</li>
+    <li>Taps and shower heads fitted or repaired, including kitchen taps</li>
+    <li>Radiator valves, including thermostatic radiator valves</li>
+    <li>Blocked sinks, pipes and drains</li>
+    <li>Water softeners fitted</li>
+  </ul>
+  <p>Plumbing and heating often go together, so if the job involves your boiler or radiators we can look at everything in one visit.</p>
+
+  <h2>Why choose us for plumbing</h2>
+  <ul class="tick-list">
+    <li>A Gas Safe registered engineer does the work, so we're fully qualified where plumbing meets your gas and heating</li>
+    <li>We tell you what's wrong and what it will cost before we start</li>
+    <li>We work tidily and clear up after ourselves, which is the thing our customers mention most</li>
+    <li>Free written quote for every job, and no VAT to add</li>
+  </ul>
+
+  {plumbingReviews.length > 0 && (
+    <>
+      <h2>What customers say</h2>
+      <div class="review-grid" style="margin-top:16px">
+        {plumbingReviews.map((r) => (
+          <figure class="review">
+            <p class="review-score"><strong>{r.score}</strong>/10</p>
+            <blockquote>“{r.text}”</blockquote>
+            <figcaption>
+              <span class="review-job">{r.job}</span>
+              <span>Customer in {r.area}, {r.date}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+      <p style="margin-top:14px"><a href="/reviews/">Read all our reviews</a></p>
+    </>
+  )}
+
+  <h2>Prices</h2>
+  <p>Plumbing jobs vary too much to give one price. Send us a photo on WhatsApp or call, and we'll quote you in writing before any work starts.</p>
+  <p>For radiators and valves specifically, see our <a href="/services/radiators-central-heating/">radiators and central heating</a> page, which has prices.</p>
+  <div class="cta-actions" style="justify-content:flex-start;margin-top:20px">
+    <a class="btn btn-call" href={business.phoneHref}>Call {business.phone}</a>
+    <a class="btn btn-quote" href={`https://wa.me/${business.whatsapp}`} target="_blank" rel="noopener">Send us a photo</a>
+  </div>
+</ServicePage>

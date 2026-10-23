@@ -1,5 +1,6 @@
 ---
 import { business, services, serviceHref, reviewSource } from "../data/business.js";
+import { towns } from "../data/towns.js";
 import Accreditations from "../components/Accreditations.astro";
 import ServiceIcon from "../components/ServiceIcon.astro";
 
@@ -23,6 +24,12 @@ const moreLinks = [
   { href: "/blog/", label: "Advice and blog" },
   { href: "/faq/", label: "FAQ" },
   { href: "/contact/", label: "Contact" },
+];
+
+// Extra pages shown in the Services menu without a card of their own.
+const extraServiceLinks = [
+  { href: "/cp12-certificate/", label: "CP12 certificate for landlords" },
+  { href: "/emergency-boiler-repair/", label: "Emergency boiler repair" },
 ];
 
 // Structured data so Google can link the site to the Business Profile.
@@ -115,6 +122,7 @@ const caret = '<path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" 
               {services.map((s) => (
                 <a class="menu-item" href={serviceHref(s)}><ServiceIcon slug={s.slug} size={20} small /><span>{s.title}</span></a>
               ))}
+              {extraServiceLinks.map((l) => <a class="menu-item sub" href={l.href}><span>{l.label}</span></a>)}
               <a class="menu-all" href="/services/">All services</a>
             </div>
           </div>
@@ -127,6 +135,7 @@ const caret = '<path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" 
               {services.filter((s) => s.boiler).map((s) => (
                 <a class="menu-item" href={serviceHref(s)}><ServiceIcon slug={s.slug} size={20} small /><span>{s.title}</span></a>
               ))}
+              <a class="menu-item sub" href="/emergency-boiler-repair/"><span>Emergency boiler repair</span></a>
               <a class="menu-all" href="/boilers/">All about boilers</a>
             </div>
           </div>
@@ -137,7 +146,12 @@ const caret = '<path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" 
           <div class="has-menu more-wrap">
             <button type="button" class="menu-toggle more-toggle" aria-expanded="false" aria-controls="more-menu">More<svg class="caret" viewBox="0 0 12 12" aria-hidden="true" set:html={caret} /></button>
             <div class="services-menu more-menu" id="more-menu">
-              {moreLinks.map((l) => <a class="menu-item" href={l.href}><span>{l.label}</span></a>)}
+              {moreLinks.map((l) => (
+                <>
+                  <a class="menu-item" href={l.href}><span>{l.label}</span></a>
+                  {l.href === "/areas/" && towns.map((t) => <a class="menu-item sub" href={`/areas/${t.slug}/`}><span>{t.name}</span></a>)}
+                </>
+              ))}
             </div>
           </div>
           {moreLinks.map((l) => <a class="more-inline" href={l.href}>{l.label}</a>)}
@@ -173,6 +187,7 @@ const caret = '<path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" 
         <div>
           <p class="footer-head">Areas</p>
           <p class="footer-areas">{business.areaGroups.map((g) => g.name).join(" and ")}</p>
+          <p class="footer-areas">{towns.map((t, i) => <>{i > 0 && ", "}<a href={`/areas/${t.slug}/`}>{t.name}</a></>)}</p>
           <p class="footer-areas"><a href="/areas/">See every town we cover</a></p>
           <p class="footer-head" style="margin-top:16px">Help and advice</p>
           <p class="footer-areas"><a href="/blog/">Blog: your questions answered</a></p>
@@ -415,10 +430,26 @@ const caret = '<path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" 
       .services-menu::before { content: ""; position: absolute; left: 0; right: 0; top: -16px; height: 16px; }
       .services-menu a { display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: var(--navy); font-weight: 500; text-decoration: none; }
       .services-menu a:hover, .services-menu a:focus-visible { background: var(--paper); color: var(--copper); }
+      .services-menu a.sub { padding: 6px 12px 6px 44px; font-size: 0.92rem; font-weight: 400; color: var(--muted); }
+      .more-menu a.sub { padding-left: 28px; }
       .services-menu .menu-all { font-weight: 600; border-top: 1px solid var(--line); margin-top: 4px; }
       .has-menu.open .services-menu,
       .has-menu:focus-within .services-menu { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
       .has-menu.open .caret { transform: rotate(180deg); }
+      /* Touch screens and phones: tap the arrow to open a menu (hovering isn't possible). */
+      @media (max-width: 760px), (hover: none) {
+        .menu-link .caret { display: none; }
+        .menu-toggle:not(.more-toggle) { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; margin-left: 2px; background: none; border: 0; padding: 0; cursor: pointer; color: var(--navy); }
+        .menu-toggle svg { width: 12px; height: 12px; transition: transform 0.2s ease; }
+        .has-menu.open .menu-toggle svg { transform: rotate(180deg); }
+      }
+      @media (max-width: 760px) {
+        .has-menu { position: static; }
+        .services-menu, .more-menu { position: fixed; left: 10px; right: 10px; top: 120px; width: auto; max-height: 68vh; overflow-y: auto; z-index: 45; }
+        .services-menu::before { display: none; }
+        .services-menu a { padding: 13px 12px; }
+        .services-menu a.sub, .more-menu a.sub { padding: 10px 12px 10px 44px; }
+      }
       @media (hover: hover) and (min-width: 761px) {
         .has-menu:hover .services-menu { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
         .has-menu:hover .caret { transform: rotate(180deg); }
@@ -480,8 +511,7 @@ const caret = '<path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" 
         .brand img { height: 50px; }
         .main-nav { gap: 18px; flex-wrap: nowrap; overflow-x: auto; font-size: 0.9rem; padding-bottom: 6px; }
         .main-nav a { white-space: nowrap; }
-        .services-menu, .menu-toggle, .menu-link .caret, .more-wrap { display: none !important; }
-        .more-inline { display: inline; }
+        .more-inline { display: none; }
         .header-actions .btn-call { display: none; }
         .header-actions .btn { min-height: 44px; padding: 0 16px; }
         .topbar-extra { display: none; }
@@ -545,6 +575,10 @@ const caret = '<path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" 
             e.stopPropagation();
             var opening = !wrap.classList.contains("open");
             document.querySelectorAll(".has-menu.open").forEach(function (w) { if (w !== wrap) { w.classList.remove("open"); var b = w.querySelector(".menu-toggle"); if (b) b.setAttribute("aria-expanded", "false"); } });
+            if (opening && window.innerWidth <= 760) {
+              var menu = wrap.querySelector(".services-menu");
+              if (menu) menu.style.top = (wrap.getBoundingClientRect().bottom + 6) + "px";
+            }
             set(opening);
           });
           document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) set(false); });
