@@ -16,6 +16,8 @@ export const business = {
   // Google Business Profile link, and the link that opens the "write a review" box.
   googleUrl: "https://g.page/r/CXTaVJ-gDNE6EBM",
   googleReviewUrl: "https://g.page/r/CXTaVJ-gDNE6EBM/review",
+  // Instagram profile. Shown in the footer and added to the site's structured data.
+  instagramUrl: "https://www.instagram.com/jrs.heatingandcooling/",
   hoursShort: "Mon–Fri 8am–5pm",
   // Contact form: free Web3Forms access key, made at https://web3forms.com with the work email.
   // It's safe to keep here (it can only send messages to that inbox). Leave blank to hide the form.
