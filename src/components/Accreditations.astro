@@ -5,9 +5,11 @@
 // certification body. Until a file is there, nothing shows for it.
 import fs from "node:fs";
 import path from "node:path";
+import { accreditationScope } from "../data/accreditation-scope.js";
 
 interface Props { variant?: "default" | "footer" }
 const { variant = "default" } = Astro.props;
+const scope = accreditationScope(Astro.url.pathname);
 
 const dir = path.join(process.cwd(), "public", "logos");
 const find = (name: string) => {
@@ -17,9 +19,9 @@ const find = (name: string) => {
   return null;
 };
 const logos = [
-  { src: find("gas-safe"), alt: "Gas Safe Register" },
-  { src: find("f-gas"), alt: "F-Gas certified" },
-].filter((l) => l.src);
+  scope !== "air" && { src: find("gas-safe"), alt: "Gas Safe Register" },
+  scope !== "gas" && { src: find("f-gas"), alt: "F-Gas certified" },
+].filter((l) => l && l.src);
 ---
 {logos.length > 0 && (
   <div class={`accreditations ${variant}`}>

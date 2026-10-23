@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Accreditations from "../../components/Accreditations.astro";
+import ServiceIcon from "../../components/ServiceIcon.astro";
 import { business, reviews, reviewSource } from "../../data/business.js";
 import { towns } from "../../data/towns.js";
 import { quotePrices as P } from "../../data/quote-prices.js";
@@ -44,23 +45,39 @@ const faqSchema = {
       <h2>What we do in {town.name}</h2>
       <div class="grid grid-2" style="margin-top:16px">
         <a class="card" href="/services/boiler-repair-servicing/" style="text-decoration:none;color:inherit">
+          <ServiceIcon slug="boiler-repair-servicing" size={34} />
           <h3>Boiler servicing and repairs</h3>
           <p>Annual service {gbp(P.boilerService)}. Repair call-out from {gbp(P.repairCallout)}, plus parts.</p>
           <span class="more">Find out more</span>
         </a>
         <a class="card" href="/services/landlord-gas-safety-certificates/" style="text-decoration:none;color:inherit">
+          <ServiceIcon slug="landlord-gas-safety-certificates" size={34} />
           <h3>Landlord gas safety certificates</h3>
           <p>{gbp(P.landlordCert)} for one appliance, or {gbp(P.landlordCertWithService)} with a boiler service.</p>
           <span class="more">Find out more</span>
         </a>
         <a class="card" href="/services/boiler-installation/" style="text-decoration:none;color:inherit">
+          <ServiceIcon slug="boiler-installation" size={34} />
           <h3>New boilers</h3>
           <p>Combi swaps from {gbp(P.combiSwap[0])}, fitted neatly and properly.</p>
           <span class="more">Find out more</span>
         </a>
         <a class="card" href="/air-conditioning/" style="text-decoration:none;color:inherit">
+          <ServiceIcon slug="air-conditioning-installation" size={34} />
           <h3>Air conditioning</h3>
           <p>One room {range(P.ac1Room)}. F-Gas certified.</p>
+          <span class="more">Find out more</span>
+        </a>
+        <a class="card" href="/plumbing/" style="text-decoration:none;color:inherit">
+          <ServiceIcon slug="plumbing" size={34} />
+          <h3>Plumbing repairs</h3>
+          <p>Leaks, taps, radiator valves and blockages, sorted tidily.</p>
+          <span class="more">Find out more</span>
+        </a>
+        <a class="card" href="/emergency-boiler-repair/" style="text-decoration:none;color:inherit">
+          <ServiceIcon slug="emergency-boiler-repair" size={34} />
+          <h3>Boiler breakdowns</h3>
+          <p>No heating or hot water? We cover breakdowns {business.breakdowns}.</p>
           <span class="more">Find out more</span>
         </a>
       </div>

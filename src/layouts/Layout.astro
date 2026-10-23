@@ -3,6 +3,7 @@ import { business, services, serviceHref, reviewSource } from "../data/business.
 import { towns } from "../data/towns.js";
 import Accreditations from "../components/Accreditations.astro";
 import ServiceIcon from "../components/ServiceIcon.astro";
+import { accreditationScope } from "../data/accreditation-scope.js";
 
 interface Props {
   title: string;
@@ -13,6 +14,9 @@ const pageTitle = title === "Home"
   ? `${business.name} | Boiler, Heating & Air Conditioning in ${business.region}`
   : `${title} | ${business.name}`;
 const canonical = new URL(Astro.url.pathname, business.url).href;
+// Air con pages show only the F-Gas logo; boiler and heating pages show only Gas Safe.
+const accScope = accreditationScope(Astro.url.pathname);
+const accText = accScope === "air" ? "REFCOM F-Gas certified" : accScope === "gas" ? "Gas Safe registered" : "Gas Safe registered · REFCOM F-Gas certified";
 // "Quick price" opens the quote tool with this page's job already picked.
 const pageService = services.find((s) => serviceHref(s) === Astro.url.pathname);
 const quoteHref = pageService?.quoteJob ? `/quote/?job=${pageService.quoteJob}` : Astro.url.pathname === "/boilers/" ? "/quote/?job=boiler" : "/quote/";
@@ -99,10 +103,10 @@ const caret = '<path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" 
   <body>
     <div class="topbar">
       <div class="container topbar-inner">
-        <span>Gas Safe registered · REFCOM F-Gas certified<span class="topbar-extra"> · {business.hoursShort} · Breakdowns {business.breakdowns}</span></span>
+        <span>{accText}<span class="topbar-extra"> · {business.hoursShort} · Breakdowns {business.breakdowns}</span></span>
         <span class="topbar-logos">
-          <a href="https://www.gassaferegister.co.uk/" target="_blank" rel="noopener" title="Check us on the Gas Safe Register"><img class="topbar-logo" src="/logos/gas-safe.png" alt="Gas Safe registered" width="27" height="30" /></a>
-          <img class="topbar-logo" src="/logos/f-gas.png" alt="REFCOM F-Gas certified" width="76" height="30" />
+          {accScope !== "air" && <a href="https://www.gassaferegister.co.uk/" target="_blank" rel="noopener" title="Check us on the Gas Safe Register"><img class="topbar-logo" src="/logos/gas-safe.png" alt="Gas Safe registered" width="27" height="30" /></a>}
+          {accScope !== "gas" && <img class="topbar-logo" src="/logos/f-gas.png" alt="REFCOM F-Gas certified" width="76" height="30" />}
         </span>
       </div>
     </div>
@@ -175,7 +179,7 @@ const caret = '<path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" 
         <div>
           <img class="footer-logo" src="/logo-white.svg" alt={business.name} width="180" height="80" />
           <p>Boiler, heating and air conditioning specialists based in {business.base}, covering {business.region}. Tidy work, every job.</p>
-          <p class="gas-safe-line">Gas Safe registered and REFCOM F-Gas certified</p>
+          <p class="gas-safe-line">{accText.replace(" · ", " and ")}</p>
           <Accreditations variant="footer" />
         </div>
         <div>

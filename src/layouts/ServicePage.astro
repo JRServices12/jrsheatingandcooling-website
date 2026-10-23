@@ -3,15 +3,17 @@ import Layout from "./Layout.astro";
 import { business, services, serviceHref, photos as allPhotos } from "../data/business.js";
 import Gallery from "../components/Gallery.astro";
 import PriceBox from "../components/PriceBox.astro";
+import ServiceIcon from "../components/ServiceIcon.astro";
 
 interface Props {
   title: string;
   description: string;
   intro: string;
   slug: string;
+  icon?: string;
   photoCategory?: string;
 }
-const { title, description, intro, slug, photoCategory } = Astro.props;
+const { title, description, intro, slug, icon, photoCategory } = Astro.props;
 const jobPhotos = photoCategory ? allPhotos.filter((p) => p.category === photoCategory).slice(0, 6) : [];
 const others = services.filter((s) => s.slug !== slug);
 const me = services.find((s) => s.slug === slug);
@@ -19,7 +21,10 @@ const me = services.find((s) => s.slug === slug);
 <Layout title={title} description={description}>
   <section class="page-hero">
     <div class="container">
-      <p class="eyebrow">Covering {business.region}</p>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px">
+        <ServiceIcon slug={icon ?? slug} size={30} />
+        <p class="eyebrow" style="margin:0">Covering {business.region}</p>
+      </div>
       <h1>{title}</h1>
       <p class="lead">{intro}</p>
       <div class="cta-actions" style="justify-content:flex-start">
@@ -53,6 +58,7 @@ const me = services.find((s) => s.slug === slug);
       <div class="grid grid-2" style="margin-top:16px">
         {others.map((s) => (
           <a class="card" href={serviceHref(s)} style="text-decoration:none;color:inherit">
+            <ServiceIcon slug={s.slug} size={34} />
             <h3>{s.title}</h3>
             <p>{s.short}</p>
             <span class="more">Find out more</span>
