@@ -32,8 +32,8 @@ const moreLinks = [
 
 // Extra pages shown in the Services menu without a card of their own.
 const extraServiceLinks = [
-  { href: "/cp12-certificate/", label: "CP12 certificate for landlords" },
-  { href: "/emergency-boiler-repair/", label: "Emergency boiler repair" },
+  { href: "/cp12-certificate/", label: "CP12 certificate for landlords", icon: "landlord-gas-safety-certificates" },
+  { href: "/emergency-boiler-repair/", label: "Emergency boiler repair", icon: "emergency-boiler-repair" },
 ];
 
 // Structured data so Google can link the site to the Business Profile.
@@ -126,7 +126,7 @@ const caret = '<path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" 
               {services.map((s) => (
                 <a class="menu-item" href={serviceHref(s)}><ServiceIcon slug={s.slug} size={20} small /><span>{s.title}</span></a>
               ))}
-              {extraServiceLinks.map((l) => <a class="menu-item sub" href={l.href}><span>{l.label}</span></a>)}
+              {extraServiceLinks.map((l) => <a class="menu-item" href={l.href}><ServiceIcon slug={l.icon} size={20} small /><span>{l.label}</span></a>)}
               <a class="menu-all" href="/services/">All services</a>
             </div>
           </div>
@@ -139,7 +139,7 @@ const caret = '<path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" 
               {services.filter((s) => s.boiler).map((s) => (
                 <a class="menu-item" href={serviceHref(s)}><ServiceIcon slug={s.slug} size={20} small /><span>{s.title}</span></a>
               ))}
-              <a class="menu-item sub" href="/emergency-boiler-repair/"><span>Emergency boiler repair</span></a>
+              <a class="menu-item" href="/emergency-boiler-repair/"><ServiceIcon slug="emergency-boiler-repair" size={20} small /><span>Emergency boiler repair</span></a>
               <a class="menu-all" href="/boilers/">All about boilers</a>
             </div>
           </div>
@@ -153,7 +153,7 @@ const caret = '<path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" 
               {moreLinks.map((l) => (
                 <>
                   <a class="menu-item" href={l.href}><span>{l.label}</span></a>
-                  {l.href === "/areas/" && towns.map((t) => <a class="menu-item sub" href={`/areas/${t.slug}/`}><span>{t.name}</span></a>)}
+                  {l.href === "/areas/" && towns.map((t) => <a class="menu-item" href={`/areas/${t.slug}/`}><ServiceIcon slug="location" size={20} small /><span>{t.name}</span></a>)}
                 </>
               ))}
             </div>
