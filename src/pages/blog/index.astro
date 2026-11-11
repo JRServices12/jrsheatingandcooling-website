@@ -18,7 +18,7 @@ const posts = Object.values(import.meta.glob("./*.md", { eager: true }))
     <div class="container">
       <div class="grid grid-3">
         {posts.map((p) => (
-          <a class="card post-card" href={p.url}>
+          <a class="card post-card" href={p.url.endsWith("/") ? p.url : `${p.url}/`}>
             <p class="post-tag">{p.tag}</p>
             <h3>{p.title}</h3>
             <p>{p.description}</p>

@@ -24,7 +24,7 @@ import { business, reviews, reviewSource } from "../data/business.js";
           </figure>
         ))}
       </div>
-      <p class="review-source">Reviews originally left on {reviewSource.name}. <a href={reviewSource.url} rel="noopener" target="_blank">See all {reviewSource.total} reviews</a>.</p>
+      <p class="review-source">Reviews originally left on {reviewSource.name}.</p>
       <div class="google-review">
         <p><strong>Had work done by JRS?</strong> A quick Google review really helps a small local business.</p>
         <a class="btn btn-quote" href={business.googleReviewUrl || business.googleUrl} target="_blank" rel="noopener">{business.googleReviewUrl ? "Leave a Google review" : "Find us on Google"}</a>

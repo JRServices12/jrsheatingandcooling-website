@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/BlogPost.astro
-title: "Combi, system or conventional boiler: which is right for my home?"
+title: "Combi, system or conventional boiler: which is best?"
 description: "The three main types of gas boiler explained in plain English, and how to tell which one suits your home and the way you use hot water."
 date: 2026-10-18
 tag: New boilers

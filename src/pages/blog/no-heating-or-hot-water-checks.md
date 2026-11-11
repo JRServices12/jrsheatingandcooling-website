@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/BlogPost.astro
-title: "No heating or hot water? 6 things to check before calling an engineer"
+title: "No heating or hot water? 6 things to check first"
 description: "Simple, safe checks that sort out a surprising number of boiler problems, plus the signs it's time to call a Gas Safe engineer."
 date: 2026-10-17
 tag: Boilers

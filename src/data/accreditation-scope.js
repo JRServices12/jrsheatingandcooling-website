@@ -4,6 +4,8 @@
 //   "both" = everywhere else (home, about, contact, towns and so on)
 export function accreditationScope(pathname) {
   if (pathname.startsWith("/air-conditioning") || pathname.startsWith("/services/air-conditioning")) return "air";
+  // The services overview lists air con as well, so show both logos there.
+  if (pathname === "/services" || pathname === "/services/") return "both";
   const gasPrefixes = ["/boilers", "/services/", "/plumbing", "/cp12-certificate", "/emergency-boiler-repair"];
   if (gasPrefixes.some((p) => pathname.startsWith(p))) return "gas";
   return "both";

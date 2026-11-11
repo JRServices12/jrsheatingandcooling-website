@@ -82,7 +82,7 @@ export const towns = [
     name: "Bexley",
     county: "London",
     postcodes: ["DA5"],
-    nearby: ["Old Bexley", "Albany Park", "Blendon", "Bexley Village"],
+    nearby: ["Old Bexley", "Albany Park", "Blendon"],
     intro:
       "Boiler servicing, repairs and new boilers in Bexley, Old Bexley and Albany Park, plus landlord gas safety certificates and home air conditioning. Gas Safe registered, F-Gas certified, and every job gets a free written quote first.",
     homes: [
@@ -128,7 +128,7 @@ export const towns = [
     name: "Gravesend",
     county: "Kent",
     postcodes: ["DA11", "DA12"],
-    nearby: ["Northfleet", "Singlewell", "Istead Rise", "Chalk", "Wrotham Road"],
+    nearby: ["Northfleet", "Singlewell", "Istead Rise", "Chalk", "Higham"],
     intro:
       "Boiler servicing, repairs and new boilers in Gravesend, Northfleet and the villages around them, plus landlord gas safety certificates and home air conditioning. Gas Safe registered, F-Gas certified, and every job gets a free written quote first.",
     homes: [
@@ -213,6 +213,29 @@ export const towns = [
       ["Do you cover Chislehurst and Elmstead?", "Yes. Chislehurst and the roads around it are in our area. Call us for a date or use the quick price tool."],
       ["Can you fit underfloor heating in an extension?", "Yes. We fit wet underfloor heating connected to your boiler. Prices start from £1,200 for rooms up to 10 square metres, not including the screed or floor."],
       ["Can you fit a new boiler in a bigger house?", "Yes. We size the boiler to the number of bathrooms and radiators, and give you a written quote before any work starts."],
+    ],
+  },
+  {
+    slug: "plumstead",
+    name: "Plumstead",
+    county: "London",
+    postcodes: ["SE18"],
+    nearby: ["Woolwich", "Plumstead Common", "Shooters Hill", "Abbey Wood", "Charlton", "Thamesmead"],
+    intro:
+      "Boiler servicing, repairs and new boilers in Plumstead, Woolwich and Shooters Hill, plus landlord gas safety certificates and home air conditioning. Plumstead is our home patch, so we're never far away. Gas Safe registered, F-Gas certified, and every job gets a free written quote first.",
+    homes: [
+      "Plumstead is mostly Victorian and Edwardian terraces, with some 1930s houses and flats around the Common. Many of these have boilers in kitchens or small cupboards, and older pipework that's worth checking when we service or replace a boiler.",
+      "Because we're local, we can often get to Plumstead jobs quickly, and we'll always tell you the price before we start. Tidy work and clear communication are what our customers mention most.",
+    ],
+    landlords:
+      "Plumstead and Woolwich have a lot of rented houses and flats. We do the CP12 gas safety check and give you the certificate, and we can book several properties in one visit.",
+    aircon:
+      "Top-floor flats and loft rooms in Plumstead can get very warm in summer. We fit wall-mounted air conditioning with neat pipe runs, and we're F-Gas certified.",
+    reviewAreas: ["SE18", "SE7", "SE3"],
+    faqs: [
+      ["Do you cover Plumstead and Woolwich?", "Yes. Plumstead, Woolwich, Shooters Hill and Abbey Wood are all in our area, and Plumstead is close to home for us. Call us for a date or use the quick price tool."],
+      ["Can you fix a boiler breakdown in Plumstead?", "Yes. Call us on the work number and we'll get to you as quickly as we can. We cover breakdowns evenings and weekends too."],
+      ["How much is a boiler service in Plumstead?", "A standard annual gas boiler service is £100, with no VAT to add."],
     ],
   },
 ];
